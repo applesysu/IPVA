@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BFD43799151096FC00277D21 /* mainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD43798151096FC00277D21 /* mainWindow.xib */; };
 		BFFFE5EB15108D3600DDB6E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFE5EA15108D3600DDB6E7 /* UIKit.framework */; };
 		BFFFE5ED15108D3600DDB6E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFE5EC15108D3600DDB6E7 /* Foundation.framework */; };
 		BFFFE5EF15108D3600DDB6E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFE5EE15108D3600DDB6E7 /* CoreGraphics.framework */; };
@@ -19,9 +20,18 @@
 		BFFFE6501510938B00DDB6E7 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE64E1510938B00DDB6E7 /* FirstViewController.xib */; };
 		BFFFE654151093C900DDB6E7 /* TrendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE652151093C900DDB6E7 /* TrendViewController.m */; };
 		BFFFE655151093C900DDB6E7 /* TrendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE653151093C900DDB6E7 /* TrendViewController.xib */; };
+		BFFFE6591510955500DDB6E7 /* CategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE6571510955500DDB6E7 /* CategoryViewController.m */; };
+		BFFFE65A1510955500DDB6E7 /* CategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE6581510955500DDB6E7 /* CategoryViewController.xib */; };
+		BFFFE65E1510957F00DDB6E7 /* CompareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE65C1510957F00DDB6E7 /* CompareViewController.m */; };
+		BFFFE65F1510957F00DDB6E7 /* CompareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE65D1510957F00DDB6E7 /* CompareViewController.xib */; };
+		BFFFE663151095AE00DDB6E7 /* BrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE661151095AE00DDB6E7 /* BrandViewController.m */; };
+		BFFFE664151095AE00DDB6E7 /* BrandViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE662151095AE00DDB6E7 /* BrandViewController.xib */; };
+		BFFFE668151095CA00DDB6E7 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE666151095CA00DDB6E7 /* StoreViewController.m */; };
+		BFFFE669151095CA00DDB6E7 /* StoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE667151095CA00DDB6E7 /* StoreViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BFD43798151096FC00277D21 /* mainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mainWindow.xib; sourceTree = "<group>"; };
 		BFFFE5E615108D3600DDB6E7 /* IPVA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPVA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFE5EA15108D3600DDB6E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BFFFE5EC15108D3600DDB6E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -41,6 +51,18 @@
 		BFFFE651151093C900DDB6E7 /* TrendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendViewController.h; sourceTree = "<group>"; };
 		BFFFE652151093C900DDB6E7 /* TrendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendViewController.m; sourceTree = "<group>"; };
 		BFFFE653151093C900DDB6E7 /* TrendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrendViewController.xib; sourceTree = "<group>"; };
+		BFFFE6561510955500DDB6E7 /* CategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryViewController.h; sourceTree = "<group>"; };
+		BFFFE6571510955500DDB6E7 /* CategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryViewController.m; sourceTree = "<group>"; };
+		BFFFE6581510955500DDB6E7 /* CategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryViewController.xib; sourceTree = "<group>"; };
+		BFFFE65B1510957F00DDB6E7 /* CompareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompareViewController.h; sourceTree = "<group>"; };
+		BFFFE65C1510957F00DDB6E7 /* CompareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompareViewController.m; sourceTree = "<group>"; };
+		BFFFE65D1510957F00DDB6E7 /* CompareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompareViewController.xib; sourceTree = "<group>"; };
+		BFFFE660151095AE00DDB6E7 /* BrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandViewController.h; sourceTree = "<group>"; };
+		BFFFE661151095AE00DDB6E7 /* BrandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandViewController.m; sourceTree = "<group>"; };
+		BFFFE662151095AE00DDB6E7 /* BrandViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrandViewController.xib; sourceTree = "<group>"; };
+		BFFFE665151095CA00DDB6E7 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
+		BFFFE666151095CA00DDB6E7 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
+		BFFFE667151095CA00DDB6E7 /* StoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +120,18 @@
 				BFFFE651151093C900DDB6E7 /* TrendViewController.h */,
 				BFFFE652151093C900DDB6E7 /* TrendViewController.m */,
 				BFFFE653151093C900DDB6E7 /* TrendViewController.xib */,
+				BFFFE6561510955500DDB6E7 /* CategoryViewController.h */,
+				BFFFE6571510955500DDB6E7 /* CategoryViewController.m */,
+				BFFFE6581510955500DDB6E7 /* CategoryViewController.xib */,
+				BFFFE65B1510957F00DDB6E7 /* CompareViewController.h */,
+				BFFFE65C1510957F00DDB6E7 /* CompareViewController.m */,
+				BFFFE65D1510957F00DDB6E7 /* CompareViewController.xib */,
+				BFFFE660151095AE00DDB6E7 /* BrandViewController.h */,
+				BFFFE661151095AE00DDB6E7 /* BrandViewController.m */,
+				BFFFE662151095AE00DDB6E7 /* BrandViewController.xib */,
+				BFFFE665151095CA00DDB6E7 /* StoreViewController.h */,
+				BFFFE666151095CA00DDB6E7 /* StoreViewController.m */,
+				BFFFE667151095CA00DDB6E7 /* StoreViewController.xib */,
 				BFFFE5F115108D3600DDB6E7 /* Supporting Files */,
 			);
 			path = IPVA;
@@ -110,6 +144,7 @@
 				BFFFE5F315108D3600DDB6E7 /* InfoPlist.strings */,
 				BFFFE5F615108D3600DDB6E7 /* main.m */,
 				BFFFE5F815108D3600DDB6E7 /* IPVA-Prefix.pch */,
+				BFD43798151096FC00277D21 /* mainWindow.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -168,6 +203,11 @@
 				BFFFE61915108FF200DDB6E7 /* LoginViewController.xib in Resources */,
 				BFFFE6501510938B00DDB6E7 /* FirstViewController.xib in Resources */,
 				BFFFE655151093C900DDB6E7 /* TrendViewController.xib in Resources */,
+				BFFFE65A1510955500DDB6E7 /* CategoryViewController.xib in Resources */,
+				BFFFE65F1510957F00DDB6E7 /* CompareViewController.xib in Resources */,
+				BFFFE664151095AE00DDB6E7 /* BrandViewController.xib in Resources */,
+				BFFFE669151095CA00DDB6E7 /* StoreViewController.xib in Resources */,
+				BFD43799151096FC00277D21 /* mainWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +223,10 @@
 				BFFFE61815108FF200DDB6E7 /* LoginViewController.m in Sources */,
 				BFFFE64F1510938B00DDB6E7 /* FirstViewController.m in Sources */,
 				BFFFE654151093C900DDB6E7 /* TrendViewController.m in Sources */,
+				BFFFE6591510955500DDB6E7 /* CategoryViewController.m in Sources */,
+				BFFFE65E1510957F00DDB6E7 /* CompareViewController.m in Sources */,
+				BFFFE663151095AE00DDB6E7 /* BrandViewController.m in Sources */,
+				BFFFE668151095CA00DDB6E7 /* StoreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +332,7 @@
 				BFFFE61415108D3600DDB6E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

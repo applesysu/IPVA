@@ -1,28 +1,18 @@
 //
-//  LoginViewController.m
+//  BrandViewController.m
 //  IPVA
 //
 //  Created by Lancy on 12-3-14.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "LoginViewController.h"
-#import "AppDelegate.h"
+#import "BrandViewController.h"
 
-
-@interface LoginViewController ()
+@interface BrandViewController ()
 
 @end
 
-@implementation LoginViewController
-@synthesize tabBarController = _tabBarController;
-
-- (void)dealloc
-{
-    [super dealloc];
-    [_tabBarController release];
-}
-
+@implementation BrandViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,9 +41,4 @@
 	return YES;
 }
 
-
-- (IBAction)pressLoginButton:(id)sender {
-    [self.tabBarController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentModalViewController:self.tabBarController animated:YES];
-}
 @end

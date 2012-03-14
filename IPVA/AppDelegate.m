@@ -8,36 +8,33 @@
 
 #import "AppDelegate.h"
 
-#import "FirstViewController.h"
-//
-//#import "SecondViewController.h"
-
 #import "LoginViewController.h"
+
+#import "FirstViewController.h"
+#import "TrendViewController.h"
+#import "CategoryViewController.h"
+#import "CompareViewController.h"
+#import "BrandViewController.h"
+#import "StoreViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController = _tabBarController;
+
 
 - (void)dealloc
 {
     [_window release];
-    [_tabBarController release];
+
     [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     UIViewController *loginViewController = [[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil] autorelease];
-    
-//    UIViewController *viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
-//    UIViewController *viewController2 = [[[SecondViewController alloc] initWithNibName:@"SecondViewController" bundle:nil] autorelease];
-    self.tabBarController = [[[UITabBarController alloc] init] autorelease];
-//    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
-    self.window.rootViewController = self.tabBarController;
-    [self.window makeKeyAndVisible];
+    [self.window setRootViewController:loginViewController];
+//    [self.window.rootViewController.view addSubview:loginViewController.view];
     return YES;
 }
 

@@ -10,4 +10,8 @@
 
 @interface LoginViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UITabBarController *tabBarController;
+
+- (IBAction)pressLoginButton:(id)sender;
+
 @end
