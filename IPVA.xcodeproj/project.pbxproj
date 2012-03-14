@@ -13,14 +13,12 @@
 		BFFFE5F515108D3600DDB6E7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE5F315108D3600DDB6E7 /* InfoPlist.strings */; };
 		BFFFE5F715108D3600DDB6E7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE5F615108D3600DDB6E7 /* main.m */; };
 		BFFFE5FB15108D3600DDB6E7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE5FA15108D3600DDB6E7 /* AppDelegate.m */; };
-		BFFFE5FE15108D3600DDB6E7 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE5FD15108D3600DDB6E7 /* FirstViewController.m */; };
-		BFFFE60015108D3600DDB6E7 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE5FF15108D3600DDB6E7 /* first.png */; };
-		BFFFE60215108D3600DDB6E7 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE60115108D3600DDB6E7 /* first@2x.png */; };
-		BFFFE60515108D3600DDB6E7 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE60415108D3600DDB6E7 /* SecondViewController.m */; };
-		BFFFE60715108D3600DDB6E7 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE60615108D3600DDB6E7 /* second.png */; };
-		BFFFE60915108D3600DDB6E7 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE60815108D3600DDB6E7 /* second@2x.png */; };
-		BFFFE60C15108D3600DDB6E7 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE60A15108D3600DDB6E7 /* FirstViewController.xib */; };
-		BFFFE60F15108D3600DDB6E7 /* SecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE60D15108D3600DDB6E7 /* SecondViewController.xib */; };
+		BFFFE61815108FF200DDB6E7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE61615108FF100DDB6E7 /* LoginViewController.m */; };
+		BFFFE61915108FF200DDB6E7 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE61715108FF200DDB6E7 /* LoginViewController.xib */; };
+		BFFFE64F1510938B00DDB6E7 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE64D1510938B00DDB6E7 /* FirstViewController.m */; };
+		BFFFE6501510938B00DDB6E7 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE64E1510938B00DDB6E7 /* FirstViewController.xib */; };
+		BFFFE654151093C900DDB6E7 /* TrendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFE652151093C900DDB6E7 /* TrendViewController.m */; };
+		BFFFE655151093C900DDB6E7 /* TrendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFFFE653151093C900DDB6E7 /* TrendViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,22 +26,21 @@
 		BFFFE5EA15108D3600DDB6E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BFFFE5EC15108D3600DDB6E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFE5EE15108D3600DDB6E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		BFFFE5F215108D3600DDB6E7 /* IPVA-Info.plist */ = {isa = PBXFileReference; path = "IPVA-Info.plist"; sourceTree = "<group>"; };
+		BFFFE5F215108D3600DDB6E7 /* IPVA-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IPVA-Info.plist"; sourceTree = "<group>"; };
 		BFFFE5F415108D3600DDB6E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BFFFE5F615108D3600DDB6E7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		BFFFE5F815108D3600DDB6E7 /* IPVA-Prefix.pch */ = {isa = PBXFileReference; path = "IPVA-Prefix.pch"; sourceTree = "<group>"; };
-		BFFFE5F915108D3600DDB6E7 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		BFFFE5F815108D3600DDB6E7 /* IPVA-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IPVA-Prefix.pch"; sourceTree = "<group>"; };
+		BFFFE5F915108D3600DDB6E7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BFFFE5FA15108D3600DDB6E7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		BFFFE5FC15108D3600DDB6E7 /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
-		BFFFE5FD15108D3600DDB6E7 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		BFFFE5FF15108D3600DDB6E7 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
-		BFFFE60115108D3600DDB6E7 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		BFFFE60315108D3600DDB6E7 /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
-		BFFFE60415108D3600DDB6E7 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		BFFFE60615108D3600DDB6E7 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
-		BFFFE60815108D3600DDB6E7 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		BFFFE60B15108D3600DDB6E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstViewController.xib; sourceTree = "<group>"; };
-		BFFFE60E15108D3600DDB6E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondViewController.xib; sourceTree = "<group>"; };
+		BFFFE61515108FF100DDB6E7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		BFFFE61615108FF100DDB6E7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		BFFFE61715108FF200DDB6E7 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		BFFFE64C1510938B00DDB6E7 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		BFFFE64D1510938B00DDB6E7 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		BFFFE64E1510938B00DDB6E7 /* FirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstViewController.xib; sourceTree = "<group>"; };
+		BFFFE651151093C900DDB6E7 /* TrendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendViewController.h; sourceTree = "<group>"; };
+		BFFFE652151093C900DDB6E7 /* TrendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendViewController.m; sourceTree = "<group>"; };
+		BFFFE653151093C900DDB6E7 /* TrendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrendViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,16 +89,15 @@
 			children = (
 				BFFFE5F915108D3600DDB6E7 /* AppDelegate.h */,
 				BFFFE5FA15108D3600DDB6E7 /* AppDelegate.m */,
-				BFFFE5FC15108D3600DDB6E7 /* FirstViewController.h */,
-				BFFFE5FD15108D3600DDB6E7 /* FirstViewController.m */,
-				BFFFE5FF15108D3600DDB6E7 /* first.png */,
-				BFFFE60115108D3600DDB6E7 /* first@2x.png */,
-				BFFFE60315108D3600DDB6E7 /* SecondViewController.h */,
-				BFFFE60415108D3600DDB6E7 /* SecondViewController.m */,
-				BFFFE60615108D3600DDB6E7 /* second.png */,
-				BFFFE60815108D3600DDB6E7 /* second@2x.png */,
-				BFFFE60A15108D3600DDB6E7 /* FirstViewController.xib */,
-				BFFFE60D15108D3600DDB6E7 /* SecondViewController.xib */,
+				BFFFE61515108FF100DDB6E7 /* LoginViewController.h */,
+				BFFFE61615108FF100DDB6E7 /* LoginViewController.m */,
+				BFFFE61715108FF200DDB6E7 /* LoginViewController.xib */,
+				BFFFE64C1510938B00DDB6E7 /* FirstViewController.h */,
+				BFFFE64D1510938B00DDB6E7 /* FirstViewController.m */,
+				BFFFE64E1510938B00DDB6E7 /* FirstViewController.xib */,
+				BFFFE651151093C900DDB6E7 /* TrendViewController.h */,
+				BFFFE652151093C900DDB6E7 /* TrendViewController.m */,
+				BFFFE653151093C900DDB6E7 /* TrendViewController.xib */,
 				BFFFE5F115108D3600DDB6E7 /* Supporting Files */,
 			);
 			path = IPVA;
@@ -169,12 +165,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFFFE5F515108D3600DDB6E7 /* InfoPlist.strings in Resources */,
-				BFFFE60015108D3600DDB6E7 /* first.png in Resources */,
-				BFFFE60215108D3600DDB6E7 /* first@2x.png in Resources */,
-				BFFFE60715108D3600DDB6E7 /* second.png in Resources */,
-				BFFFE60915108D3600DDB6E7 /* second@2x.png in Resources */,
-				BFFFE60C15108D3600DDB6E7 /* FirstViewController.xib in Resources */,
-				BFFFE60F15108D3600DDB6E7 /* SecondViewController.xib in Resources */,
+				BFFFE61915108FF200DDB6E7 /* LoginViewController.xib in Resources */,
+				BFFFE6501510938B00DDB6E7 /* FirstViewController.xib in Resources */,
+				BFFFE655151093C900DDB6E7 /* TrendViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,8 +180,9 @@
 			files = (
 				BFFFE5F715108D3600DDB6E7 /* main.m in Sources */,
 				BFFFE5FB15108D3600DDB6E7 /* AppDelegate.m in Sources */,
-				BFFFE5FE15108D3600DDB6E7 /* FirstViewController.m in Sources */,
-				BFFFE60515108D3600DDB6E7 /* SecondViewController.m in Sources */,
+				BFFFE61815108FF200DDB6E7 /* LoginViewController.m in Sources */,
+				BFFFE64F1510938B00DDB6E7 /* FirstViewController.m in Sources */,
+				BFFFE654151093C900DDB6E7 /* TrendViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,22 +195,6 @@
 				BFFFE5F415108D3600DDB6E7 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		BFFFE60A15108D3600DDB6E7 /* FirstViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BFFFE60B15108D3600DDB6E7 /* en */,
-			);
-			name = FirstViewController.xib;
-			sourceTree = "<group>";
-		};
-		BFFFE60D15108D3600DDB6E7 /* SecondViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BFFFE60E15108D3600DDB6E7 /* en */,
-			);
-			name = SecondViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -273,6 +251,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IPVA/IPVA-Prefix.pch";
 				INFOPLIST_FILE = "IPVA/IPVA-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -284,6 +263,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IPVA/IPVA-Prefix.pch";
 				INFOPLIST_FILE = "IPVA/IPVA-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
