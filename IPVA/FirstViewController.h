@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface FirstViewController : UIViewController <UIPopoverControllerDelegate>
+
+@property (nonatomic, retain) UIPopoverController *aeraPickPopover;
+
+- (IBAction)pressAeraButton:(id)sender;
 
 @end

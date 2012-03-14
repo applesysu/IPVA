@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BFD43799151096FC00277D21 /* mainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD43798151096FC00277D21 /* mainWindow.xib */; };
+		BFF032C81510CB980079BB8E /* AeraPickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF032C61510CB980079BB8E /* AeraPickViewController.m */; };
+		BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFF032C71510CB980079BB8E /* AeraPickViewController.xib */; };
 		BFFFE5EB15108D3600DDB6E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFE5EA15108D3600DDB6E7 /* UIKit.framework */; };
 		BFFFE5ED15108D3600DDB6E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFE5EC15108D3600DDB6E7 /* Foundation.framework */; };
 		BFFFE5EF15108D3600DDB6E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFE5EE15108D3600DDB6E7 /* CoreGraphics.framework */; };
@@ -32,6 +34,9 @@
 
 /* Begin PBXFileReference section */
 		BFD43798151096FC00277D21 /* mainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mainWindow.xib; sourceTree = "<group>"; };
+		BFF032C51510CB980079BB8E /* AeraPickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AeraPickViewController.h; sourceTree = "<group>"; };
+		BFF032C61510CB980079BB8E /* AeraPickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AeraPickViewController.m; sourceTree = "<group>"; };
+		BFF032C71510CB980079BB8E /* AeraPickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AeraPickViewController.xib; sourceTree = "<group>"; };
 		BFFFE5E615108D3600DDB6E7 /* IPVA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPVA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFE5EA15108D3600DDB6E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BFFFE5EC15108D3600DDB6E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -117,6 +122,9 @@
 				BFFFE64C1510938B00DDB6E7 /* FirstViewController.h */,
 				BFFFE64D1510938B00DDB6E7 /* FirstViewController.m */,
 				BFFFE64E1510938B00DDB6E7 /* FirstViewController.xib */,
+				BFF032C51510CB980079BB8E /* AeraPickViewController.h */,
+				BFF032C61510CB980079BB8E /* AeraPickViewController.m */,
+				BFF032C71510CB980079BB8E /* AeraPickViewController.xib */,
 				BFFFE651151093C900DDB6E7 /* TrendViewController.h */,
 				BFFFE652151093C900DDB6E7 /* TrendViewController.m */,
 				BFFFE653151093C900DDB6E7 /* TrendViewController.xib */,
@@ -208,6 +216,7 @@
 				BFFFE664151095AE00DDB6E7 /* BrandViewController.xib in Resources */,
 				BFFFE669151095CA00DDB6E7 /* StoreViewController.xib in Resources */,
 				BFD43799151096FC00277D21 /* mainWindow.xib in Resources */,
+				BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +236,7 @@
 				BFFFE65E1510957F00DDB6E7 /* CompareViewController.m in Sources */,
 				BFFFE663151095AE00DDB6E7 /* BrandViewController.m in Sources */,
 				BFFFE668151095CA00DDB6E7 /* StoreViewController.m in Sources */,
+				BFF032C81510CB980079BB8E /* AeraPickViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
