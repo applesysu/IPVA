@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF8F559C15146D6C00E65690 /* DatePickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F559A15146D6C00E65690 /* DatePickViewController.m */; };
+		BF8F559D15146D6C00E65690 /* DatePickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8F559B15146D6C00E65690 /* DatePickViewController.xib */; };
+		BF8F565615146E7200E65690 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8F565515146E7200E65690 /* QuartzCore.framework */; };
+		BF8F586315147A2400E65690 /* NSDate+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F585515147A2400E65690 /* NSDate+TKCategory.m */; };
+		BF8F586415147A2400E65690 /* TapkuLibrary.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF8F585615147A2400E65690 /* TapkuLibrary.bundle */; };
+		BF8F586515147A2400E65690 /* TKCalendarMonthTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F585815147A2400E65690 /* TKCalendarMonthTableViewController.m */; };
+		BF8F586615147A2400E65690 /* TKCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F585A15147A2400E65690 /* TKCalendarMonthView.m */; };
+		BF8F586715147A2400E65690 /* TKCalendarMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F585C15147A2400E65690 /* TKCalendarMonthViewController.m */; };
+		BF8F586815147A2400E65690 /* TKGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F585E15147A2400E65690 /* TKGlobal.m */; };
+		BF8F586915147A2400E65690 /* UIImage+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586015147A2400E65690 /* UIImage+TKCategory.m */; };
+		BF8F586A15147A2400E65690 /* UIView+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586215147A2400E65690 /* UIView+TKCategory.m */; };
 		BFD43799151096FC00277D21 /* mainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD43798151096FC00277D21 /* mainWindow.xib */; };
 		BFF032C81510CB980079BB8E /* AeraPickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF032C61510CB980079BB8E /* AeraPickViewController.m */; };
 		BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFF032C71510CB980079BB8E /* AeraPickViewController.xib */; };
@@ -33,6 +44,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF8F559915146D6C00E65690 /* DatePickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickViewController.h; sourceTree = "<group>"; };
+		BF8F559A15146D6C00E65690 /* DatePickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickViewController.m; sourceTree = "<group>"; };
+		BF8F559B15146D6C00E65690 /* DatePickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickViewController.xib; sourceTree = "<group>"; };
+		BF8F565515146E7200E65690 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BF8F585415147A2400E65690 /* NSDate+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TKCategory.h"; sourceTree = "<group>"; };
+		BF8F585515147A2400E65690 /* NSDate+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TKCategory.m"; sourceTree = "<group>"; };
+		BF8F585615147A2400E65690 /* TapkuLibrary.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapkuLibrary.bundle; sourceTree = "<group>"; };
+		BF8F585715147A2400E65690 /* TKCalendarMonthTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCalendarMonthTableViewController.h; sourceTree = "<group>"; };
+		BF8F585815147A2400E65690 /* TKCalendarMonthTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCalendarMonthTableViewController.m; sourceTree = "<group>"; };
+		BF8F585915147A2400E65690 /* TKCalendarMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCalendarMonthView.h; sourceTree = "<group>"; };
+		BF8F585A15147A2400E65690 /* TKCalendarMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCalendarMonthView.m; sourceTree = "<group>"; };
+		BF8F585B15147A2400E65690 /* TKCalendarMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCalendarMonthViewController.h; sourceTree = "<group>"; };
+		BF8F585C15147A2400E65690 /* TKCalendarMonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCalendarMonthViewController.m; sourceTree = "<group>"; };
+		BF8F585D15147A2400E65690 /* TKGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKGlobal.h; sourceTree = "<group>"; };
+		BF8F585E15147A2400E65690 /* TKGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKGlobal.m; sourceTree = "<group>"; };
+		BF8F585F15147A2400E65690 /* UIImage+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+TKCategory.h"; sourceTree = "<group>"; };
+		BF8F586015147A2400E65690 /* UIImage+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+TKCategory.m"; sourceTree = "<group>"; };
+		BF8F586115147A2400E65690 /* UIView+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TKCategory.h"; sourceTree = "<group>"; };
+		BF8F586215147A2400E65690 /* UIView+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TKCategory.m"; sourceTree = "<group>"; };
 		BFD43798151096FC00277D21 /* mainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mainWindow.xib; sourceTree = "<group>"; };
 		BFF032C51510CB980079BB8E /* AeraPickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AeraPickViewController.h; sourceTree = "<group>"; };
 		BFF032C61510CB980079BB8E /* AeraPickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AeraPickViewController.m; sourceTree = "<group>"; };
@@ -75,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8F565615146E7200E65690 /* QuartzCore.framework in Frameworks */,
 				BFFFE5EB15108D3600DDB6E7 /* UIKit.framework in Frameworks */,
 				BFFFE5ED15108D3600DDB6E7 /* Foundation.framework in Frameworks */,
 				BFFFE5EF15108D3600DDB6E7 /* CoreGraphics.framework in Frameworks */,
@@ -84,9 +115,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF8F554F15146C8C00E65690 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				BFFFE64C1510938B00DDB6E7 /* FirstViewController.h */,
+				BFFFE64D1510938B00DDB6E7 /* FirstViewController.m */,
+				BFFFE64E1510938B00DDB6E7 /* FirstViewController.xib */,
+				BFFFE651151093C900DDB6E7 /* TrendViewController.h */,
+				BFFFE652151093C900DDB6E7 /* TrendViewController.m */,
+				BFFFE653151093C900DDB6E7 /* TrendViewController.xib */,
+				BFFFE6561510955500DDB6E7 /* CategoryViewController.h */,
+				BFFFE6571510955500DDB6E7 /* CategoryViewController.m */,
+				BFFFE6581510955500DDB6E7 /* CategoryViewController.xib */,
+				BFFFE65B1510957F00DDB6E7 /* CompareViewController.h */,
+				BFFFE65C1510957F00DDB6E7 /* CompareViewController.m */,
+				BFFFE65D1510957F00DDB6E7 /* CompareViewController.xib */,
+				BFFFE660151095AE00DDB6E7 /* BrandViewController.h */,
+				BFFFE661151095AE00DDB6E7 /* BrandViewController.m */,
+				BFFFE662151095AE00DDB6E7 /* BrandViewController.xib */,
+				BFFFE665151095CA00DDB6E7 /* StoreViewController.h */,
+				BFFFE666151095CA00DDB6E7 /* StoreViewController.m */,
+				BFFFE667151095CA00DDB6E7 /* StoreViewController.xib */,
+			);
+			name = MainView;
+			sourceTree = "<group>";
+		};
+		BF8F559E15146D7D00E65690 /* Popover */ = {
+			isa = PBXGroup;
+			children = (
+				BF8F559915146D6C00E65690 /* DatePickViewController.h */,
+				BF8F559A15146D6C00E65690 /* DatePickViewController.m */,
+				BF8F559B15146D6C00E65690 /* DatePickViewController.xib */,
+				BFF032C51510CB980079BB8E /* AeraPickViewController.h */,
+				BFF032C61510CB980079BB8E /* AeraPickViewController.m */,
+				BFF032C71510CB980079BB8E /* AeraPickViewController.xib */,
+			);
+			name = Popover;
+			sourceTree = "<group>";
+		};
+		BF8F585315147A2400E65690 /* TapkuLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				BF8F585415147A2400E65690 /* NSDate+TKCategory.h */,
+				BF8F585515147A2400E65690 /* NSDate+TKCategory.m */,
+				BF8F585615147A2400E65690 /* TapkuLibrary.bundle */,
+				BF8F585715147A2400E65690 /* TKCalendarMonthTableViewController.h */,
+				BF8F585815147A2400E65690 /* TKCalendarMonthTableViewController.m */,
+				BF8F585915147A2400E65690 /* TKCalendarMonthView.h */,
+				BF8F585A15147A2400E65690 /* TKCalendarMonthView.m */,
+				BF8F585B15147A2400E65690 /* TKCalendarMonthViewController.h */,
+				BF8F585C15147A2400E65690 /* TKCalendarMonthViewController.m */,
+				BF8F585D15147A2400E65690 /* TKGlobal.h */,
+				BF8F585E15147A2400E65690 /* TKGlobal.m */,
+				BF8F585F15147A2400E65690 /* UIImage+TKCategory.h */,
+				BF8F586015147A2400E65690 /* UIImage+TKCategory.m */,
+				BF8F586115147A2400E65690 /* UIView+TKCategory.h */,
+				BF8F586215147A2400E65690 /* UIView+TKCategory.m */,
+			);
+			path = TapkuLibrary;
+			sourceTree = "<group>";
+		};
 		BFFFE5DB15108D3600DDB6E7 = {
 			isa = PBXGroup;
 			children = (
+				BF8F585315147A2400E65690 /* TapkuLibrary */,
 				BFFFE5F015108D3600DDB6E7 /* IPVA */,
 				BFFFE5E915108D3600DDB6E7 /* Frameworks */,
 				BFFFE5E715108D3600DDB6E7 /* Products */,
@@ -104,6 +196,7 @@
 		BFFFE5E915108D3600DDB6E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF8F565515146E7200E65690 /* QuartzCore.framework */,
 				BFFFE5EA15108D3600DDB6E7 /* UIKit.framework */,
 				BFFFE5EC15108D3600DDB6E7 /* Foundation.framework */,
 				BFFFE5EE15108D3600DDB6E7 /* CoreGraphics.framework */,
@@ -119,27 +212,8 @@
 				BFFFE61515108FF100DDB6E7 /* LoginViewController.h */,
 				BFFFE61615108FF100DDB6E7 /* LoginViewController.m */,
 				BFFFE61715108FF200DDB6E7 /* LoginViewController.xib */,
-				BFFFE64C1510938B00DDB6E7 /* FirstViewController.h */,
-				BFFFE64D1510938B00DDB6E7 /* FirstViewController.m */,
-				BFFFE64E1510938B00DDB6E7 /* FirstViewController.xib */,
-				BFF032C51510CB980079BB8E /* AeraPickViewController.h */,
-				BFF032C61510CB980079BB8E /* AeraPickViewController.m */,
-				BFF032C71510CB980079BB8E /* AeraPickViewController.xib */,
-				BFFFE651151093C900DDB6E7 /* TrendViewController.h */,
-				BFFFE652151093C900DDB6E7 /* TrendViewController.m */,
-				BFFFE653151093C900DDB6E7 /* TrendViewController.xib */,
-				BFFFE6561510955500DDB6E7 /* CategoryViewController.h */,
-				BFFFE6571510955500DDB6E7 /* CategoryViewController.m */,
-				BFFFE6581510955500DDB6E7 /* CategoryViewController.xib */,
-				BFFFE65B1510957F00DDB6E7 /* CompareViewController.h */,
-				BFFFE65C1510957F00DDB6E7 /* CompareViewController.m */,
-				BFFFE65D1510957F00DDB6E7 /* CompareViewController.xib */,
-				BFFFE660151095AE00DDB6E7 /* BrandViewController.h */,
-				BFFFE661151095AE00DDB6E7 /* BrandViewController.m */,
-				BFFFE662151095AE00DDB6E7 /* BrandViewController.xib */,
-				BFFFE665151095CA00DDB6E7 /* StoreViewController.h */,
-				BFFFE666151095CA00DDB6E7 /* StoreViewController.m */,
-				BFFFE667151095CA00DDB6E7 /* StoreViewController.xib */,
+				BF8F559E15146D7D00E65690 /* Popover */,
+				BF8F554F15146C8C00E65690 /* MainView */,
 				BFFFE5F115108D3600DDB6E7 /* Supporting Files */,
 			);
 			path = IPVA;
@@ -217,6 +291,8 @@
 				BFFFE669151095CA00DDB6E7 /* StoreViewController.xib in Resources */,
 				BFD43799151096FC00277D21 /* mainWindow.xib in Resources */,
 				BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */,
+				BF8F559D15146D6C00E65690 /* DatePickViewController.xib in Resources */,
+				BF8F586415147A2400E65690 /* TapkuLibrary.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +313,14 @@
 				BFFFE663151095AE00DDB6E7 /* BrandViewController.m in Sources */,
 				BFFFE668151095CA00DDB6E7 /* StoreViewController.m in Sources */,
 				BFF032C81510CB980079BB8E /* AeraPickViewController.m in Sources */,
+				BF8F559C15146D6C00E65690 /* DatePickViewController.m in Sources */,
+				BF8F586315147A2400E65690 /* NSDate+TKCategory.m in Sources */,
+				BF8F586515147A2400E65690 /* TKCalendarMonthTableViewController.m in Sources */,
+				BF8F586615147A2400E65690 /* TKCalendarMonthView.m in Sources */,
+				BF8F586715147A2400E65690 /* TKCalendarMonthViewController.m in Sources */,
+				BF8F586815147A2400E65690 /* TKGlobal.m in Sources */,
+				BF8F586915147A2400E65690 /* UIImage+TKCategory.m in Sources */,
+				BF8F586A15147A2400E65690 /* UIView+TKCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,8 +388,11 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IPVA/IPVA-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "IPVA/IPVA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -316,8 +403,11 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IPVA/IPVA-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "IPVA/IPVA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

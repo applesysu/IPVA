@@ -11,7 +11,9 @@
 @interface FirstViewController : UIViewController <UIPopoverControllerDelegate>
 
 @property (nonatomic, retain) UIPopoverController *aeraPickPopover;
+@property (nonatomic, retain) UIPopoverController *datePickPopover;
 
 - (IBAction)pressAeraButton:(id)sender;
+- (IBAction)pressDateButton:(id)sender;
 
 @end
