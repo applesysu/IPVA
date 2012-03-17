@@ -10,6 +10,7 @@
 
 #import "AeraPickViewController.h"
 #import "DatePickViewController.h"
+#import "CycleViewController.h"
 
 @interface FirstViewController ()
 
@@ -18,12 +19,14 @@
 @implementation FirstViewController
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
+@synthesize cyclePickPopover = _cyclePickPopover;
 
 - (void)dealloc
 {
     [super dealloc];
     [_aeraPickPopover release];
     [_datePickPopover release];
+    [_cyclePickPopover release];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -48,11 +51,14 @@
     [self.aeraPickPopover setDelegate:self];
     
     DatePickViewController *datePickVC = [[[DatePickViewController alloc] init] autorelease];
-//    NSLog(@"%@", datePickVC);
     self.datePickPopover = [[UIPopoverController alloc] initWithContentViewController:datePickVC];
     [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
     [self.datePickPopover setDelegate:self];
     
+    CycleViewController *cyclePickVC = [[[CycleViewController alloc] init] autorelease];
+    self.cyclePickPopover = [[UIPopoverController alloc] initWithContentViewController:cyclePickVC];
+    [self.cyclePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
+    [self.cyclePickPopover setDelegate:self];
     
 
 }
@@ -85,7 +91,8 @@
     }
 }
 
-- (IBAction)pressDateButton:(id)sender {
+- (IBAction)pressDateButton:(id)sender 
+{
     if ([self.datePickPopover isPopoverVisible])
     {
         [self.datePickPopover dismissPopoverAnimated:YES];
@@ -94,6 +101,19 @@
         UIBarButtonItem *tappedButton = (UIBarButtonItem *)sender;
         [self.datePickPopover presentPopoverFromBarButtonItem:tappedButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         
+    }
+}
+
+- (IBAction)pressCycleButton:(id)sender; 
+{
+    if ([self.cyclePickPopover isPopoverVisible])
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    else {
+        UIBarButtonItem *tappedButton = (UIBarButtonItem *)sender;
+        [self.cyclePickPopover presentPopoverFromBarButtonItem:tappedButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    
     }
 }
 @end

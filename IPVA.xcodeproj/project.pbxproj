@@ -18,6 +18,8 @@
 		BF8F586815147A2400E65690 /* TKGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F585E15147A2400E65690 /* TKGlobal.m */; };
 		BF8F586915147A2400E65690 /* UIImage+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586015147A2400E65690 /* UIImage+TKCategory.m */; };
 		BF8F586A15147A2400E65690 /* UIView+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586215147A2400E65690 /* UIView+TKCategory.m */; };
+		BF8F586E15147F4B00E65690 /* CycleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586C15147F4A00E65690 /* CycleViewController.m */; };
+		BF8F586F15147F4B00E65690 /* CycleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8F586D15147F4B00E65690 /* CycleViewController.xib */; };
 		BFD43799151096FC00277D21 /* mainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD43798151096FC00277D21 /* mainWindow.xib */; };
 		BFF032C81510CB980079BB8E /* AeraPickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF032C61510CB980079BB8E /* AeraPickViewController.m */; };
 		BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFF032C71510CB980079BB8E /* AeraPickViewController.xib */; };
@@ -63,6 +65,9 @@
 		BF8F586015147A2400E65690 /* UIImage+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+TKCategory.m"; sourceTree = "<group>"; };
 		BF8F586115147A2400E65690 /* UIView+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TKCategory.h"; sourceTree = "<group>"; };
 		BF8F586215147A2400E65690 /* UIView+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TKCategory.m"; sourceTree = "<group>"; };
+		BF8F586B15147F4A00E65690 /* CycleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleViewController.h; sourceTree = "<group>"; };
+		BF8F586C15147F4A00E65690 /* CycleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleViewController.m; sourceTree = "<group>"; };
+		BF8F586D15147F4B00E65690 /* CycleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CycleViewController.xib; sourceTree = "<group>"; };
 		BFD43798151096FC00277D21 /* mainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mainWindow.xib; sourceTree = "<group>"; };
 		BFF032C51510CB980079BB8E /* AeraPickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AeraPickViewController.h; sourceTree = "<group>"; };
 		BFF032C61510CB980079BB8E /* AeraPickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AeraPickViewController.m; sourceTree = "<group>"; };
@@ -149,6 +154,9 @@
 				BFF032C51510CB980079BB8E /* AeraPickViewController.h */,
 				BFF032C61510CB980079BB8E /* AeraPickViewController.m */,
 				BFF032C71510CB980079BB8E /* AeraPickViewController.xib */,
+				BF8F586B15147F4A00E65690 /* CycleViewController.h */,
+				BF8F586C15147F4A00E65690 /* CycleViewController.m */,
+				BF8F586D15147F4B00E65690 /* CycleViewController.xib */,
 			);
 			name = Popover;
 			sourceTree = "<group>";
@@ -293,6 +301,7 @@
 				BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */,
 				BF8F559D15146D6C00E65690 /* DatePickViewController.xib in Resources */,
 				BF8F586415147A2400E65690 /* TapkuLibrary.bundle in Resources */,
+				BF8F586F15147F4B00E65690 /* CycleViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +330,7 @@
 				BF8F586815147A2400E65690 /* TKGlobal.m in Sources */,
 				BF8F586915147A2400E65690 /* UIImage+TKCategory.m in Sources */,
 				BF8F586A15147A2400E65690 /* UIView+TKCategory.m in Sources */,
+				BF8F586E15147F4B00E65690 /* CycleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
