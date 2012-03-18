@@ -1,26 +1,18 @@
 //
-//  LoginViewController.m
+//  PassengerViewController.m
 //  IPVA
 //
-//  Created by Lancy on 12-3-14.
+//  Created by Lancy on 12-3-18.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "LoginViewController.h"
-#import "AppDelegate.h"
+#import "PassengerViewController.h"
 
-
-@interface LoginViewController ()
+@interface PassengerViewController ()
 
 @end
 
-@implementation LoginViewController
-
-- (void)dealloc
-{
-    [super dealloc];
-}
-
+@implementation PassengerViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,14 +41,4 @@
 	return YES;
 }
 
-
-- (IBAction)pressLoginButton:(id)sender {
-    id delegate = [[UIApplication sharedApplication] delegate];
-    [delegate setTabBarControllerShowHeadOffice:YES];
-    UITabBarController *tabBarController= [delegate tabBarController];
-    
-    
-    [tabBarController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentModalViewController:[delegate tabBarController] animated:YES];
-}
 @end

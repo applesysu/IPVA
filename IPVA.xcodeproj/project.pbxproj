@@ -20,6 +20,10 @@
 		BF8F586A15147A2400E65690 /* UIView+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586215147A2400E65690 /* UIView+TKCategory.m */; };
 		BF8F586E15147F4B00E65690 /* CycleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586C15147F4A00E65690 /* CycleViewController.m */; };
 		BF8F586F15147F4B00E65690 /* CycleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8F586D15147F4B00E65690 /* CycleViewController.xib */; };
+		BFBA0C0D1515C8D40037D293 /* PassengerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0C0B1515C8D40037D293 /* PassengerViewController.m */; };
+		BFBA0C0E1515C8D40037D293 /* PassengerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBA0C0C1515C8D40037D293 /* PassengerViewController.xib */; };
+		BFBA0C121515C8DE0037D293 /* RankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBA0C101515C8DD0037D293 /* RankViewController.m */; };
+		BFBA0C131515C8DE0037D293 /* RankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBA0C111515C8DD0037D293 /* RankViewController.xib */; };
 		BFD43799151096FC00277D21 /* mainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD43798151096FC00277D21 /* mainWindow.xib */; };
 		BFF032C81510CB980079BB8E /* AeraPickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF032C61510CB980079BB8E /* AeraPickViewController.m */; };
 		BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFF032C71510CB980079BB8E /* AeraPickViewController.xib */; };
@@ -68,6 +72,12 @@
 		BF8F586B15147F4A00E65690 /* CycleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleViewController.h; sourceTree = "<group>"; };
 		BF8F586C15147F4A00E65690 /* CycleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleViewController.m; sourceTree = "<group>"; };
 		BF8F586D15147F4B00E65690 /* CycleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CycleViewController.xib; sourceTree = "<group>"; };
+		BFBA0C0A1515C8D40037D293 /* PassengerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassengerViewController.h; sourceTree = "<group>"; };
+		BFBA0C0B1515C8D40037D293 /* PassengerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassengerViewController.m; sourceTree = "<group>"; };
+		BFBA0C0C1515C8D40037D293 /* PassengerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassengerViewController.xib; sourceTree = "<group>"; };
+		BFBA0C0F1515C8DD0037D293 /* RankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankViewController.h; sourceTree = "<group>"; };
+		BFBA0C101515C8DD0037D293 /* RankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankViewController.m; sourceTree = "<group>"; };
+		BFBA0C111515C8DD0037D293 /* RankViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankViewController.xib; sourceTree = "<group>"; };
 		BFD43798151096FC00277D21 /* mainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mainWindow.xib; sourceTree = "<group>"; };
 		BFF032C51510CB980079BB8E /* AeraPickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AeraPickViewController.h; sourceTree = "<group>"; };
 		BFF032C61510CB980079BB8E /* AeraPickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AeraPickViewController.m; sourceTree = "<group>"; };
@@ -141,6 +151,12 @@
 				BFFFE665151095CA00DDB6E7 /* StoreViewController.h */,
 				BFFFE666151095CA00DDB6E7 /* StoreViewController.m */,
 				BFFFE667151095CA00DDB6E7 /* StoreViewController.xib */,
+				BFBA0C0A1515C8D40037D293 /* PassengerViewController.h */,
+				BFBA0C0B1515C8D40037D293 /* PassengerViewController.m */,
+				BFBA0C0C1515C8D40037D293 /* PassengerViewController.xib */,
+				BFBA0C0F1515C8DD0037D293 /* RankViewController.h */,
+				BFBA0C101515C8DD0037D293 /* RankViewController.m */,
+				BFBA0C111515C8DD0037D293 /* RankViewController.xib */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -302,6 +318,8 @@
 				BF8F559D15146D6C00E65690 /* DatePickViewController.xib in Resources */,
 				BF8F586415147A2400E65690 /* TapkuLibrary.bundle in Resources */,
 				BF8F586F15147F4B00E65690 /* CycleViewController.xib in Resources */,
+				BFBA0C0E1515C8D40037D293 /* PassengerViewController.xib in Resources */,
+				BFBA0C131515C8DE0037D293 /* RankViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +349,8 @@
 				BF8F586915147A2400E65690 /* UIImage+TKCategory.m in Sources */,
 				BF8F586A15147A2400E65690 /* UIView+TKCategory.m in Sources */,
 				BF8F586E15147F4B00E65690 /* CycleViewController.m in Sources */,
+				BFBA0C0D1515C8D40037D293 /* PassengerViewController.m in Sources */,
+				BFBA0C121515C8DE0037D293 /* RankViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

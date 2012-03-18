@@ -7,13 +7,15 @@
 //
 
 #import "AeraPickViewController.h"
+#import "AppDelegate.h"
 
-#define AERA_NUMBER 3
+#define AERA_NUMBER 4
 
 @interface AeraPickViewController ()
 
 
 @end
+
 
 @implementation AeraPickViewController
 
@@ -37,8 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _aeraArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"华东区"], [NSString stringWithFormat:@"华北区"], [NSString stringWithFormat:@"华南区"], nil];
+    _aeraArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"总部"], [NSString stringWithFormat:@"华东区"], [NSString stringWithFormat:@"华北区"], [NSString stringWithFormat:@"华南区"], nil];
     NSLog(@"%@", _aeraArray);
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -127,6 +128,7 @@
 }
 */
 
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -148,12 +150,18 @@
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
     }
-        
     
     [[self.tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
-    
     [[self.tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:NO];
-
+    
+    if (indexPath.row == 0) {
+        id delegate = [[UIApplication sharedApplication] delegate];
+        [delegate setTabBarControllerShowHeadOffice:YES];
+    } else {
+        id delegate = [[UIApplication sharedApplication] delegate];
+        [delegate setTabBarControllerShowHeadOffice:NO];
+    }
+        
 }
 
 @end
