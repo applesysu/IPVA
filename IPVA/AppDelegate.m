@@ -61,6 +61,7 @@
     self.compareViewController = covc;
     [covc release];
     
+
     BrandViewController *bvc = [[BrandViewController alloc] initWithNibName:@"BrandViewController" bundle:nil];
     self.brandViewController = bvc;
     [bvc release];
@@ -123,7 +124,9 @@
 {
     if (toggle == YES)
     {
-        [self.tabBarController setViewControllers:[NSArray arrayWithObjects:_firstViewController, _trendViewController, _categoryViewController, _compareViewController, _brandViewController, _storeViewController, nil] animated:YES];
+        UINavigationController *nav = [[[UINavigationController alloc] initWithRootViewController:self.brandViewController] autorelease];
+        [self.tabBarController setViewControllers:[NSArray arrayWithObjects:_firstViewController, _trendViewController, _categoryViewController, _compareViewController, nav, _storeViewController, nil] animated:YES];
+
         [[[[self.tabBarController tabBar] items] objectAtIndex:0] setTitle:@"概述"];
         [[[[self.tabBarController tabBar] items] objectAtIndex:1] setTitle:@"趋势"];
         [[[[self.tabBarController tabBar] items] objectAtIndex:2] setTitle:@"类别"];
