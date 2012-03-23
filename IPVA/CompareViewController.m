@@ -11,6 +11,7 @@
 #import "AeraPickViewController.h"
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
+#import "CYCompareGraph.h"
 
 @interface CompareViewController ()
 
@@ -21,9 +22,11 @@
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
+@synthesize compareView = _compareView;
 
 - (void)dealloc
 {
+    [_compareView release];
     [super dealloc];
     [_aeraPickPopover release];
     [_datePickPopover release];
@@ -42,7 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    // Do any additional setup after loading the view from its nib
     
     
     // configure popover;
@@ -62,10 +65,20 @@
     [self.cyclePickPopover setDelegate:self];
     
     
+    
+    // configure compare graph
+    CYCompareGraph *compareGraph = [[[CYCompareGraph alloc] initWithFrame:CGRectMake(0, 0, 300, 300)] autorelease];
+
+    [self.compareView addSubview:compareGraph];
+    
+
+    
+    
 }
 
 - (void)viewDidUnload
 {
+    [self setCompareView:nil];
     [super viewDidUnload];
     self.aeraPickPopover = nil;
     self.datePickPopover = nil;

@@ -39,6 +39,7 @@
 		140E75B81515E8C70020D692 /* RankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140E75B61515E8C70020D692 /* RankViewController.xib */; };
 		140E75BC1515E9D10020D692 /* PassengerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 140E75BA1515E9D00020D692 /* PassengerViewController.m */; };
 		140E75BD1515E9D10020D692 /* PassengerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140E75BB1515E9D10020D692 /* PassengerViewController.xib */; };
+		BF7C6A90151B3673004B1897 /* CYCompareGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7C6A8F151B3673004B1897 /* CYCompareGraph.m */; };
 		BF8F559C15146D6C00E65690 /* DatePickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F559A15146D6C00E65690 /* DatePickViewController.m */; };
 		BF8F559D15146D6C00E65690 /* DatePickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8F559B15146D6C00E65690 /* DatePickViewController.xib */; };
 		BF8F565615146E7200E65690 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8F565515146E7200E65690 /* QuartzCore.framework */; };
@@ -201,6 +202,8 @@
 		140E75B91515E9D00020D692 /* PassengerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassengerViewController.h; sourceTree = "<group>"; };
 		140E75BA1515E9D00020D692 /* PassengerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassengerViewController.m; sourceTree = "<group>"; };
 		140E75BB1515E9D10020D692 /* PassengerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassengerViewController.xib; sourceTree = "<group>"; };
+		BF7C6A8E151B3673004B1897 /* CYCompareGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYCompareGraph.h; sourceTree = "<group>"; };
+		BF7C6A8F151B3673004B1897 /* CYCompareGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYCompareGraph.m; sourceTree = "<group>"; };
 		BF8F559915146D6C00E65690 /* DatePickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickViewController.h; sourceTree = "<group>"; };
 		BF8F559A15146D6C00E65690 /* DatePickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickViewController.m; sourceTree = "<group>"; };
 		BF8F559B15146D6C00E65690 /* DatePickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickViewController.xib; sourceTree = "<group>"; };
@@ -433,6 +436,15 @@
 			name = Store;
 			sourceTree = "<group>";
 		};
+		BF7C6A92151B3755004B1897 /* CYDrawing */ = {
+			isa = PBXGroup;
+			children = (
+				BF7C6A8E151B3673004B1897 /* CYCompareGraph.h */,
+				BF7C6A8F151B3673004B1897 /* CYCompareGraph.m */,
+			);
+			name = CYDrawing;
+			sourceTree = "<group>";
+		};
 		BF8F554F15146C8C00E65690 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,6 +554,7 @@
 				BFFFE61515108FF100DDB6E7 /* LoginViewController.h */,
 				BFFFE61615108FF100DDB6E7 /* LoginViewController.m */,
 				BFFFE61715108FF200DDB6E7 /* LoginViewController.xib */,
+				BF7C6A92151B3755004B1897 /* CYDrawing */,
 				BF8F559E15146D7D00E65690 /* Popover */,
 				BF8F554F15146C8C00E65690 /* MainView */,
 				BFFFE5F115108D3600DDB6E7 /* Supporting Files */,
@@ -679,6 +692,7 @@
 				140E75BC1515E9D10020D692 /* PassengerViewController.m in Sources */,
 				04B7B55C151968F6003FB57F /* tableViewController.m in Sources */,
 				04B7B55F151974A4003FB57F /* SheetView.m in Sources */,
+				BF7C6A90151B3673004B1897 /* CYCompareGraph.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
