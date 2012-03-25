@@ -30,6 +30,7 @@ static int calendarShadowOffset = (int)-20;
     return self;
 }
 
+
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 	// Costruct the view because we aren't using a 
@@ -40,17 +41,18 @@ static int calendarShadowOffset = (int)-20;
 	self.view.backgroundColor = [UIColor grayColor];
 	
 	// Add button to toggle calendar
-	UIButton *toggleButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 370, 220, 50)];
-	toggleButton.backgroundColor = [UIColor darkGrayColor];
-	toggleButton.titleLabel.font = [UIFont systemFontOfSize:12];
-	toggleButton.titleLabel.textColor = [UIColor whiteColor];
-	[toggleButton setTitle:@"Toggle Calendar" forState:UIControlStateNormal];
-	[toggleButton addTarget:self action:@selector(toggleCalendar) forControlEvents:UIControlEventTouchUpInside];
-	[self.view addSubview:toggleButton];
-	[toggleButton release];
+//	UIButton *toggleButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 370, 220, 50)];
+//	toggleButton.backgroundColor = [UIColor darkGrayColor];
+//	toggleButton.titleLabel.font = [UIFont systemFontOfSize:12];
+//	toggleButton.titleLabel.textColor = [UIColor whiteColor];
+//	[toggleButton setTitle:@"Toggle Calendar" forState:UIControlStateNormal];
+//	[toggleButton addTarget:self action:@selector(toggleCalendar) forControlEvents:UIControlEventTouchUpInside];
+//	[self.view addSubview:toggleButton];
+//	[toggleButton release];
 	
 	// Add Calendar to just off the top of the screen so it can later slide down
-	calendar.frame = CGRectMake(0, -calendar.frame.size.height+calendarShadowOffset, calendar.frame.size.width, calendar.frame.size.height);
+    // calendar.frame = CGRectMake(0, -calendar.frame.size.height+calendarShadowOffset, calendar.frame.size.width, calendar.frame.size.height);
+    calendar.frame = CGRectMake(0, 0, calendar.frame.size.width, calendar.frame.size.height);
 	// Ensure this is the last "addSubview" because the calendar must be the top most view layer	
 	[self.view addSubview:calendar];
 	[calendar reload];
