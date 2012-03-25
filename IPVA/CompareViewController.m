@@ -13,7 +13,10 @@
 #import "CycleViewController.h"
 #import "CYCompareGraph.h"
 
-@interface CompareViewController ()
+@interface CompareViewController () {
+    int data[5][8];
+}
+
 
 @end
 
@@ -23,10 +26,17 @@
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
 @synthesize compareView = _compareView;
+@synthesize compareGraph = _compareGraph;
+@synthesize squareALabel = _squareALabel;
+@synthesize squareBLabel = _squareBLabel;
+@synthesize squareButton = _squareButton;
 
 - (void)dealloc
 {
     [_compareView release];
+    [_squareALabel release];
+    [_squareBLabel release];
+    [_squareButton release];
     [super dealloc];
     [_aeraPickPopover release];
     [_datePickPopover release];
@@ -38,6 +48,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+        // test data;
+        for (int i = 0; i < 5; i++) 
+            for (int j = 0;j < 8; j++)
+        {
+            data[i][j] = arc4random() % 6;
+        }
+        
+        
     }
     return self;
 }
@@ -68,17 +87,21 @@
     
     // configure compare graph
     CYCompareGraph *compareGraph = [[[CYCompareGraph alloc] initWithFrame:CGRectMake(0, 0, 300, 300)] autorelease];
+    self.compareGraph = compareGraph;
+    [self.compareGraph setMaxValue:5];
+    [self.compareGraph setFirstObjectValuesArray:data[0]];
+    [self.compareGraph setSecondObjectValuesArray:data[1]];
+    
+    [self.compareView addSubview:self.compareGraph];
 
-    [self.compareView addSubview:compareGraph];
-    
-
-    
-    
 }
 
 - (void)viewDidUnload
 {
     [self setCompareView:nil];
+    [self setSquareALabel:nil];
+    [self setSquareBLabel:nil];
+    [self setSquareButton:nil];
     [super viewDidUnload];
     self.aeraPickPopover = nil;
     self.datePickPopover = nil;
@@ -129,6 +152,27 @@
         [self.cyclePickPopover presentPopoverFromBarButtonItem:tappedButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         
     }
+}
+
+- (IBAction)pressSquareButton:(id)sender {
+    static int lastButtonID = 1;
+    if ([(UIButton *)sender isSelected])
+        return;
+    
+    for (UIButton *button in self.squareButton)
+    {
+        [button setSelected:NO];
+    }
+    [[self.squareButton objectAtIndex:lastButtonID] setSelected:YES];
+    [self.squareALabel setText:[[[self.squareButton objectAtIndex:lastButtonID] titleLabel] text]];
+    [self.compareGraph setFirstObjectValuesArray:data[lastButtonID]];
+    
+    [[self.squareButton objectAtIndex:([sender tag] - 10)] setSelected:YES];
+    [self.squareBLabel setText:[[[self.squareButton objectAtIndex:([sender tag] - 10)] titleLabel] text]];
+    [self.compareGraph setSecondObjectValuesArray:data[([sender tag] - 10)]];
+    
+    lastButtonID = [sender tag] - 10;
+    [self.compareGraph setNeedsDisplay];
 }
 
 @end

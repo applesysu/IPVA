@@ -16,11 +16,13 @@ void drawValueGraph(CGContextRef context, CGPoint center, NSInteger *valueArray,
 
 @implementation CYCompareGraph
 @synthesize center, radious, edges, width, polygonColor, firstObjectColor, secondObjectColor, maxValue;
-//@synthesize firstObjectValuesArray, secondObjectValuesArray;
+@synthesize firstObjectValuesArray, secondObjectValuesArray;
 
 - (void)dealloc
 {
     [super dealloc];
+    free(firstObjectValuesArray);
+    free(secondObjectValuesArray);
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -36,6 +38,15 @@ void drawValueGraph(CGContextRef context, CGPoint center, NSInteger *valueArray,
         polygonColor = [[UIColor grayColor] CGColor];
         firstObjectColor = [[UIColor redColor] CGColor];
         secondObjectColor = [[UIColor blueColor] CGColor];
+        firstObjectValuesArray = (int *)malloc(10 * sizeof(int));
+        secondObjectValuesArray = (int *)malloc(10 * sizeof(int));
+        
+        for (int i = 0; i < 8; i++) {
+            firstObjectValuesArray[i] = 0;
+            secondObjectValuesArray[i] = 0;
+        }
+        
+        
     }
     return self;
 }
@@ -51,17 +62,6 @@ void drawValueGraph(CGContextRef context, CGPoint center, NSInteger *valueArray,
     
     CGContextSetFillColorWithColor(ctx, [[UIColor whiteColor] CGColor]);
     CGContextFillRect(ctx, self.bounds);
-    
-    //    drawPolygon(ctx, 100, 8, 5, [[UIColor yellowColor] CGColor], 2.0);
-    //    
-    for (int i = 0; i < 8; i++) {
-        firstObjectValuesArray[i] = i % 4;
-        secondObjectValuesArray[i] = (i + 1) % 4;
-    }
-    //    
-    //    drawValueGraph(ctx, firstObjectValueArray, 100, 8, 5, [[UIColor redColor] CGColor], 2.0);
-    //    drawValueGraph(ctx, secondObjectValueArray, 100, 8, 5, [[UIColor blueColor] CGColor], 2.0);
-    
     
     drawPolygon(ctx, center, radious, edges, maxValue, polygonColor, width);
     drawValueGraph(ctx, center, firstObjectValuesArray, radious, edges, maxValue, firstObjectColor, width);

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CYCompareGraph.h"
 
 @interface CompareViewController : UIViewController <UIPopoverControllerDelegate>
 
@@ -14,9 +15,16 @@
 @property (nonatomic, retain) UIPopoverController *datePickPopover;
 @property (nonatomic, retain) UIPopoverController *cyclePickPopover;
 @property (retain, nonatomic) IBOutlet UIView *compareView;
+@property (retain, nonatomic) CYCompareGraph *compareGraph;
+
+@property (retain, nonatomic) IBOutlet UILabel *squareALabel;
+@property (retain, nonatomic) IBOutlet UILabel *squareBLabel;
+
+@property (retain, nonatomic) IBOutletCollection(UIButton) NSArray *squareButton;
 
 - (IBAction)pressAeraButton:(id)sender;
 - (IBAction)pressDateButton:(id)sender;
 - (IBAction)pressCycleButton:(id)sender;
 
+- (IBAction)pressSquareButton:(id)sender;
 @end

@@ -8,7 +8,7 @@
 
 #import "CycleViewController.h"
 
-#define CYCLE_NUMBER 6
+#define CYCLE_NUMBER 3
 
 @interface CycleViewController ()
 
@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     
-    _cycleArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"一天"], [NSString stringWithFormat:@"一周"], [NSString stringWithFormat:@"十五天"], [NSString stringWithFormat:@"一个月"], [NSString stringWithFormat:@"一季度"], [NSString stringWithFormat:@"一年"],   nil];
+    _cycleArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"一天"], [NSString stringWithFormat:@"一周"], [NSString stringWithFormat:@"一个月"], nil];
     NSLog(@"%@", _cycleArray);
 
     // Uncomment the following line to preserve selection between presentations.

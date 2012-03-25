@@ -18,8 +18,8 @@
     CGColorRef firstObjectColor;
     CGColorRef secondObjectColor;
     NSInteger maxValue;
-    NSInteger firstObjectValuesArray[20];
-    NSInteger secondObjectValuesArray[20];
+    NSInteger *firstObjectValuesArray;
+    NSInteger *secondObjectValuesArray;
 }
 
 @property CGPoint center;
@@ -30,7 +30,7 @@
 @property CGColorRef firstObjectColor;
 @property CGColorRef secondObjectColor;
 @property NSInteger maxValue;
-//@property NSInteger *firstObjectValuesArray;
-//@property NSInteger *secondObjectValuesArray;
+@property NSInteger *firstObjectValuesArray;
+@property NSInteger *secondObjectValuesArray;
 
 @end
