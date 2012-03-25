@@ -42,6 +42,6 @@
 - (IBAction)pressDateButton:(id)sender;
 - (IBAction)pressCycleButton:(id)sender;
 
--(void) constructScatterPlot;
+-(void) constructMonthScatterPlot;
 
 @end

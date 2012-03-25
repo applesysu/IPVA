@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@class BrandAnalysisTitle;
+@class BrandSheetView;
 
-@interface BrandViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPopoverControllerDelegate>
+@interface BrandViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPopoverControllerDelegate>
 {
-    UITableView *recordTableView;
-    BrandAnalysisTitle *analysisTitle;
     NSArray *data;
 }
 
-@property (nonatomic, retain) UITableView *recordTableView;
-@property (nonatomic, retain) BrandAnalysisTitle *analysisTitle;
 @property (nonatomic, retain) NSArray *data;
+@property (nonatomic, retain) UITableView *rightTableView;
+@property (nonatomic, retain) NSArray *titleArray;
+@property (nonatomic, retain) NSArray *propertyNames;
+@property (nonatomic, retain) UIView *titleRowView;
 
 @property (nonatomic, retain) UIPopoverController *aeraPickPopover;
 @property (nonatomic, retain) UIPopoverController *datePickPopover;
@@ -30,5 +30,6 @@
 - (IBAction)pressCycleButton:(id)sender;
 
 -(void) initWithData;
+-(void) buttonClick:(id) sender;
 
 @end

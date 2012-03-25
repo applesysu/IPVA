@@ -63,6 +63,7 @@
 	[graph applyTheme:theme];
 	scatterPlotView.hostedGraph = graph;
     [self.view addSubview:self.scatterPlotView];
+    [scatterPlotView setUserInteractionEnabled:NO];
     
     graph.plotAreaFrame.paddingLeft = 70.0 ;
     graph.plotAreaFrame.paddingTop = 70.0 ;
@@ -138,13 +139,7 @@
     plotSymbol.fill = [CPTFill fillWithColor:[CPTColor yellowColor]];
     plotSymbol.size = CGSizeMake(20, 20);
     dataSourceLinePlot.plotSymbol = plotSymbol;
-    
-    //	CPTMutableLineStyle *lineStyle = [[dataSourceLinePlot.dataLineStyle mutableCopy] autorelease];
-    //	lineStyle.lineWidth				 = 3.f;
-    //	lineStyle.lineColor				 = [CPTColor greenColor];
-    //	lineStyle.dashPattern			 = [NSArray arrayWithObjects:[NSNumber numberWithFloat:5.0f], [NSNumber numberWithFloat:5.0f], nil];
 	dataSourceLinePlot.dataLineStyle = nil;
-    
 	dataSourceLinePlot.dataSource = self;
     
 	// Animate in the new plot, as an example
@@ -209,7 +204,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     
     // configure popover;
     AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] init] autorelease];

@@ -7,17 +7,16 @@
 //
 
 #import "BrandViewController.h"
-#import "BrandAnalysisTitle.h"
-#import "BrandAnalysisRecordCell.h"
-#import "BrandAnalysisDetail.h"
 #import "BrandAnalysisData.h"
+#import "BrandAnalysisDetail.h"
 #import "AeraPickViewController.h"
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation BrandViewController
 
-@synthesize recordTableView, analysisTitle, data;
+@synthesize titleRowView,titleArray, rightTableView, propertyNames, data;
 
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
@@ -29,18 +28,6 @@
     
     if (self != nil)
     {
-        //初始化title
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"BrandAnalysisTitle" owner:self options:nil];
-        self.analysisTitle = [array objectAtIndex:0];
-        [self.analysisTitle setFrame:CGRectMake(0, 0, 768, 44)];
-        [self.view addSubview:self.analysisTitle];
-        
-        self.recordTableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 44, 768, 980) style:UITableViewStylePlain] autorelease];
-        [self.recordTableView setDelegate:self];
-        [self.recordTableView setDataSource:self];
-        [self.view addSubview:self.recordTableView];
-        
-        [self initWithData];
     }
     
     return self;
@@ -60,6 +47,16 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+-(void) buttonClick:(id)sender
+{
+    NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:[self.propertyNames objectAtIndex:[(UIButton *)sender tag]] ascending:YES] autorelease];
+    NSArray *array = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
+    self.data = sortedArray;
+    
+    [self.rightTableView reloadData];
 }
 
 -(void) initWithData
@@ -132,98 +129,47 @@
     
 }
 
--(void) buttonClick : (id) sender
+-(void) initTheTableView
 {
-    switch ([(UIButton *)sender tag]) {
-        case 1:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"rankNumber" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 2:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"brandName" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 3:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"storeNumber" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 4:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"consumerCount" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 5:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"salesCount" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 6:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"avgConsumerCount" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 7:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"avgSalesCount" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
+    NSArray *titles = [[NSArray alloc] initWithObjects:@"排名", @"品牌名", @"店铺号", @"客流量", @"销售额", @"平均客流量", @"平均销售额", nil];
+    NSArray *propertyName = [[NSArray alloc] initWithObjects:@"rankNumber", @"brandName", @"storeNumber", @"consumerCount", @"salesCount", @"avgConsumerCount", @"avgSalesCount", nil];
+    self.titleArray = titles;
+    self.propertyNames = propertyName;
+    [self initWithData];
+    
+    [titles release];
+    [propertyName release];
+    
+    //初始化表头行的各个数据名目
+    titleRowView = [[UIView alloc] initWithFrame:CGRectMake(64, 100, [self.titleArray count] * 90, 50)];
+    titleRowView.backgroundColor = [UIColor grayColor];
+    for(int i=0;i<[titleArray count];i++)
+    {
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10 + 90*i, 10, 70, 30)];
+        button.backgroundColor = [UIColor blackColor];
+        button.titleLabel.font = [UIFont systemFontOfSize:15];
+        [button setTitle:[self.titleArray objectAtIndex:i] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor yellowColor] forState:UIControlStateHighlighted];
+        button.titleLabel.textAlignment = UITextAlignmentCenter;
+        button.tag = i;
+        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
+        [titleRowView addSubview:button];
+        [button release];
     }
+    [self.view addSubview:titleRowView];
+    
+    //每个记录的table
+    rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(64, 150, [self.titleArray count] * 90, 500)];
+    rightTableView.delegate = self;
+    rightTableView.dataSource = self;
+    rightTableView.rowHeight = 50;
+    rightTableView.separatorColor=	[[UIColor alloc] initWithRed:0.337 green:0.337 blue:0.337 alpha:1];
+    rightTableView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:rightTableView];
+    
 }
 
--(void) bindingActionsForButtons
-{
-    [self.analysisTitle.rankButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisTitle.brandButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisTitle.storeButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisTitle.consumerCountButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisTitle.salesCountButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisTitle.avgConsumerButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisTitle.avgSalesButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-}
 
 #pragma mark - View lifecycle
 
@@ -231,7 +177,7 @@
 {
     [super viewDidLoad];
     
-    [self bindingActionsForButtons];
+    [self initTheTableView];
     
     // configure popover;
     AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] init] autorelease];
@@ -304,31 +250,64 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 7;
+    return [self.data count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"BrandAnalysisRecordCell";
-    
-    BrandAnalysisRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"BrandAnalysisRecordCell" owner:self options:nil];
-        cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+    static NSString *cellIdetify = @"cell1";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdetify];
+    if(!cell)
+    {
+        cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:cellIdetify] autorelease];
+        CGFloat labelLocation = 0;
+        int index = 0;
+        for (int i = 0; i < [self.titleArray count]; i++)
+        {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(labelLocation, 10, 90, 30)];
+            label.backgroundColor = [UIColor blackColor];
+            label.textColor = [UIColor whiteColor];
+            label.textAlignment = UITextAlignmentCenter;
+            label.tag = 100 + index;
+            [cell.contentView addSubview:label];
+            labelLocation += 90;
+            index++;
+            [label release];
+        }
     }
     
-    // Configure the cell...
-    BrandAnalysisData *cellData = [self.data objectAtIndex:indexPath.row];
-    cell.rankNumber.text = [NSString stringWithFormat:@"%ld", cellData.rankNumber];
-    cell.brandName.text = cellData.brandName;
-    cell.storeCount.text = [NSString stringWithFormat:@"%ld", cellData.storeNumber];
-    cell.consumerCount.text = [NSString stringWithFormat:@"%ld", cellData.consumerCount];
-    cell.salesCount.text = [NSString stringWithFormat:@"%f", cellData.salesCount];
-    cell.avgConsumerCount.text = [NSString stringWithFormat:@"%f", cellData.avgConsumerCount];
-    cell.avgSalesCount.text = [NSString stringWithFormat:@"%f", cellData.avgSalesCount];
+    //设置每一个cell的内容
+    UILabel *label = (UILabel *)[cell.contentView viewWithTag:100];
+    BrandAnalysisData *tempData = (BrandAnalysisData *)[self.data objectAtIndex:indexPath.row];
+    label.text = [NSString stringWithFormat:@"%ld", tempData.rankNumber];
+    
+    label = (UILabel *)[cell.contentView viewWithTag:101];
+    tempData = (BrandAnalysisData *)[self.data objectAtIndex:indexPath.row];
+    label.text = tempData.brandName;
+    
+    label = (UILabel *)[cell.contentView viewWithTag:102];
+    tempData = (BrandAnalysisData *)[self.data objectAtIndex:indexPath.row];
+    label.text = [NSString stringWithFormat:@"%ld", tempData.storeNumber];
+    
+    label = (UILabel *)[cell.contentView viewWithTag:103];
+    tempData = (BrandAnalysisData *)[self.data objectAtIndex:indexPath.row];
+    label.text = [NSString stringWithFormat:@"%ld", tempData.consumerCount];
+    
+    label = (UILabel *)[cell.contentView viewWithTag:104];
+    tempData = (BrandAnalysisData *)[self.data objectAtIndex:indexPath.row];
+    label.text = [NSString stringWithFormat:@"%f", tempData.salesCount];
+    
+    label = (UILabel *)[cell.contentView viewWithTag:105];
+    tempData = (BrandAnalysisData *)[self.data objectAtIndex:indexPath.row];
+    label.text = [NSString stringWithFormat:@"%f", tempData.avgConsumerCount];
+    
+    label = (UILabel *)[cell.contentView viewWithTag:106];
+    tempData = (BrandAnalysisData *)[self.data objectAtIndex:indexPath.row];
+    label.text = [NSString stringWithFormat:@"%f", tempData.avgSalesCount];
+    
     
     return cell;
+
 }
 
 /*

@@ -7,13 +7,13 @@
 //
 
 #import "BrandAnalysisDetail.h"
-#import "BrandAnalysisDetailTitle.h"
-#import "BrandAnalysisDetailRecordCell.h"
 #import "BrandAnalysisDetailData.h"
+#import "BrandDetailSheetView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation BrandAnalysisDetail
 
-@synthesize recordTableView, analysisDetailTitle, data;
+@synthesize brandDetailSheetView, data;
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -21,17 +21,6 @@
     
     if (self != nil)
     {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"BrandAnalysisDetailTitle" owner:self options:nil];
-        self.analysisDetailTitle = [array objectAtIndex:0];
-        [self.analysisDetailTitle setFrame:CGRectMake(0, 0, 768, 44)];
-        [self.view addSubview:self.analysisDetailTitle];
-        
-        self.recordTableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 44, 768, 980) style:UITableViewStylePlain] autorelease];
-        [self.recordTableView setDelegate:self];
-        [self.recordTableView setDataSource:self];
-        [self.view addSubview: self.recordTableView];
-        
-        [self initWithData];
     }
     
     return self;
@@ -86,74 +75,6 @@
     self.data = array;
 }
 
--(void) buttonClick : (id) sender
-{
-    switch ([(UIButton *)sender tag]) {
-        case 1:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"rankNumber" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 2:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"squareName" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 3:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"storeID" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 4:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"consumerCount" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 5:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"salesCount" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-    }
-}
-
--(void) bindingTheActionsForButtons
-{
-    [self.analysisDetailTitle.rankButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisDetailTitle.squareButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisDetailTitle.storeButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisDetailTitle.consumerCountButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.analysisDetailTitle.salesCountButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-}
 
 #pragma mark - View lifecycle
 
@@ -161,7 +82,12 @@
 {
     [super viewDidLoad];
 
-    [self bindingTheActionsForButtons];
+    [self initWithData];
+    NSArray *titles = [[NSArray alloc] initWithObjects:@"排名",@"广场名称",@"铺位号",@"客流量",@"销售额", nil];
+    NSArray *propertyNames = [[NSArray alloc] initWithObjects:@"rankNumber", @"squareName",@"storeID", @"consumerCount",@"salesCount",nil];
+    self.brandDetailSheetView  = [[BrandDetailSheetView alloc] initWithFrame:CGRectMake(50, 50, 700, 500) andTitles:titles andPropertyname:propertyNames andData:self.data];
+    [self.view addSubview:brandDetailSheetView];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -202,96 +128,96 @@
 	return YES;
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 5;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"BrandAnalysisDetailRecordCell";
-    
-    BrandAnalysisDetailRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"BrandAnalysisDetailRecordCell" owner:self options:nil];
-        cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
-    }
-    
-    // Configure the cell...
-    BrandAnalysisDetailData *cellData = [self.data objectAtIndex:indexPath.row];
-    
-    cell.rankNumber.text = [NSString stringWithFormat:@"%ld", cellData.rankNumber];
-    cell.squareName.text = cellData.squareName;
-    cell.storeNumber.text = [NSString stringWithFormat:@"%ld", cellData.storeID];
-    cell.consumerCount.text = [NSString stringWithFormat:@"%ld", cellData.consumerCount];
-    cell.salesCount.text = [NSString stringWithFormat:@"%f", cellData.salesCount];
-    
-    return cell;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
-}
+//#pragma mark - Table view data source
+//
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//#warning Potentially incomplete method implementation.
+//    // Return the number of sections.
+//    return 1;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//#warning Incomplete method implementation.
+//    // Return the number of rows in the section.
+//    return 5;
+//}
+//
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *CellIdentifier = @"BrandAnalysisDetailRecordCell";
+//    
+//    BrandAnalysisDetailRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil) {
+//        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"BrandAnalysisDetailRecordCell" owner:self options:nil];
+//        cell = [array objectAtIndex:0];
+//        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+//    }
+//    
+//    // Configure the cell...
+//    BrandAnalysisDetailData *cellData = [self.data objectAtIndex:indexPath.row];
+//    
+//    cell.rankNumber.text = [NSString stringWithFormat:@"%ld", cellData.rankNumber];
+//    cell.squareName.text = cellData.squareName;
+//    cell.storeNumber.text = [NSString stringWithFormat:@"%ld", cellData.storeID];
+//    cell.consumerCount.text = [NSString stringWithFormat:@"%ld", cellData.consumerCount];
+//    cell.salesCount.text = [NSString stringWithFormat:@"%f", cellData.salesCount];
+//    
+//    return cell;
+//}
+//
+///*
+//// Override to support conditional editing of the table view.
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Return NO if you do not want the specified item to be editable.
+//    return YES;
+//}
+//*/
+//
+///*
+//// Override to support editing the table view.
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        // Delete the row from the data source
+//        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    }   
+//    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//    }   
+//}
+//*/
+//
+///*
+//// Override to support rearranging the table view.
+//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+//{
+//}
+//*/
+//
+///*
+//// Override to support conditional rearranging of the table view.
+//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Return NO if you do not want the item to be re-orderable.
+//    return YES;
+//}
+//*/
+//
+//#pragma mark - Table view delegate
+//
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Navigation logic may go here. Create and push another view controller.
+//    /*
+//     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+//     // ...
+//     // Pass the selected object to the new view controller.
+//     [self.navigationController pushViewController:detailViewController animated:YES];
+//     [detailViewController release];
+//     */
+//}
 
 @end

@@ -19,7 +19,7 @@
 	NSArray *titleArray;
     NSArray *nameLabels;
 	
-	UIView *view2;
+	UIView *titleRowView;
 	
 }
 
@@ -29,7 +29,7 @@
 @property (nonatomic, retain) UITableView *rightTableView;
 @property (nonatomic, retain) NSArray *titleArray;
 @property (nonatomic, retain) NSArray *nameLabels;
-@property (nonatomic, retain) UIView *view2;
+@property (nonatomic, retain) UIView *titleRowView;
 
 -(id) initWithFrame:(CGRect)frame andTitles:(NSArray *) titles andNamelabels:(NSArray *) namelabels;
 

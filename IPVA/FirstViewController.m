@@ -7,7 +7,7 @@
 //
 
 #import "FirstViewController.h"
-
+#import "FirstSheetView.h"
 #import "AeraPickViewController.h"
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
@@ -42,6 +42,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    NSArray *titles = [[NSArray alloc] initWithObjects:@"序号", @"广场名称", @"客流量", @"销售额", @"天气", @"活动",nil] ;
+    NSArray *property = [[[NSArray alloc] initWithObjects:@"rankNumber", @"squareName", @"consumerCount", @"salesCount", @"weather", @"activity", nil] autorelease];
+    FirstSheetView *fsw = [[FirstSheetView alloc] initWithFrame:CGRectMake(40, 130, 620, 570) andTitles:titles andPropertyname:property andData:nil];    
+    [self.view addSubview:fsw];
     
     
     // configure popover;

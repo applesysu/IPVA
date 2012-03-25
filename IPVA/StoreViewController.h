@@ -8,19 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class LeadingTitle;
+@class StoreSheetView;
 
-@interface StoreViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPopoverControllerDelegate>
+@interface StoreViewController : UIViewController <UIPopoverControllerDelegate>
 {
-    UITableView *recordTableView;
-    LeadingTitle *leadingSotre;
     NSArray *data;
+    StoreSheetView *sheetView;
 }
 
-@property (nonatomic, retain) UITableView *recordTableView;
-@property (nonatomic, retain) LeadingTitle *leadingStore;
 @property (nonatomic, retain) NSArray *data;
-
+@property (nonatomic, retain) StoreSheetView *sheetView;
 @property (nonatomic, retain) UIPopoverController *aeraPickPopover;
 @property (nonatomic, retain) UIPopoverController *datePickPopover;
 @property (nonatomic, retain) UIPopoverController *cyclePickPopover;

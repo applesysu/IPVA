@@ -11,11 +11,11 @@
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
 
-#import "SheetView.h"
+#import "RankSheetView.h"
 
 @implementation RankViewController
 
-@synthesize barChartView, barChartForTop, barChartForButtom, dataForPlot, dataForChart, topTenOrButtomTen, topTen, buttomTen;
+@synthesize barChartView, barChartForTop, barChartForButtom, dataForPlot, dataForChart, topTenOrButtomTen, topTen, buttomTen, dataForGraph1, dataForGraph2;
 
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
@@ -37,6 +37,9 @@
         self.barChartView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 50, 700, 500)] autorelease];
         self.barChartView.layer.masksToBounds = YES;
         self.barChartView.layer.cornerRadius = 20;
+        
+        self.dataForGraph1 = [[NSMutableArray alloc] init];
+        self.dataForGraph2 = [[NSMutableArray alloc] init]; 
     }
     return self;
 }
@@ -262,15 +265,17 @@
 
 -(void) createTable
 {
-    NSArray *titles = [[NSArray alloc] initWithObjects:@"第一名", @"第二名", @"第三名", @"第四名", @"第五名", @"第六名",@"第七名", @"第八名", nil] ;
+    NSArray *titles = [[NSArray alloc] initWithObjects:@"第一名", @"第二名", @"第三名", @"第四名", @"第五名", @"第六名",@"第七名", @"第八名", @"第九名", @"第十名", nil] ;
     NSArray *nameLabels = [[NSArray alloc] initWithObjects:@"名次", @"店铺名称", nil];
-    self.topTen = [[[SheetView alloc] initWithFrame:CGRectMake(30, 550, 700, 200) andTitles:titles andNamelabels:nameLabels] autorelease];
+    self.topTen = [[[RankSheetView alloc] initWithFrame:CGRectMake(30, 550, 700, 200) andTitles:titles andNamelabels:nameLabels andDatas:self.dataForGraph1] autorelease];
+    NSLog(@"%d", [dataForGraph1 count]);
     
     [self.view addSubview:topTen];
     
-    NSArray *titles1 = [[NSArray alloc] initWithObjects:@"倒数1", @"倒数2", @"倒数3", @"倒数4", @"倒数5", @"倒数6",@"倒数7", @"倒数8", nil] ;
+    NSArray *titles1 = [[NSArray alloc] initWithObjects:@"倒数1", @"倒数2", @"倒数3", @"倒数4", @"倒数5", @"倒数6",@"倒数7", @"倒数8", @"倒数9", @"倒数10", nil] ;
     NSArray *nameLabels1 = [[NSArray alloc] initWithObjects:@"名次", @"店铺名称", nil];
-    self.buttomTen = [[[SheetView alloc] initWithFrame:CGRectMake(30, 550, 700, 200) andTitles:titles1 andNamelabels:nameLabels1] autorelease];
+    self.buttomTen = [[[RankSheetView alloc] initWithFrame:CGRectMake(30, 530, 700, 200) andTitles:titles1 andNamelabels:nameLabels1 andDatas:self.dataForGraph2] autorelease];
+     NSLog(@"%d", [dataForGraph1 count]);
     
     [self.view addSubview:buttomTen];
     [self.buttomTen setHidden:YES];
@@ -357,10 +362,12 @@
                 if ([plot.identifier isEqual:@"Bar Plot 2"])
                 {
                     num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:70- index * 5];
+                    [dataForGraph2 addObject:[NSNumber numberWithInt:(50 -index * 6)] ];
                 }
                 else
                 {
                     num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:200- index * 7];
+                    [dataForGraph1 addObject:[NSNumber numberWithInt:(50 -index * 6)]];
                 }
             }
             break;

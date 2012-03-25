@@ -9,18 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "CorePlot-CocoaTouch.h"
 
-@class SheetView;
+@class RankSheetView;
 
 @interface RankViewController : UIViewController <CPTBarPlotDataSource, CPTBarPlotDelegate,UIPopoverControllerDelegate>
 {
     CPTGraphHostingView *barChartView;
     CPTXYGraph *barChartForTop, *barChartForButtom;
     NSMutableArray *dataForPlot, *dataForChart;
+    NSMutableArray *dataForGraph1, *dataForGraph2;
     
     UISegmentedControl *categorySelection, *topTenOrButtomTen;
     
-    SheetView *topTen;
-    SheetView *buttomTen;
+    RankSheetView *topTen;
+    RankSheetView *buttomTen;
 }
 
 @property (nonatomic, retain) CPTGraphHostingView *barChartView;
@@ -28,8 +29,9 @@
 @property (nonatomic, retain) NSMutableArray *dataForPlot;
 @property (nonatomic, retain) NSMutableArray *dataForChart;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *topTenOrButtomTen;
-@property (nonatomic, retain) SheetView *topTen;
-@property (nonatomic, retain) SheetView *buttomTen;
+@property (nonatomic, retain) RankSheetView *topTen;
+@property (nonatomic, retain) RankSheetView *buttomTen;
+@property (nonatomic, retain) NSMutableArray *dataForGraph1, *dataForGraph2;
 
 @property (nonatomic, retain) UIPopoverController *aeraPickPopover;
 @property (nonatomic, retain) UIPopoverController *datePickPopover;

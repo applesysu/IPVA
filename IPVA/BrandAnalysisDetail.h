@@ -8,18 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class BrandAnalysisDetailTitle;
+@class BrandDetailSheetView;
 
-@interface BrandAnalysisDetail : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface BrandAnalysisDetail : UIViewController
 {
-    UITableView *recordTableView;
-    BrandAnalysisDetailTitle *analysisDetailTitle;
     NSArray *data;
+    BrandDetailSheetView *brandDetailSheetView;
+    
 }
-
-@property (nonatomic, retain) UITableView *recordTableView;
-@property (nonatomic, retain) BrandAnalysisDetailTitle *analysisDetailTitle;
 @property (nonatomic, retain) NSArray *data;
+@property (nonatomic, retain) BrandDetailSheetView *brandDetailSheetView;
 
 -(void) initWithData;
 

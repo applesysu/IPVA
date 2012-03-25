@@ -7,17 +7,18 @@
 //
 
 #import "StoreViewController.h"
-#import "LeadingTitle.h"
-#import "LeadingStoreRecordCell.h"
+#import "StoreSheetView.h"
 #import "LeadingStoreData.h"
 #import "AeraPickViewController.h"
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation StoreViewController
 
-@synthesize recordTableView, leadingStore, data;
-
+@synthesize data;
+@synthesize sheetView;
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
@@ -28,17 +29,7 @@
     
     if (self != nil)
     {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"LeadingTitle" owner:self options:nil];
-        self.leadingStore = [array objectAtIndex:0];
-        [self.leadingStore setFrame:CGRectMake(0, 44, 768, 44)];
-        [self.view addSubview:self.leadingStore];
         
-        self.recordTableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 88, 768, 980) style:UITableViewStylePlain] autorelease];
-        [self.recordTableView setDelegate:self];
-        [self.recordTableView setDataSource:self];
-        [self.view addSubview:self.recordTableView];
-        
-        [self initWithData];
     }
     
     return self;
@@ -50,8 +41,7 @@
     [_aeraPickPopover release];
     [_datePickPopover release];
     [_cyclePickPopover release];
-    [self.recordTableView release];
-    [self.leadingStore release];
+    [self.sheetView release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,70 +82,20 @@
     self.data = array;
 }
 
--(void) buttonClick : (id) sender
-{
-    switch ([(UIButton *)sender tag]) {
-        case 1:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"rankNumber" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 2:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"squareName" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 3:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"consumerCount" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-            
-        case 4:
-        {
-            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"salesCount" ascending:YES] autorelease];
-            NSArray *array = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray = [self.data sortedArrayUsingDescriptors:array];
-            self.data = sortedArray;
-            
-            [self.recordTableView reloadData];
-        }
-            break;
-    }
-}
-
--(void) bindingActionsForButton
-{
-    [self.leadingStore.rankButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.leadingStore.squareButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.leadingStore.consumerCountButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-    [self.leadingStore.salesCountButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self bindingActionsForButton];
+    //生成表视图
+    [self initWithData];
+    NSArray *titles = [[NSArray alloc] initWithObjects:@"排名", @"广场名称", @"客流量", @"销售额", nil];
+    NSArray *propertyNames = [[NSArray alloc] initWithObjects:@"rankNumber", @"squareName", @"consumerCount", @"salesCount", nil];
+    self.sheetView = [[StoreSheetView alloc] initWithFrame:CGRectMake(74, 100, 620, 570) andTitles:titles andPropertyname:propertyNames andData:self.data];
+    
+    [self.view addSubview:self.sheetView];
+    
     
     AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] init] autorelease];
     self.aeraPickPopover = [[UIPopoverController alloc] initWithContentViewController:aeraPickVC];
@@ -186,8 +126,7 @@
     self.aeraPickPopover = nil;
     self.datePickPopover = nil;
     
-    self.recordTableView = nil;
-    self.leadingStore = nil;
+    self.sheetView = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -216,99 +155,6 @@
 {
     // Return YES for supported orientations
 	return YES;
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 4;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"LeadingStoreRecordCell";
-    
-    LeadingStoreRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"LeadingStoreRecordCell" owner:self options:nil];
-        cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
-    }
-    
-    // Configure the cell...
-    
-    LeadingStoreData *cellData = [self.data objectAtIndex:indexPath.row];
-    
-    cell.rankNumber.text = [NSString stringWithFormat:@"%ld", cellData.rankNumber];
-    cell.squareName.text = cellData.squareName;
-    cell.consumerCount.text = [NSString stringWithFormat:@"%ld", cellData.consumerCount];
-    cell.salesCount.text = [NSString stringWithFormat:@"%f", cellData.salesCount];
-    
-    return cell;
-
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
 }
 
 - (IBAction)pressAeraButton:(id)sender 

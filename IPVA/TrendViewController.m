@@ -28,7 +28,7 @@
     
     if (self != nil)
     {
-        self.scatterPlotView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 50, 700, 500)] autorelease];
+        self.scatterPlotView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 75, 700, 500)] autorelease];
         self.scatterPlotView.layer.masksToBounds = YES;
         self.scatterPlotView.layer.cornerRadius = 20;
     }
@@ -47,7 +47,7 @@
 
 -(void) controlValueChanged
 {
-    [self constructScatterPlot];
+    [self constructMonthScatterPlot];
 }
 
 
@@ -65,7 +65,20 @@
 {
 	NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:100];
 	NSUInteger i;
-	for ( i = 0; i < 12; i++ ) {
+    NSUInteger dataNumber;
+    if (self.timeSelection.selectedSegmentIndex == 0)
+    {
+        dataNumber = 31;
+    }
+    else if (self.timeSelection.selectedSegmentIndex == 1)
+    {
+        dataNumber = 52;
+    }
+    else
+    {
+        dataNumber = 12;
+    }
+	for ( i = 0; i < dataNumber; i++ ) {
 		id x = [NSNumber numberWithFloat:i];
 		id y = [NSNumber numberWithFloat:1.2 * arc4random()/RAND_MAX*10];
 		[contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
@@ -73,7 +86,7 @@
 	self.dataForPlot = contentArray;
 }
 
--(void) constructScatterPlot
+-(void) constructMonthScatterPlot
 {
     graph = [[[CPTXYGraph alloc] initWithFrame:CGRectZero] autorelease];
 	CPTTheme *theme = [CPTTheme themeNamed:kCPTSlateTheme];
@@ -112,12 +125,45 @@
         self.graph.titleTextStyle = textStyle;
     }
     
+	// Setup plot space
+	CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+	plotSpace.allowsUserInteraction = NO;
+    
+	// Axes
+	CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
+	CPTXYAxis *x		  = axisSet.xAxis;
+	
+    NSArray *customTickLocations;
+	NSArray *xAxisLabels;
+    NSMutableArray *tempArray = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *tempArray2 = [[[NSMutableArray alloc] init] autorelease];
     switch (self.timeSelection.selectedSegmentIndex) {
         case 0:
         {
             [self.daySheet setHidden: NO];
             [self.weekSheet setHidden:YES];
             [self.yearSheet setHidden:YES];
+            
+            plotSpace.xRange				= [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(31.0f)];
+            plotSpace.yRange				= [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(50.0f)];
+            
+            x.majorIntervalLength		  = CPTDecimalFromString(@"1");
+            x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
+            x.visibleRange = plotSpace.xRange;
+            x.labelingPolicy = CPTAxisLabelingPolicyNone;
+            
+            for (int i = 0; i < 31; i++)
+            {
+                [tempArray addObject:[NSDecimalNumber numberWithInt:(i+1)]];
+            }
+            customTickLocations = tempArray;
+            
+            
+            for (int i = 0; i < 31; i++)
+            {
+                [tempArray2 addObject:[NSString stringWithFormat:@"%d日",i+1]];
+            }
+            xAxisLabels = tempArray2;
         }
             break;
             
@@ -126,6 +172,28 @@
             [self.daySheet setHidden: YES];
             [self.weekSheet setHidden:NO];
             [self.yearSheet setHidden:YES];
+            
+            plotSpace.xRange				= [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(52.0f)];
+            plotSpace.yRange				= [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(50.0f)];
+            
+            x.majorIntervalLength		  = CPTDecimalFromString(@"1");
+            x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
+            x.visibleRange = plotSpace.xRange;
+            x.labelingPolicy = CPTAxisLabelingPolicyNone;
+            
+            for (int i = 0; i < 52; i++)
+            {
+                [tempArray addObject:[NSDecimalNumber numberWithInt:(i+1)]];
+            }
+            customTickLocations = tempArray;
+            
+            
+            for (int i = 0; i < 52; i++)
+            {
+                [tempArray2 addObject:[NSString stringWithFormat:@"%d周",i+1]];
+            }
+            xAxisLabels = tempArray2;
+            
         }
             break;
             
@@ -134,42 +202,43 @@
             [self.daySheet setHidden: YES];
             [self.weekSheet setHidden:YES];
             [self.yearSheet setHidden:NO];
+            
+            plotSpace.xRange				= [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(12.0f)];
+            plotSpace.yRange				= [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(50.0f)];
+            
+            x.majorIntervalLength		  = CPTDecimalFromString(@"1");
+            x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
+            x.visibleRange = plotSpace.xRange;
+            x.labelingPolicy = CPTAxisLabelingPolicyNone;
+            
+            
+            for (int i = 0; i < 12; i++)
+            {
+                [tempArray addObject:[NSDecimalNumber numberWithInt:(i+1)]];
+            }
+            customTickLocations = tempArray;
+            
+            
+            for (int i = 0; i < 12; i++)
+            {
+                [tempArray2 addObject:[NSString stringWithFormat:@"%d月",i+1]];
+            }
+            xAxisLabels = tempArray2;
         }
             break;
     }
-    
-	// Setup plot space
-	CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
-	plotSpace.allowsUserInteraction = YES;
-	plotSpace.xRange				= [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(12.0f)];
-	plotSpace.yRange				= [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(50.0f)];
-    
-    
-	// Axes
-	CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
-    
-	CPTXYAxis *x		  = axisSet.xAxis;
-	x.majorIntervalLength		  = CPTDecimalFromString(@"1");
-	x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
-    x.visibleRange = plotSpace.xRange;
-    x.labelingPolicy = CPTAxisLabelingPolicyNone;
-    NSArray *customTickLocations;
-	NSArray *xAxisLabels;
-    
-    customTickLocations = [NSArray arrayWithObjects:[NSDecimalNumber numberWithInt:1], [NSDecimalNumber numberWithInt:2], [NSDecimalNumber numberWithInt:3], [NSDecimalNumber numberWithInt:4], [NSDecimalNumber numberWithInt:5], [NSDecimalNumber numberWithInt:6], [NSDecimalNumber numberWithInt:7], [NSDecimalNumber numberWithInt:8], [NSDecimalNumber numberWithInt:9], [NSDecimalNumber numberWithInt:10],[NSDecimalNumber numberWithInt:11],[NSDecimalNumber numberWithInt:12], nil];
-    
-    xAxisLabels = [NSArray arrayWithObjects:@"1月", @"2月", @"3月", @"4月", @"5月",@"6月", @"7月", @"8月", @"9月", @"10月", @"11月", @"12月", nil];
-    
-	NSUInteger labelLocation	 = 0;
-	NSMutableArray *customLabels = [NSMutableArray arrayWithCapacity:[xAxisLabels count]];
-	for ( NSNumber *tickLocation in customTickLocations ) {
-		CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++] textStyle:x.labelTextStyle];
-		newLabel.tickLocation = [tickLocation decimalValue];
-		newLabel.offset		  = x.labelOffset + x.majorTickLength;
-		newLabel.rotation	  = M_PI / 4;
-		[customLabels addObject:newLabel];
-		[newLabel release];
-	}
+            
+    NSUInteger labelLocation = 0;
+    NSMutableArray *customLabels = [NSMutableArray arrayWithCapacity:[xAxisLabels count]];
+    for ( NSNumber *tickLocation in customTickLocations ) 
+    {
+		 CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++] textStyle:x.labelTextStyle];
+		 newLabel.tickLocation = [tickLocation decimalValue];
+		 newLabel.offset		  = x.labelOffset + x.majorTickLength;
+         newLabel.rotation	  = M_PI / 4;
+		 [customLabels addObject:newLabel];
+		 [newLabel release];
+    }
     
 	x.axisLabels = [NSSet setWithArray:customLabels];
     x.title = @"时间周期";
@@ -227,22 +296,38 @@
 
 -(void) constructTable
 {
-    NSArray *titles = [[NSArray alloc] initWithObjects:@"1号", @"2号", @"3号", @"4号", @"5号", @"6号",@"7号", @"8号", nil] ;
+    NSMutableArray *titlesDays = [[NSMutableArray alloc] initWithCapacity:31];
+    NSMutableArray *titlesMonths = [[NSMutableArray alloc] initWithCapacity:12];
+    NSMutableArray *titlesWeeks = [[NSMutableArray alloc] initWithCapacity:52];
+    
+    for (int i = 0; i < 31; i++)
+    {
+        [titlesDays addObject:[NSString stringWithFormat:@"%d日", i+1]];
+    }
+    
+    for (int i = 0; i < 12; i++)
+    {
+        [titlesMonths addObject:[NSString stringWithFormat:@"%d月", i+1]];
+    }
+    
+    for (int i = 0; i < 52; i++)
+    {
+        [titlesWeeks addObject:[NSString stringWithFormat:@"%d周", i+1]];
+    }
+    
     NSArray *nameLabels = [[NSArray alloc] initWithObjects:@"日期", @"本月", @"上月", @"去年同月", nil];
-    self.daySheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 550, 700, 200) andTitles:titles andNamelabels:nameLabels] autorelease];
+    self.daySheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 580, 700, 200) andTitles:titlesDays andNamelabels:nameLabels] autorelease];
     
     [self.view addSubview:daySheet];
     
-    NSArray *titles2 = [[NSArray alloc] initWithObjects:@"1周", @"2周", @"3周", @"4周", @"5周", @"6周",@"7周", @"8周", nil] ;
     NSArray *nameLabels2 = [[NSArray alloc] initWithObjects:@"周数", @"今年", @"去年", nil];
-    self.weekSheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 550, 700, 200) andTitles:titles2 andNamelabels:nameLabels2] autorelease];
+    self.weekSheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 600, 700, 200) andTitles:titlesWeeks andNamelabels:nameLabels2] autorelease];
     
     [self.view addSubview:weekSheet];
     [self.weekSheet setHidden:YES];
-    
-    NSArray *titles3 = [[NSArray alloc] initWithObjects:@"1月", @"2月", @"3月", @"4月", @"5月", @"6月",@"7月", @"8月", nil] ;
+
     NSArray *nameLabels3 = [[NSArray alloc] initWithObjects:@"月份", @"今年", @"去年", nil];
-    self.yearSheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 550, 700, 200) andTitles:titles3 andNamelabels:nameLabels3] autorelease];
+    self.yearSheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 600, 700, 200) andTitles:titlesMonths andNamelabels:nameLabels3] autorelease];
     
     [self.view addSubview:yearSheet];
     [self.yearSheet setHidden:YES];
@@ -256,7 +341,7 @@
     [super viewDidLoad];
     
     [self initTheSegmentControl];
-    [self constructScatterPlot];
+    [self constructMonthScatterPlot];
     [self constructTable];
     
     // configure popover;
