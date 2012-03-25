@@ -316,7 +316,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="650783659"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor" id="752209096">
+						<object class="NSColor" key="IBUIBackgroundColor" id="799285623">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAwIDAAA</bytes>
 						</object>
@@ -356,7 +356,7 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
-						<reference key="IBUISelectedTitleColor" ref="752209096"/>
+						<reference key="IBUISelectedTitleColor" ref="799285623"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
@@ -392,7 +392,7 @@
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">西郊广场</string>
 						<reference key="IBUIHighlightedTitleColor" ref="808004950"/>
-						<reference key="IBUISelectedTitleColor" ref="752209096"/>
+						<reference key="IBUISelectedTitleColor" ref="799285623"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
@@ -417,7 +417,7 @@
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">东风广场</string>
 						<reference key="IBUIHighlightedTitleColor" ref="808004950"/>
-						<reference key="IBUISelectedTitleColor" ref="752209096"/>
+						<reference key="IBUISelectedTitleColor" ref="799285623"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
@@ -484,7 +484,7 @@
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">岭南广场</string>
 						<reference key="IBUIHighlightedTitleColor" ref="808004950"/>
-						<reference key="IBUISelectedTitleColor" ref="752209096"/>
+						<reference key="IBUISelectedTitleColor" ref="799285623"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
@@ -499,7 +499,6 @@
 						<string key="NSFrame">{{516, 661}, {85, 37}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">14</int>
@@ -509,7 +508,7 @@
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">豁达广场</string>
 						<reference key="IBUIHighlightedTitleColor" ref="808004950"/>
-						<reference key="IBUISelectedTitleColor" ref="752209096"/>
+						<reference key="IBUISelectedTitleColor" ref="799285623"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
@@ -714,7 +713,6 @@
 						<reference key="object" ref="766721923"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="1033834306"/>
-							<reference ref="919865324"/>
 							<reference ref="181950324"/>
 							<reference ref="778186876"/>
 							<reference ref="959218611"/>
@@ -732,6 +730,7 @@
 							<reference ref="914206564"/>
 							<reference ref="909239462"/>
 							<reference ref="445884225"/>
+							<reference ref="919865324"/>
 							<reference ref="650783659"/>
 						</array>
 						<reference key="parent" ref="0"/>
