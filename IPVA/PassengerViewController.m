@@ -243,7 +243,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-	return YES;
+	return NO;
 }
 
 #pragma mark CPTBarPlot delegate method
@@ -297,6 +297,16 @@
 - (IBAction)pressAeraButton:(id)sender 
 // show a popover table view
 {
+    if ([self.datePickPopover isPopoverVisible])
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.cyclePickPopover isPopoverVisible])
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.aeraPickPopover isPopoverVisible])
     {
         [self.aeraPickPopover dismissPopoverAnimated:YES];

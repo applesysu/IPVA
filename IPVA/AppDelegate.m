@@ -128,11 +128,11 @@
         [self.tabBarController setViewControllers:[NSArray arrayWithObjects:_firstViewController, _trendViewController, _categoryViewController, _compareViewController, nav, _storeViewController, nil] animated:YES];
 
         [[[[self.tabBarController tabBar] items] objectAtIndex:0] setTitle:@"概述"];
-        [[[[self.tabBarController tabBar] items] objectAtIndex:1] setTitle:@"趋势"];
-        [[[[self.tabBarController tabBar] items] objectAtIndex:2] setTitle:@"类别"];
-        [[[[self.tabBarController tabBar] items] objectAtIndex:3] setTitle:@"对比"];
-        [[[[self.tabBarController tabBar] items] objectAtIndex:4] setTitle:@"品牌"];
-        [[[[self.tabBarController tabBar] items] objectAtIndex:5] setTitle:@"主力店"];
+        [[[[self.tabBarController tabBar] items] objectAtIndex:1] setTitle:@"趋势分析"];
+        [[[[self.tabBarController tabBar] items] objectAtIndex:2] setTitle:@"类别分析"];
+        [[[[self.tabBarController tabBar] items] objectAtIndex:3] setTitle:@"对比分析"];
+        [[[[self.tabBarController tabBar] items] objectAtIndex:4] setTitle:@"品牌分析"];
+        [[[[self.tabBarController tabBar] items] objectAtIndex:5] setTitle:@"主力店分析"];
         [self.tabBarController setSelectedIndex:0];
     } else {
         [self.tabBarController setViewControllers:[NSArray arrayWithObjects:_firstViewController, _trendViewController, _passengerViewController, _rankViewController, nil] animated:YES];

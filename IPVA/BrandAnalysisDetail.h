@@ -20,5 +20,6 @@
 @property (nonatomic, retain) BrandDetailSheetView *brandDetailSheetView;
 
 -(void) initWithData;
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andTheData:(NSString *)dataName;
 
 @end

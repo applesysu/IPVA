@@ -20,6 +20,7 @@
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
+@synthesize sales, consumers, squareNumber;
 
 - (void)dealloc
 {
@@ -45,7 +46,7 @@
     
     NSArray *titles = [[NSArray alloc] initWithObjects:@"序号", @"广场名称", @"客流量", @"销售额", @"天气", @"活动",nil] ;
     NSArray *property = [[[NSArray alloc] initWithObjects:@"rankNumber", @"squareName", @"consumerCount", @"salesCount", @"weather", @"activity", nil] autorelease];
-    FirstSheetView *fsw = [[FirstSheetView alloc] initWithFrame:CGRectMake(40, 130, 620, 570) andTitles:titles andPropertyname:property andData:nil];    
+    FirstSheetView *fsw = [[FirstSheetView alloc] initWithFrame:CGRectMake(40, 300, 620, 570) andTitles:titles andPropertyname:property andData:nil];    
     [self.view addSubview:fsw];
     
     
@@ -79,12 +80,22 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return YES;
+	return NO;
 }
 
 - (IBAction)pressAeraButton:(id)sender 
 // show a popover table view
 {
+    if ([self.datePickPopover isPopoverVisible])
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.cyclePickPopover isPopoverVisible])
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.aeraPickPopover isPopoverVisible])
     {
         [self.aeraPickPopover dismissPopoverAnimated:YES];
@@ -98,6 +109,16 @@
 
 - (IBAction)pressDateButton:(id)sender 
 {
+    if ([self.cyclePickPopover isPopoverVisible])
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.datePickPopover isPopoverVisible])
     {
         [self.datePickPopover dismissPopoverAnimated:YES];
@@ -111,6 +132,16 @@
 
 - (IBAction)pressCycleButton:(id)sender; 
 {
+    if ([self.datePickPopover isPopoverVisible])
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.cyclePickPopover isPopoverVisible])
     {
         [self.cyclePickPopover dismissPopoverAnimated:YES];

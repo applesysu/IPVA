@@ -176,7 +176,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.navigationItem.title = @"万达集团品牌分析";
     [self initTheTableView];
     
     // configure popover;
@@ -234,7 +234,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-	return YES;
+	return NO;
 }
 
 #pragma mark - Table view data source
@@ -361,11 +361,9 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+    NSString *brandName = [(UILabel *)[[tableView cellForRowAtIndexPath:indexPath] viewWithTag:101] text];
     
-//    BrandAnalysisRecordCell *cell = (BrandAnalysisRecordCell *)[self tableView:self.recordTableView cellForRowAtIndexPath:indexPath];
-    
-    
-    BrandAnalysisDetail *brandAnalysisDetail = [[BrandAnalysisDetail alloc] initWithNibName:@"BrandAnalysisDetail" bundle:nil];
+    BrandAnalysisDetail *brandAnalysisDetail = [[BrandAnalysisDetail alloc] initWithNibName:@"BrandAnalysisDetail" bundle:nil andTheData:brandName];
     [self.navigationController pushViewController:brandAnalysisDetail animated:YES];
     [brandAnalysisDetail release];
 }
@@ -373,6 +371,16 @@
 - (IBAction)pressAeraButton:(id)sender 
 // show a popover table view
 {
+    if ([self.cyclePickPopover isPopoverVisible])
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.datePickPopover isPopoverVisible]) 
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.aeraPickPopover isPopoverVisible])
     {
         [self.aeraPickPopover dismissPopoverAnimated:YES];
@@ -386,6 +394,16 @@
 
 - (IBAction)pressDateButton:(id)sender 
 {
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.cyclePickPopover isPopoverVisible]) 
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.datePickPopover isPopoverVisible])
     {
         [self.datePickPopover dismissPopoverAnimated:YES];
@@ -399,6 +417,16 @@
 
 - (IBAction)pressCycleButton:(id)sender; 
 {
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.datePickPopover isPopoverVisible]) 
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.cyclePickPopover isPopoverVisible])
     {
         [self.cyclePickPopover dismissPopoverAnimated:YES];

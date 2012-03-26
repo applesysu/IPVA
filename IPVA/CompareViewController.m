@@ -111,12 +111,22 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return YES;
+	return NO;
 }
 
 - (IBAction)pressAeraButton:(id)sender 
 // show a popover table view
 {
+    if ([self.cyclePickPopover isPopoverVisible])
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.datePickPopover isPopoverVisible]) 
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.aeraPickPopover isPopoverVisible])
     {
         [self.aeraPickPopover dismissPopoverAnimated:YES];
@@ -130,6 +140,16 @@
 
 - (IBAction)pressDateButton:(id)sender 
 {
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.cyclePickPopover isPopoverVisible]) 
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.datePickPopover isPopoverVisible])
     {
         [self.datePickPopover dismissPopoverAnimated:YES];
@@ -143,6 +163,16 @@
 
 - (IBAction)pressCycleButton:(id)sender; 
 {
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.datePickPopover isPopoverVisible]) 
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.cyclePickPopover isPopoverVisible])
     {
         [self.cyclePickPopover dismissPopoverAnimated:YES];

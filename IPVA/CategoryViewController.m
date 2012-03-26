@@ -24,6 +24,8 @@
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
 
+@synthesize consumer, sales, collectConsumer, convertRate, bags, effect, selectedButton, generateGraph; 
+
 - (void)dealloc
 {
     [super dealloc];
@@ -32,14 +34,51 @@
     [_cyclePickPopover release];
 }
 
+-(IBAction) buttonClick:(id)sender
+{
+    NSLog(@"buttonclick");
+    if ([selectedButton count] < 2)
+    {
+        [selectedButton addObject:[(UIButton *)sender titleLabel].text];
+        [(UIButton *)sender setEnabled:NO];
+        if ([selectedButton count] == 2)
+        {
+            [self.generateGraph setEnabled:YES];
+            [self.consumer setEnabled:NO];
+            [self.sales setEnabled:NO];
+            [self.collectConsumer setEnabled:NO];
+            [self.convertRate setEnabled:NO];
+            [self.bags setEnabled:NO];
+            [self.effect setEnabled:NO];
+        }
+    }
+}
+-(IBAction) generateCG
+{
+    NSLog(@"hihi  generate");
+    [self constructScatterPlot:self.selectedButton];
+    
+    [self.selectedButton removeAllObjects];
+    [self.generateGraph setEnabled:NO];
+    [self.consumer setEnabled:YES];
+    [self.sales setEnabled:YES];
+    [self.collectConsumer setEnabled:YES];
+    [self.convertRate setEnabled:YES];
+    [self.bags setEnabled:YES];
+    [self.effect setEnabled:YES];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.scatterPlotView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 50, 700, 500)] autorelease];
+        self.scatterPlotView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 100, 700, 500)] autorelease];
         self.scatterPlotView.layer.masksToBounds = YES;
         self.scatterPlotView.layer.cornerRadius = 20;
+        [self.view addSubview:self.scatterPlotView];
+        self.selectedButton = [[NSMutableArray alloc] initWithCapacity:2];
+        [self.generateGraph setEnabled:NO];
     }
     return self;
 }
@@ -56,14 +95,12 @@
 	self.dataForPlot = contentArray;
 }
 
--(void) constructScatterPlot
+-(void) constructScatterPlot:(NSMutableArray *)selected
 {
     graph = [[[CPTXYGraph alloc] initWithFrame:CGRectZero] autorelease];
 	CPTTheme *theme = [CPTTheme themeNamed:kCPTSlateTheme];
 	[graph applyTheme:theme];
 	scatterPlotView.hostedGraph = graph;
-    [self.view addSubview:self.scatterPlotView];
-    [scatterPlotView setUserInteractionEnabled:NO];
     
     graph.plotAreaFrame.paddingLeft = 70.0 ;
     graph.plotAreaFrame.paddingTop = 70.0 ;
@@ -80,7 +117,7 @@
     textStyle.fontName = @"Helvetica-Bold";
     textStyle.fontSize = 25.0;
     
-    graph.title = @"对比分析";
+    graph.title = @"类别分析";
     graph.titleTextStyle = textStyle;
     graph.titleDisplacement = CGPointMake(0.0, -20.0);
     graph.titlePlotAreaFrameAnchor = CPTRectAnchorTop;
@@ -119,7 +156,7 @@
 	}
     
 	x.axisLabels = [NSSet setWithArray:customLabels];
-    x.title = @"时间周期";
+    x.title = [selected objectAtIndex:0];
     x.titleOffset = 45.0f;
     x.titleLocation = CPTDecimalFromFloat(8.0f); 
     
@@ -127,7 +164,7 @@
     y.visibleRange = plotSpace.yRange;
     y.majorIntervalLength = CPTDecimalFromString (@"5");
     y.orthogonalCoordinateDecimal = CPTDecimalFromString (@"0");
-    y.title = @"数量";
+    y.title = [selected objectAtIndex:1];
     y.titleOffset = 45.0f ;
     y.titleLocation = CPTDecimalFromFloat ( 46.0f );
     y.titleRotation = M_PI * 2;
@@ -141,6 +178,7 @@
     dataSourceLinePlot.plotSymbol = plotSymbol;
 	dataSourceLinePlot.dataLineStyle = nil;
 	dataSourceLinePlot.dataSource = self;
+    dataSourceLinePlot.delegate = self;
     
 	// Animate in the new plot, as an example
 	[graph addPlot:dataSourceLinePlot];
@@ -199,6 +237,14 @@
     return plotSymbol;
 }
 
+-(void) scatterPlot:(CPTScatterPlot *)plot plotSymbolWasSelectedAtRecordIndex:(NSUInteger)index
+{
+    NSLog(@"hihihihi");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"详情" message:@"客户数是XXX， 店铺总数是XXX" delegate:self cancelButtonTitle:@"了解完毕" otherButtonTitles: nil];
+    [alertView show];
+    [alertView release];
+}
+
 
 - (void)viewDidLoad
 {
@@ -221,7 +267,6 @@
     [self.cyclePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
     [self.cyclePickPopover setDelegate:self];
     
-    [self constructScatterPlot];
 }
 
 - (void)viewDidUnload
@@ -235,12 +280,22 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return YES;
+	return NO;
 }
 
 - (IBAction)pressAeraButton:(id)sender 
 // show a popover table view
 {
+    if ([self.cyclePickPopover isPopoverVisible])
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.datePickPopover isPopoverVisible]) 
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.aeraPickPopover isPopoverVisible])
     {
         [self.aeraPickPopover dismissPopoverAnimated:YES];
@@ -254,6 +309,16 @@
 
 - (IBAction)pressDateButton:(id)sender 
 {
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.cyclePickPopover isPopoverVisible]) 
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.datePickPopover isPopoverVisible])
     {
         [self.datePickPopover dismissPopoverAnimated:YES];
@@ -267,6 +332,16 @@
 
 - (IBAction)pressCycleButton:(id)sender; 
 {
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.datePickPopover isPopoverVisible]) 
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.cyclePickPopover isPopoverVisible])
     {
         [self.cyclePickPopover dismissPopoverAnimated:YES];

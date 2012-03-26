@@ -132,6 +132,8 @@
 	// Axes
 	CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
 	CPTXYAxis *x		  = axisSet.xAxis;
+    
+    CPTMutableTextStyle *mts = [[CPTMutableTextStyle.textStyle mutableCopy] autorelease];
 	
     NSArray *customTickLocations;
 	NSArray *xAxisLabels;
@@ -194,6 +196,8 @@
             }
             xAxisLabels = tempArray2;
             
+            mts.fontSize = 7.0f;
+            
         }
             break;
             
@@ -232,7 +236,7 @@
     NSMutableArray *customLabels = [NSMutableArray arrayWithCapacity:[xAxisLabels count]];
     for ( NSNumber *tickLocation in customTickLocations ) 
     {
-		 CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++] textStyle:x.labelTextStyle];
+		 CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++] textStyle:mts];
 		 newLabel.tickLocation = [tickLocation decimalValue];
 		 newLabel.offset		  = x.labelOffset + x.majorTickLength;
          newLabel.rotation	  = M_PI / 4;
@@ -242,8 +246,12 @@
     
 	x.axisLabels = [NSSet setWithArray:customLabels];
     x.title = @"时间周期";
-    x.titleOffset = 45.0f;
-    x.titleLocation = CPTDecimalFromFloat(8.0f); 
+    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
+    axisTitleStyle.color = [CPTColor blackColor];
+    axisTitleStyle.fontSize = 14;
+    CPTAxisTitle *title = [[[CPTAxisTitle alloc] initWithText:@"时间周期" textStyle:axisTitleStyle] autorelease];
+    x.axisTitle = title;
+    x.titleOffset = 40.0f;
     
     CPTXYAxis *y = axisSet.yAxis;
     y.visibleRange = plotSpace.yRange;
@@ -399,12 +407,22 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-	return YES;
+	return NO;
 }
 
 - (IBAction)pressAeraButton:(id)sender 
 // show a popover table view
 {
+    if ([self.cyclePickPopover isPopoverVisible])
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.datePickPopover isPopoverVisible]) 
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.aeraPickPopover isPopoverVisible])
     {
         [self.aeraPickPopover dismissPopoverAnimated:YES];
@@ -418,6 +436,16 @@
 
 - (IBAction)pressDateButton:(id)sender 
 {
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.cyclePickPopover isPopoverVisible]) 
+    {
+        [self.cyclePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.datePickPopover isPopoverVisible])
     {
         [self.datePickPopover dismissPopoverAnimated:YES];
@@ -431,6 +459,16 @@
 
 - (IBAction)pressCycleButton:(id)sender; 
 {
+    if ([self.aeraPickPopover isPopoverVisible])
+    {
+        [self.aeraPickPopover dismissPopoverAnimated:YES];
+    }
+    
+    if ([self.datePickPopover isPopoverVisible]) 
+    {
+        [self.datePickPopover dismissPopoverAnimated:YES];
+    }
+    
     if ([self.cyclePickPopover isPopoverVisible])
     {
         [self.cyclePickPopover dismissPopoverAnimated:YES];
