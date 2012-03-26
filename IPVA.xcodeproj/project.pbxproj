@@ -44,6 +44,8 @@
 		BF8F586A15147A2400E65690 /* UIView+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586215147A2400E65690 /* UIView+TKCategory.m */; };
 		BF8F586E15147F4B00E65690 /* CycleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F586C15147F4A00E65690 /* CycleViewController.m */; };
 		BF8F586F15147F4B00E65690 /* CycleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8F586D15147F4B00E65690 /* CycleViewController.xib */; };
+		BF9ACF0015206ECE0093BF54 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9ACEFF15206ECE0093BF54 /* logo@2x.png */; };
+		BF9ACF0315206F180093BF54 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9ACF0215206F180093BF54 /* logo.png */; };
 		BFD43799151096FC00277D21 /* mainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD43798151096FC00277D21 /* mainWindow.xib */; };
 		BFF032C81510CB980079BB8E /* AeraPickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF032C61510CB980079BB8E /* AeraPickViewController.m */; };
 		BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFF032C71510CB980079BB8E /* AeraPickViewController.xib */; };
@@ -205,6 +207,8 @@
 		BF8F586B15147F4A00E65690 /* CycleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleViewController.h; sourceTree = "<group>"; };
 		BF8F586C15147F4A00E65690 /* CycleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleViewController.m; sourceTree = "<group>"; };
 		BF8F586D15147F4B00E65690 /* CycleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CycleViewController.xib; sourceTree = "<group>"; };
+		BF9ACEFF15206ECE0093BF54 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "../logo@2x.png"; sourceTree = "<group>"; };
+		BF9ACF0215206F180093BF54 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../logo.png; sourceTree = "<group>"; };
 		BFD43798151096FC00277D21 /* mainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mainWindow.xib; sourceTree = "<group>"; };
 		BFF032C51510CB980079BB8E /* AeraPickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AeraPickViewController.h; sourceTree = "<group>"; };
 		BFF032C61510CB980079BB8E /* AeraPickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AeraPickViewController.m; sourceTree = "<group>"; };
@@ -457,6 +461,15 @@
 			path = TapkuLibrary;
 			sourceTree = "<group>";
 		};
+		BF9ACF04152070C30093BF54 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				BF9ACF0215206F180093BF54 /* logo.png */,
+				BF9ACEFF15206ECE0093BF54 /* logo@2x.png */,
+			);
+			name = image;
+			sourceTree = "<group>";
+		};
 		BFFFE5DB15108D3600DDB6E7 = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +521,7 @@
 		BFFFE5F115108D3600DDB6E7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BF9ACF04152070C30093BF54 /* image */,
 				04B7B55415196508003FB57F /* unit.png */,
 				BFFFE5F215108D3600DDB6E7 /* IPVA-Info.plist */,
 				BFFFE5F315108D3600DDB6E7 /* InfoPlist.strings */,
@@ -585,6 +599,8 @@
 				140E75B81515E8C70020D692 /* RankViewController.xib in Resources */,
 				140E75BD1515E9D10020D692 /* PassengerViewController.xib in Resources */,
 				04B7B55515196508003FB57F /* unit.png in Resources */,
+				BF9ACF0015206ECE0093BF54 /* logo@2x.png in Resources */,
+				BF9ACF0315206F180093BF54 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
