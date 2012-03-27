@@ -30,6 +30,7 @@
 		140E75B81515E8C70020D692 /* RankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140E75B61515E8C70020D692 /* RankViewController.xib */; };
 		140E75BC1515E9D10020D692 /* PassengerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 140E75BA1515E9D00020D692 /* PassengerViewController.m */; };
 		140E75BD1515E9D10020D692 /* PassengerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140E75BB1515E9D10020D692 /* PassengerViewController.xib */; };
+		BF04765415218C1300048B3E /* login_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = BF04765315218C1300048B3E /* login_logo.png */; };
 		BF7C6A90151B3673004B1897 /* CYCompareGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7C6A8F151B3673004B1897 /* CYCompareGraph.m */; };
 		BF8F559C15146D6C00E65690 /* DatePickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F559A15146D6C00E65690 /* DatePickViewController.m */; };
 		BF8F559D15146D6C00E65690 /* DatePickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8F559B15146D6C00E65690 /* DatePickViewController.xib */; };
@@ -183,6 +184,7 @@
 		140E75B91515E9D00020D692 /* PassengerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassengerViewController.h; sourceTree = "<group>"; };
 		140E75BA1515E9D00020D692 /* PassengerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassengerViewController.m; sourceTree = "<group>"; };
 		140E75BB1515E9D10020D692 /* PassengerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassengerViewController.xib; sourceTree = "<group>"; };
+		BF04765315218C1300048B3E /* login_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_logo.png; sourceTree = "<group>"; };
 		BF7C6A8E151B3673004B1897 /* CYCompareGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYCompareGraph.h; sourceTree = "<group>"; };
 		BF7C6A8F151B3673004B1897 /* CYCompareGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYCompareGraph.m; sourceTree = "<group>"; };
 		BF8F559915146D6C00E65690 /* DatePickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickViewController.h; sourceTree = "<group>"; };
@@ -213,7 +215,7 @@
 		BFF032C51510CB980079BB8E /* AeraPickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AeraPickViewController.h; sourceTree = "<group>"; };
 		BFF032C61510CB980079BB8E /* AeraPickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AeraPickViewController.m; sourceTree = "<group>"; };
 		BFF032C71510CB980079BB8E /* AeraPickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AeraPickViewController.xib; sourceTree = "<group>"; };
-		BFFFE5E615108D3600DDB6E7 /* IPVA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPVA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFFE5E615108D3600DDB6E7 /* IPVA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = IPVA.app; path = "万达客流统计.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFE5EA15108D3600DDB6E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BFFFE5EC15108D3600DDB6E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFE5EE15108D3600DDB6E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -464,6 +466,7 @@
 		BF9ACF04152070C30093BF54 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				BF04765315218C1300048B3E /* login_logo.png */,
 				BF9ACF0215206F180093BF54 /* logo.png */,
 				BF9ACEFF15206ECE0093BF54 /* logo@2x.png */,
 			);
@@ -535,9 +538,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BFFFE5E515108D3600DDB6E7 /* IPVA */ = {
+		BFFFE5E515108D3600DDB6E7 /* 万达客流统计 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BFFFE61215108D3600DDB6E7 /* Build configuration list for PBXNativeTarget "IPVA" */;
+			buildConfigurationList = BFFFE61215108D3600DDB6E7 /* Build configuration list for PBXNativeTarget "万达客流统计" */;
 			buildPhases = (
 				BFFFE5E215108D3600DDB6E7 /* Sources */,
 				BFFFE5E315108D3600DDB6E7 /* Frameworks */,
@@ -547,7 +550,7 @@
 			);
 			dependencies = (
 			);
-			name = IPVA;
+			name = "万达客流统计";
 			productName = IPVA;
 			productReference = BFFFE5E615108D3600DDB6E7 /* IPVA.app */;
 			productType = "com.apple.product-type.application";
@@ -572,7 +575,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BFFFE5E515108D3600DDB6E7 /* IPVA */,
+				BFFFE5E515108D3600DDB6E7 /* 万达客流统计 */,
 			);
 		};
 /* End PBXProject section */
@@ -601,6 +604,7 @@
 				04B7B55515196508003FB57F /* unit.png in Resources */,
 				BF9ACF0015206ECE0093BF54 /* logo@2x.png in Resources */,
 				BF9ACF0315206F180093BF54 /* logo.png in Resources */,
+				BF04765415218C1300048B3E /* login_logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -759,7 +763,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BFFFE61215108D3600DDB6E7 /* Build configuration list for PBXNativeTarget "IPVA" */ = {
+		BFFFE61215108D3600DDB6E7 /* Build configuration list for PBXNativeTarget "万达客流统计" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BFFFE61315108D3600DDB6E7 /* Debug */,
