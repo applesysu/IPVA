@@ -15,7 +15,7 @@
 @property (nonatomic, retain) UIPopoverController *datePickPopover;
 @property (nonatomic, retain) UIPopoverController *cyclePickPopover;
 @property (retain, nonatomic) IBOutlet UIView *compareView;
-@property (retain, nonatomic) CYCompareGraph *compareGraph;
+
 
 @property (retain, nonatomic) IBOutlet UILabel *squareALabel;
 @property (retain, nonatomic) IBOutlet UILabel *squareBLabel;

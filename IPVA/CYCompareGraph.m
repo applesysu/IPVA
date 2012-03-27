@@ -10,25 +10,66 @@
 void drawStroke(CGContextRef context, CGPoint startPoint, CGPoint endPoint, 
                 CGColorRef color, CGFloat width);
 void drawPolygon(CGContextRef context, CGPoint center, CGFloat radious, NSInteger edges, NSInteger maxValue, CGColorRef color, CGFloat width);
-void drawValueGraph(CGContextRef context, CGPoint center, NSInteger *valueArray, CGFloat radious, NSInteger edges, NSInteger maxValue, CGColorRef color, CGFloat width);
+void drawValueGraph(CGContextRef context, CGPoint center, CGFloat *valueArray, CGFloat radious, NSInteger edges, NSInteger maxValue, CGColorRef color, CGFloat width);
 
 
 
 @implementation CYCompareGraph
 @synthesize center, radious, edges, width, polygonColor, firstObjectColor, secondObjectColor, maxValue;
-@synthesize firstObjectValuesArray, secondObjectValuesArray;
+@synthesize firstObjectValuesArray = _firstObjectValuesArray;
+@synthesize secondObjectValuesArray = _secondObjectValuesArray;
+
+
+//- (NSMutableArray *)firstObjectValuesArray
+//{
+//    if (_firstObjectValuesArray == nil)
+//        _firstObjectValuesArray = [[[NSMutableArray alloc] init] autorelease];
+//    return _firstObjectValuesArray;
+//
+//}
+
+//- (void)setFirstObjectValuesArray:(NSMutableArray *)firstObjectValuesArray
+//{
+//    int i = 0;
+//    for (NSNumber *number in firstObjectValuesArray)
+//    {
+//        [_firstObjectValuesArray replaceObjectAtIndex:i withObject:[firstObjectValuesArray objectAtIndex:i]];
+//        i++;
+//    }
+//    _firstObjectValuesArray = firstObjectValuesArray;
+//}
+
+//- (NSMutableArray *)secondObjectValuesArray
+//{
+//    if (_secondObjectValuesArray == nil)
+//        _secondObjectValuesArray = [[[NSMutableArray alloc] init] autorelease];
+//    return _secondObjectValuesArray;
+//    
+//}
+
+//- (void)setSecondObjectValuesArray:(NSMutableArray *)secondObjectValuesArray
+//{
+//    int i = 0;
+//    for (NSNumber *number in secondObjectValuesArray)
+//    {
+//        [_secondObjectValuesArray replaceObjectAtIndex:i withObject:[secondObjectValuesArray objectAtIndex:i]];
+//        i++;
+//    }
+//}
 
 - (void)dealloc
 {
     [super dealloc];
-    free(firstObjectValuesArray);
-    free(secondObjectValuesArray);
+    [_firstObjectValuesArray release];
+    [_secondObjectValuesArray release];
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        [self setOpaque:NO];
+        
         // Initialization code
         radious = 150;
         center = CGPointMake(150, 150);
@@ -38,13 +79,11 @@ void drawValueGraph(CGContextRef context, CGPoint center, NSInteger *valueArray,
         polygonColor = [[UIColor grayColor] CGColor];
         firstObjectColor = [[UIColor redColor] CGColor];
         secondObjectColor = [[UIColor blueColor] CGColor];
-        firstObjectValuesArray = (int *)malloc(10 * sizeof(int));
-        secondObjectValuesArray = (int *)malloc(10 * sizeof(int));
-        
         for (int i = 0; i < 8; i++) {
-            firstObjectValuesArray[i] = 0;
-            secondObjectValuesArray[i] = 0;
+            [self.firstObjectValuesArray addObject:[NSNumber numberWithDouble:0]];
+            [self.secondObjectValuesArray addObject:[NSNumber numberWithDouble:0]];
         }
+        NSLog(@"%@",self.firstObjectValuesArray);
         
         
     }
@@ -60,11 +99,32 @@ void drawValueGraph(CGContextRef context, CGPoint center, NSInteger *valueArray,
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextClearRect(ctx, rect);
     
-    CGContextSetFillColorWithColor(ctx, [[UIColor whiteColor] CGColor]);
-    CGContextFillRect(ctx, self.bounds);
+    [[UIColor clearColor] setFill];
+    CGContextAddRect(ctx, rect);
+    CGContextDrawPath(ctx, kCGPathFill);
     
-    drawPolygon(ctx, center, radious, edges, maxValue, polygonColor, width);
-    drawValueGraph(ctx, center, firstObjectValuesArray, radious, edges, maxValue, firstObjectColor, width);
+    // change NSArray to c array
+    CGFloat firstObjectValueArray[self.edges];
+    int i = 0;
+    NSLog(@"%@", self.firstObjectValuesArray);
+    NSLog(@"%@", self.secondObjectValuesArray);
+
+    for (NSNumber *number in self.firstObjectValuesArray)
+    {
+        firstObjectValueArray[i] = [number doubleValue];
+        i++;
+    }
+    
+    CGFloat secondObjectValuesArray[self.edges];
+    i = 0;
+    for (NSNumber *number in self.secondObjectValuesArray)
+    {
+        secondObjectValuesArray[i] = [number doubleValue];
+        i++;
+    }
+    
+    drawPolygon(ctx, center, radious, edges, 5, polygonColor, width);
+    drawValueGraph(ctx, center, firstObjectValueArray, radious, edges, maxValue, firstObjectColor, width);
     drawValueGraph(ctx, center, secondObjectValuesArray, radious, edges, maxValue, secondObjectColor, width);
     
     
@@ -72,15 +132,17 @@ void drawValueGraph(CGContextRef context, CGPoint center, NSInteger *valueArray,
 }
 
 #pragma mark - drawMethods
-void drawValueGraph(CGContextRef context, CGPoint center, NSInteger *valueArray, CGFloat radious, NSInteger edge, NSInteger maxValue, CGColorRef color, CGFloat width)
+void drawValueGraph(CGContextRef context, CGPoint center, CGFloat *valueArray, CGFloat radious, NSInteger edge, NSInteger maxValue, CGColorRef color, CGFloat width)
 {
-    NSInteger currentValue = valueArray[0];
-    CGFloat currentRadious = currentValue * (radious / maxValue);
+    CGFloat currentValue = valueArray[0];
+    //    CGFloat currentRadious = currentValue * (radious / maxValue);
+    CGFloat currentRadious = currentValue * radious;
     CGPoint lastPoint = CGPointMake(center.x, center.y - currentRadious);
     for (int j = 1; j <= edge; j++) { 
         CGFloat currentAngle = 2 * M_PI / edge * j;
         currentValue = valueArray[j % edge];
-        currentRadious = currentValue * (radious / maxValue);
+        //        currentRadious = currentValue * (radious / maxValue);
+        currentRadious = currentValue * radious;
         CGFloat x = center.x + currentRadious * sin(currentAngle);
         CGFloat y = center.y - currentRadious * cos(currentAngle);
         CGPoint currentPoint = CGPointMake(x, y);
@@ -102,6 +164,10 @@ void drawPolygon(CGContextRef context, CGPoint center, CGFloat radious, NSIntege
             CGPoint currentPoint = CGPointMake(x, y);
             drawStroke(context, lastPoint, currentPoint, color, width);
             lastPoint = currentPoint;
+            if (i == maxValue)
+            {
+                drawStroke(context, center, currentPoint, color, width);
+            }
         }
     }
     

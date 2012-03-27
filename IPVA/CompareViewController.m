@@ -14,9 +14,10 @@
 #import "CYCompareGraph.h"
 
 @interface CompareViewController () {
-    int data[5][8];
 }
 
+@property (strong, nonatomic) NSMutableArray *dataArray;
+@property (strong, nonatomic) CYCompareGraph *compareGraph;
 
 @end
 
@@ -30,9 +31,29 @@
 @synthesize squareALabel = _squareALabel;
 @synthesize squareBLabel = _squareBLabel;
 @synthesize squareButton = _squareButton;
+@synthesize dataArray = _dataArray;
+
+
+- (NSMutableArray *)dataArray
+{
+    if (_dataArray == nil)
+    {
+        _dataArray = [[NSMutableArray alloc] init];
+    }
+    return _dataArray;
+}
+
+- (CYCompareGraph *)compareGraph
+{
+    if (_compareGraph == nil) {
+        _compareGraph = [[CYCompareGraph alloc] init];
+    }
+    return _compareGraph;
+}
 
 - (void)dealloc
 {
+    [_dataArray release];
     [_compareView release];
     [_squareALabel release];
     [_squareBLabel release];
@@ -51,12 +72,14 @@
         
         // test data;
         for (int i = 0; i < 5; i++) 
-            for (int j = 0;j < 8; j++)
         {
-            data[i][j] = arc4random() % 6;
+            NSMutableArray *currentArray = [[[NSMutableArray alloc] init] autorelease];
+            for (int j = 0;j < 8; j++)
+            {
+               [currentArray addObject:[NSNumber numberWithDouble:((CGFloat)(arc4random() % 100) / 100)]];
+            }
+            [self.dataArray addObject:currentArray];
         }
-        
-        
     }
     return self;
 }
@@ -88,9 +111,9 @@
     // configure compare graph
     CYCompareGraph *compareGraph = [[[CYCompareGraph alloc] initWithFrame:CGRectMake(0, 0, 300, 300)] autorelease];
     self.compareGraph = compareGraph;
-    [self.compareGraph setMaxValue:5];
-    [self.compareGraph setFirstObjectValuesArray:data[0]];
-    [self.compareGraph setSecondObjectValuesArray:data[1]];
+    
+    [self.compareGraph setFirstObjectValuesArray:[self.dataArray objectAtIndex:0]];
+    [self.compareGraph setSecondObjectValuesArray:[self.dataArray objectAtIndex:1]];
     
     [self.compareView addSubview:self.compareGraph];
 
@@ -105,6 +128,7 @@
     [super viewDidUnload];
     self.aeraPickPopover = nil;
     self.datePickPopover = nil;
+    self.dataArray = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -184,22 +208,33 @@
     }
 }
 
+- (NSMutableArray *)arrayWithCStyleDoubleArray:(double *) array count:(int)count
+{
+    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
+    for (int i = 0; i < count; i++) {
+        [resultArray addObject:[NSNumber numberWithDouble:array[i]]];
+    }
+    return resultArray;
+}
+
 - (IBAction)pressSquareButton:(id)sender {
     static int lastButtonID = 1;
     if ([(UIButton *)sender isSelected])
         return;
-    
+
     for (UIButton *button in self.squareButton)
     {
         [button setSelected:NO];
     }
     [[self.squareButton objectAtIndex:lastButtonID] setSelected:YES];
     [self.squareALabel setText:[[[self.squareButton objectAtIndex:lastButtonID] titleLabel] text]];
-    [self.compareGraph setFirstObjectValuesArray:data[lastButtonID]];
+    [self.compareGraph setFirstObjectValuesArray:[self.dataArray objectAtIndex:lastButtonID]];
     
     [[self.squareButton objectAtIndex:([sender tag] - 10)] setSelected:YES];
     [self.squareBLabel setText:[[[self.squareButton objectAtIndex:([sender tag] - 10)] titleLabel] text]];
-    [self.compareGraph setSecondObjectValuesArray:data[([sender tag] - 10)]];
+    [self.compareGraph setSecondObjectValuesArray:[self.dataArray objectAtIndex:([sender tag] - 10)]];
+
+
     
     lastButtonID = [sender tag] - 10;
     [self.compareGraph setNeedsDisplay];

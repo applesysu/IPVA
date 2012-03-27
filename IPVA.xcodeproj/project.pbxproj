@@ -47,6 +47,7 @@
 		BF8F586F15147F4B00E65690 /* CycleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8F586D15147F4B00E65690 /* CycleViewController.xib */; };
 		BF9ACF0015206ECE0093BF54 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9ACEFF15206ECE0093BF54 /* logo@2x.png */; };
 		BF9ACF0315206F180093BF54 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9ACF0215206F180093BF54 /* logo.png */; };
+		BFB293AC1521E0B400E35BC8 /* graph_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB293AB1521E0B400E35BC8 /* graph_bg.png */; };
 		BFD43799151096FC00277D21 /* mainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD43798151096FC00277D21 /* mainWindow.xib */; };
 		BFF032C81510CB980079BB8E /* AeraPickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF032C61510CB980079BB8E /* AeraPickViewController.m */; };
 		BFF032C91510CB980079BB8E /* AeraPickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFF032C71510CB980079BB8E /* AeraPickViewController.xib */; };
@@ -211,11 +212,12 @@
 		BF8F586D15147F4B00E65690 /* CycleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CycleViewController.xib; sourceTree = "<group>"; };
 		BF9ACEFF15206ECE0093BF54 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "../logo@2x.png"; sourceTree = "<group>"; };
 		BF9ACF0215206F180093BF54 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../logo.png; sourceTree = "<group>"; };
+		BFB293AB1521E0B400E35BC8 /* graph_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph_bg.png; sourceTree = "<group>"; };
 		BFD43798151096FC00277D21 /* mainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mainWindow.xib; sourceTree = "<group>"; };
 		BFF032C51510CB980079BB8E /* AeraPickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AeraPickViewController.h; sourceTree = "<group>"; };
 		BFF032C61510CB980079BB8E /* AeraPickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AeraPickViewController.m; sourceTree = "<group>"; };
 		BFF032C71510CB980079BB8E /* AeraPickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AeraPickViewController.xib; sourceTree = "<group>"; };
-		BFFFE5E615108D3600DDB6E7 /* IPVA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = IPVA.app; path = "万达客流统计.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFFE5E615108D3600DDB6E7 /* 万达客流统计.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "万达客流统计.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFE5EA15108D3600DDB6E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BFFFE5EC15108D3600DDB6E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFE5EE15108D3600DDB6E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -466,6 +468,7 @@
 		BF9ACF04152070C30093BF54 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				BFB293AB1521E0B400E35BC8 /* graph_bg.png */,
 				BF04765315218C1300048B3E /* login_logo.png */,
 				BF9ACF0215206F180093BF54 /* logo.png */,
 				BF9ACEFF15206ECE0093BF54 /* logo@2x.png */,
@@ -485,7 +488,7 @@
 		BFFFE5E715108D3600DDB6E7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BFFFE5E615108D3600DDB6E7 /* IPVA.app */,
+				BFFFE5E615108D3600DDB6E7 /* 万达客流统计.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -508,12 +511,12 @@
 			isa = PBXGroup;
 			children = (
 				140E75061515DCF10020D692 /* GraphAndSheet */,
+				BF7C6A92151B3755004B1897 /* CYDrawing */,
 				BFFFE5F915108D3600DDB6E7 /* AppDelegate.h */,
 				BFFFE5FA15108D3600DDB6E7 /* AppDelegate.m */,
 				BFFFE61515108FF100DDB6E7 /* LoginViewController.h */,
 				BFFFE61615108FF100DDB6E7 /* LoginViewController.m */,
 				BFFFE61715108FF200DDB6E7 /* LoginViewController.xib */,
-				BF7C6A92151B3755004B1897 /* CYDrawing */,
 				BF8F559E15146D7D00E65690 /* Popover */,
 				BF8F554F15146C8C00E65690 /* MainView */,
 				BFFFE5F115108D3600DDB6E7 /* Supporting Files */,
@@ -552,7 +555,7 @@
 			);
 			name = "万达客流统计";
 			productName = IPVA;
-			productReference = BFFFE5E615108D3600DDB6E7 /* IPVA.app */;
+			productReference = BFFFE5E615108D3600DDB6E7 /* 万达客流统计.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -605,6 +608,7 @@
 				BF9ACF0015206ECE0093BF54 /* logo@2x.png in Resources */,
 				BF9ACF0315206F180093BF54 /* logo.png in Resources */,
 				BF04765415218C1300048B3E /* login_logo.png in Resources */,
+				BFB293AC1521E0B400E35BC8 /* graph_bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

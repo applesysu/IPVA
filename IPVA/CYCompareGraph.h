@@ -10,27 +10,18 @@
 
 
 @interface CYCompareGraph : UIView {
-    CGPoint center;
-    CGFloat radious;
-    NSInteger edges;
-    CGFloat width;
-    CGColorRef polygonColor;
-    CGColorRef firstObjectColor;
-    CGColorRef secondObjectColor;
-    NSInteger maxValue;
-    NSInteger *firstObjectValuesArray;
-    NSInteger *secondObjectValuesArray;
+    
 }
 
-@property CGPoint center;
-@property CGFloat radious;
-@property NSInteger edges;
-@property CGFloat width;
-@property CGColorRef polygonColor;
-@property CGColorRef firstObjectColor;
-@property CGColorRef secondObjectColor;
-@property NSInteger maxValue;
-@property NSInteger *firstObjectValuesArray;
-@property NSInteger *secondObjectValuesArray;
+@property (nonatomic) CGPoint center;
+@property (nonatomic) CGFloat radious;
+@property (nonatomic) NSInteger edges;
+@property (nonatomic) CGFloat width;
+@property (nonatomic) CGColorRef polygonColor;
+@property (nonatomic) CGColorRef firstObjectColor;
+@property (nonatomic) CGColorRef secondObjectColor;
+@property (nonatomic) NSInteger maxValue;
+@property (nonatomic, retain)NSMutableArray *firstObjectValuesArray;
+@property (nonatomic, retain)NSMutableArray *secondObjectValuesArray;
 
 @end
