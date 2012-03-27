@@ -26,7 +26,8 @@
 @property (nonatomic, retain) UIPopoverController *cyclePickPopover;
 
 @property (nonatomic, retain) IBOutlet UIButton *consumer, *sales, *effect, *collectConsumer, *convertRate, *bags, *generateGraph;
-@property (nonatomic, retain) NSMutableArray *selectedButton;
+@property (nonatomic, retain) NSMutableArray *selectedButton, *selectedTag;
+@property (nonatomic, assign) int indexs;
 
 - (IBAction)pressAeraButton:(id)sender;
 - (IBAction)pressDateButton:(id)sender;

@@ -24,7 +24,7 @@
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
 
-@synthesize consumer, sales, collectConsumer, convertRate, bags, effect, selectedButton, generateGraph; 
+@synthesize consumer, sales, collectConsumer, convertRate, bags, effect, selectedButton, generateGraph, indexs, selectedTag; 
 
 - (void)dealloc
 {
@@ -36,36 +36,33 @@
 
 -(IBAction) buttonClick:(id)sender
 {
-    NSLog(@"buttonclick");
-    if ([selectedButton count] < 2)
-    {
-        [selectedButton addObject:[(UIButton *)sender titleLabel].text];
-        [(UIButton *)sender setEnabled:NO];
-        if ([selectedButton count] == 2)
-        {
-            [self.generateGraph setEnabled:YES];
-            [self.consumer setEnabled:NO];
-            [self.sales setEnabled:NO];
-            [self.collectConsumer setEnabled:NO];
-            [self.convertRate setEnabled:NO];
-            [self.bags setEnabled:NO];
-            [self.effect setEnabled:NO];
-        }
-    }
-}
--(IBAction) generateCG
-{
-    NSLog(@"hihi  generate");
-    [self constructScatterPlot:self.selectedButton];
     
-    [self.selectedButton removeAllObjects];
-    [self.generateGraph setEnabled:NO];
-    [self.consumer setEnabled:YES];
-    [self.sales setEnabled:YES];
-    [self.collectConsumer setEnabled:YES];
-    [self.convertRate setEnabled:YES];
-    [self.bags setEnabled:YES];
-    [self.effect setEnabled:YES];
+    if (self.indexs == 0)
+    {
+        [self.selectedButton removeObjectAtIndex:self.indexs];
+        [selectedButton insertObject:[(UIButton *)sender titleLabel].text atIndex:self.indexs];
+        
+        UIButton *button = (UIButton *)[self.view viewWithTag:[[self.selectedTag objectAtIndex:self.indexs] intValue]];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [selectedTag removeObjectAtIndex:self.indexs];
+        [selectedTag insertObject:[NSNumber numberWithInt:[(UIButton *)sender tag]] atIndex:self.indexs];
+        [(UIButton *)sender setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        self.indexs = 1;
+    }
+    else
+    {
+        [self.selectedButton removeObjectAtIndex:self.indexs];
+        [selectedButton insertObject:[(UIButton *)sender titleLabel].text atIndex:self.indexs];
+        
+        UIButton *button = (UIButton *)[self.view viewWithTag:[[self.selectedTag objectAtIndex:self.indexs] intValue]];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [selectedTag removeObjectAtIndex:self.indexs];
+        [selectedTag insertObject:[NSNumber numberWithInt:[(UIButton *)sender tag]] atIndex:self.indexs];
+        [(UIButton *)sender setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        self.indexs = 0;
+    }
+    
+    [self constructScatterPlot:self.selectedButton];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -77,8 +74,7 @@
         self.scatterPlotView.layer.masksToBounds = YES;
         self.scatterPlotView.layer.cornerRadius = 20;
         [self.view addSubview:self.scatterPlotView];
-        self.selectedButton = [[NSMutableArray alloc] initWithCapacity:2];
-        [self.generateGraph setEnabled:NO];
+        self.indexs = 0;
     }
     return self;
 }
@@ -266,6 +262,16 @@
     self.cyclePickPopover = [[UIPopoverController alloc] initWithContentViewController:cyclePickVC];
     [self.cyclePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
     [self.cyclePickPopover setDelegate:self];
+    
+    self.selectedButton = [[NSMutableArray alloc] initWithCapacity:2];
+    [self.selectedButton insertObject:@"客流量" atIndex:0];
+    [self.selectedButton insertObject:@"销售额" atIndex:1];
+    [self.consumer setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.sales setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    self.selectedTag = [[NSMutableArray alloc] initWithCapacity:2];
+    [self.selectedTag insertObject:[NSNumber numberWithInt:self.consumer.tag] atIndex:0];
+    [self.selectedTag insertObject:[NSNumber numberWithInt:self.sales.tag] atIndex:1];
+    [self constructScatterPlot:self.selectedButton];
     
 }
 
