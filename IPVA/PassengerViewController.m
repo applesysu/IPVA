@@ -211,14 +211,14 @@
     [self createTableView];
     
     // configure popover;
-    AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] init] autorelease];
+    AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] initWithNibName:@"AeraPickViewController" bundle:nil] autorelease];
     self.aeraPickPopover = [[UIPopoverController alloc] initWithContentViewController:aeraPickVC];
     [self.aeraPickPopover setPopoverContentSize:CGSizeMake(320, 320)];
     [self.aeraPickPopover setDelegate:self];
     
-    DatePickViewController *datePickVC = [[[DatePickViewController alloc] init] autorelease];
+    DatePickViewController *datePickVC = [[[DatePickViewController alloc] initWithNibName:@"DateViewController" bundle:nil] autorelease];
     self.datePickPopover = [[UIPopoverController alloc] initWithContentViewController:datePickVC];
-    [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
+    [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 265)];
     [self.datePickPopover setDelegate:self];
     
     CycleViewController *cyclePickVC = [[[CycleViewController alloc] init] autorelease];

@@ -109,6 +109,45 @@
 					<object class="IBUIToolbar" id="207345774">
 						<reference key="NSNextResponder" ref="764617568"/>
 						<int key="NSvFlags">266</int>
+						<array class="NSMutableArray" key="NSSubviews">
+							<object class="IBUISegmentedControl" id="942067701">
+								<reference key="NSNextResponder" ref="207345774"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{585, 7}, {122, 30}}</string>
+								<reference key="NSSuperview" ref="207345774"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+								<int key="IBSegmentControlStyle">2</int>
+								<int key="IBNumberOfSegments">3</int>
+								<int key="IBSelectedSegmentIndex">0</int>
+								<array key="IBSegmentTitles">
+									<string>日</string>
+									<string>周</string>
+									<string>月</string>
+								</array>
+								<array class="NSMutableArray" key="IBSegmentWidths">
+									<real value="0.0"/>
+									<real value="0.0"/>
+									<real value="0.0"/>
+								</array>
+								<array class="NSMutableArray" key="IBSegmentEnabledStates">
+									<boolean value="YES"/>
+									<boolean value="YES"/>
+									<boolean value="YES"/>
+								</array>
+								<array class="NSMutableArray" key="IBSegmentContentOffsets">
+									<string>{0, 0}</string>
+									<string>{0, 0}</string>
+									<string>{0, 0}</string>
+								</array>
+								<array class="NSMutableArray" key="IBSegmentImages">
+									<reference ref="4"/>
+									<reference ref="4"/>
+									<reference ref="4"/>
+								</array>
+							</object>
+						</array>
 						<string key="NSFrameSize">{768, 44}</string>
 						<reference key="NSSuperview" ref="764617568"/>
 						<reference key="NSNextKeyView" ref="504924065"/>
@@ -134,10 +173,9 @@
 								<reference key="IBUIToolbar" ref="207345774"/>
 								<int key="IBUISystemItemIdentifier">13</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="53403385">
-								<string key="IBUITitle">周期</string>
+							<object class="IBUIBarButtonItem" id="1009293713">
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<int key="IBUIStyle">1</int>
+								<reference key="IBUICustomView" ref="942067701"/>
 								<reference key="IBUIToolbar" ref="207345774"/>
 							</object>
 							<object class="IBUIBarButtonItem" id="614595207">
@@ -237,14 +275,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">pressCycleButton:</string>
-						<reference key="source" ref="53403385"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">31</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">pressDateButton:</string>
 						<reference key="source" ref="614595207"/>
 						<reference key="destination" ref="372490531"/>
@@ -299,8 +329,8 @@
 							<reference ref="573772741"/>
 							<reference ref="350286600"/>
 							<reference ref="959808980"/>
-							<reference ref="53403385"/>
 							<reference ref="614595207"/>
+							<reference ref="1009293713"/>
 						</array>
 						<reference key="parent" ref="764617568"/>
 					</object>
@@ -320,11 +350,6 @@
 						<reference key="parent" ref="207345774"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">28</int>
-						<reference key="object" ref="53403385"/>
-						<reference key="parent" ref="207345774"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">29</int>
 						<reference key="object" ref="614595207"/>
 						<reference key="parent" ref="207345774"/>
@@ -333,6 +358,19 @@
 						<int key="objectID">35</int>
 						<reference key="object" ref="504924065"/>
 						<reference key="parent" ref="764617568"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">36</int>
+						<reference key="object" ref="1009293713"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="942067701"/>
+						</array>
+						<reference key="parent" ref="207345774"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">37</int>
+						<reference key="object" ref="942067701"/>
+						<reference key="parent" ref="1009293713"/>
 					</object>
 				</array>
 			</object>
@@ -348,15 +386,17 @@
 				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="35.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="36.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="37.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<integer value="0" key="37.IUISegmentedControlInspectorSelectedSegmentMetadataKey"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">35</int>
+			<int key="maxID">37</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

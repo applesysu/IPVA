@@ -91,26 +91,28 @@
     
     
     // configure popover;
-    AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] init] autorelease];
+    AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] initWithNibName:@"AeraPickViewController" bundle:nil] autorelease];
     self.aeraPickPopover = [[UIPopoverController alloc] initWithContentViewController:aeraPickVC];
     [self.aeraPickPopover setPopoverContentSize:CGSizeMake(320, 320)];
     [self.aeraPickPopover setDelegate:self];
     
-    DatePickViewController *datePickVC = [[[DatePickViewController alloc] init] autorelease];
+    DatePickViewController *datePickVC = [[[DatePickViewController alloc] initWithNibName:@"DateViewController" bundle:nil] autorelease];
+    [datePickVC.calendar setDelegate:self];
     self.datePickPopover = [[UIPopoverController alloc] initWithContentViewController:datePickVC];
-    [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
+    [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 265)];
     [self.datePickPopover setDelegate:self];
     
-    CycleViewController *cyclePickVC = [[[CycleViewController alloc] init] autorelease];
-    self.cyclePickPopover = [[UIPopoverController alloc] initWithContentViewController:cyclePickVC];
-    [self.cyclePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
-    [self.cyclePickPopover setDelegate:self];
+//    CycleViewController *cyclePickVC = [[[CycleViewController alloc] initWithNibName:@"CycleViewController" bundle:nil] autorelease];
+//    self.cyclePickPopover = [[UIPopoverController alloc] initWithContentViewController:cyclePickVC];
+//    [self.cyclePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
+//    [self.cyclePickPopover setDelegate:self];
     
     
     
     // configure compare graph
     CYCompareGraph *compareGraph = [[[CYCompareGraph alloc] initWithFrame:CGRectMake(0, 0, 300, 300)] autorelease];
     self.compareGraph = compareGraph;
+
     
     [self.compareGraph setFirstObjectValuesArray:[self.dataArray objectAtIndex:0]];
     [self.compareGraph setSecondObjectValuesArray:[self.dataArray objectAtIndex:1]];
@@ -208,14 +210,14 @@
     }
 }
 
-- (NSMutableArray *)arrayWithCStyleDoubleArray:(double *) array count:(int)count
-{
-    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
-    for (int i = 0; i < count; i++) {
-        [resultArray addObject:[NSNumber numberWithDouble:array[i]]];
-    }
-    return resultArray;
-}
+//- (NSMutableArray *)arrayWithCStyleDoubleArray:(double *) array count:(int)count
+//{
+//    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
+//    for (int i = 0; i < count; i++) {
+//        [resultArray addObject:[NSNumber numberWithDouble:array[i]]];
+//    }
+//    return resultArray;
+//}
 
 - (IBAction)pressSquareButton:(id)sender {
     static int lastButtonID = 1;
@@ -238,6 +240,17 @@
     
     lastButtonID = [sender tag] - 10;
     [self.compareGraph setNeedsDisplay];
+}
+
+
+#pragma mark - TKCalendarMonthViewDelegate methods
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView didSelectDate:(NSDate *)d {
+    NSLog(@"Did Select Date and delegate to master view, %@", d);
+}
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView monthDidChange:(NSDate *)d {
+	NSLog(@"calendarMonthView monthDidChange");	
 }
 
 @end

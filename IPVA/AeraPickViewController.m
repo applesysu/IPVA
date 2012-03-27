@@ -27,6 +27,7 @@
     [_aeraArray release];
 }
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];

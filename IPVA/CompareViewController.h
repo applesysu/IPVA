@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CYCompareGraph.h"
+#import "TKCalendarMonthView.h"
 
-@interface CompareViewController : UIViewController <UIPopoverControllerDelegate>
+
+@interface CompareViewController : UIViewController <UIPopoverControllerDelegate, TKCalendarMonthViewDelegate>
 
 @property (nonatomic, retain) UIPopoverController *aeraPickPopover;
 @property (nonatomic, retain) UIPopoverController *datePickPopover;

@@ -85,7 +85,7 @@ static int calendarShadowOffset = (int)-20;
 #pragma mark TKCalendarMonthViewDelegate methods
 
 - (void)calendarMonthView:(TKCalendarMonthView *)monthView didSelectDate:(NSDate *)d {
-    
+    NSLog(@"Did Select Date, %@", d);
 }
 
 - (void)calendarMonthView:(TKCalendarMonthView *)monthView monthDidChange:(NSDate *)d {
