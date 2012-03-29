@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CorePlot-CocoaTouch.h"
+#import "TKCalendarMonthView.h"
 
-@interface CategoryViewController : UIViewController <UIPopoverControllerDelegate, CPTScatterPlotDataSource, CPTScatterPlotDelegate>
+@interface CategoryViewController : UIViewController <UIPopoverControllerDelegate, TKCalendarMonthViewDelegate, CPTScatterPlotDataSource, CPTScatterPlotDelegate>
 {
     NSMutableArray *dataForPlot, *dataForChart;
     CPTGraphHostingView *scatterPlotView;

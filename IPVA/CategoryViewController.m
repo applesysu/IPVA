@@ -254,15 +254,12 @@
     [self.aeraPickPopover setDelegate:self];
     
     DatePickViewController *datePickVC = [[[DatePickViewController alloc] initWithNibName:@"DateViewController" bundle:nil] autorelease];
+    [datePickVC.calendar setDelegate:self];
     self.datePickPopover = [[UIPopoverController alloc] initWithContentViewController:datePickVC];
     [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 265)];
     [self.datePickPopover setDelegate:self];
     
-    CycleViewController *cyclePickVC = [[[CycleViewController alloc] init] autorelease];
-    self.cyclePickPopover = [[UIPopoverController alloc] initWithContentViewController:cyclePickVC];
-    [self.cyclePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
-    [self.cyclePickPopover setDelegate:self];
-    
+
     self.selectedButton = [[NSMutableArray alloc] initWithCapacity:2];
     [self.selectedButton insertObject:@"客流量" atIndex:0];
     [self.selectedButton insertObject:@"销售额" atIndex:1];
@@ -359,5 +356,14 @@
     }
 }
 
+#pragma mark - TKCalendarMonthViewDelegate methods
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView didSelectDate:(NSDate *)d {
+    NSLog(@"Did Select Date and delegate to master view, %@", d);
+}
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView monthDidChange:(NSDate *)d {
+	NSLog(@"calendarMonthView monthDidChange");	
+}
 
 @end
