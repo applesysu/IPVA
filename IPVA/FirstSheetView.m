@@ -8,6 +8,7 @@
 
 #import "FirstSheetView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 @implementation FirstSheetView
 
@@ -28,9 +29,20 @@
         titleRowView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, [self.titleArray count] * 110, 50)];
         titleRowView.backgroundColor = [UIColor grayColor];
         
+        int buttonLoaction = 10;
         for(int i = 0;i < [titleArray count];i++)
         {
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10 + 110*i, 10, 90, 30)];
+            UIButton *button;
+            if (i != 1)
+            {
+                button = [[UIButton alloc] initWithFrame:CGRectMake(buttonLoaction +30, 10, 60, 30)];
+                buttonLoaction += 100;
+            }
+            else
+            {
+                button = [[UIButton alloc] initWithFrame:CGRectMake(buttonLoaction+ 40, 10, 90, 30)];
+                buttonLoaction += 150;
+            }
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button setTitleColor:[UIColor yellowColor] forState:UIControlStateHighlighted];
             [button setTitle:[titleArray objectAtIndex:i] forState:UIControlStateNormal];
@@ -39,6 +51,7 @@
             button.tag = i;
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
             [titleRowView addSubview:button];
+            [button setEnabled:NO];
             [button release];
         }
         [self addSubview:titleRowView];
@@ -84,27 +97,66 @@
         int index = 0;
         for (int i = 0; i < [self.titleArray count]; i++)
         {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(labelLocation, 10, 110, 30)];
+            UILabel *label;
+            
+            if (i != 1)
+            {
+                label = [[UILabel alloc] initWithFrame:CGRectMake(labelLocation, 10, 110, 30)];
+                labelLocation += 110;
+            }
+            else
+            {
+                label = [[UILabel alloc] initWithFrame:CGRectMake(labelLocation, 10, 180, 30)];
+                labelLocation += 180;
+            }
             label.backgroundColor = [UIColor blackColor];
             label.textColor = [UIColor whiteColor];
-            label.textAlignment = UITextAlignmentCenter;
             label.tag = 100 + index;
             [cell.contentView addSubview:label];
-            labelLocation += 110;
+            
             index++;
             [label release];
         }
     }
     
     //设置每一个cell的内容
-    for (int i = 0; i < [titleArray count]; i++)
-    {
-        UILabel *label = (UILabel *)[cell.contentView viewWithTag:(100 + i)];
-        label.text = [titleArray objectAtIndex:i];
-    }
+    UILabel *label = (UILabel *)[cell.contentView viewWithTag:100];
+    label.text = [NSString stringWithFormat:@"%d", indexPath.row+1];
+    label.textAlignment = UITextAlignmentCenter;
+    
+    label = (UILabel *)[cell.contentView viewWithTag:101];
+    label.text = [self.data objectAtIndex:indexPath.row];
+    label.textAlignment = UITextAlignmentLeft;
     
     return cell;
 	
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare = [self.data objectAtIndex:indexPath.row];
+    
+    for (int i = 0; i < [self.data count]; i++)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        UITableViewCell *cell = [self.rightTableView cellForRowAtIndexPath:indexPath];
+        if ([cell accessoryType] == UITableViewCellAccessoryCheckmark)
+        {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
+    }
+    
+    [[self.rightTableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
+    [[self.rightTableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:NO];
+    
+    if (indexPath.row == 0) {
+        id delegate = [[UIApplication sharedApplication] delegate];
+        [delegate setTabBarControllerShowHeadOffice:YES];
+    } else {
+        id delegate = [[UIApplication sharedApplication] delegate];
+        [delegate setTabBarControllerShowHeadOffice:NO];
+    }
+
 }
 
 

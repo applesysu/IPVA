@@ -11,16 +11,24 @@
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
 
-#import "SheetView.h"
+#import "AppDelegate.h"
 
+#import "SheetView.h"
 
 @implementation TrendViewController
 
-@synthesize daySheet, weekSheet, yearSheet, scatterPlotView, categorySelection, timeSelection, graph, dataForChart, dataForPlot;
+@synthesize daySheet, weekSheet, yearSheet;
+@synthesize scatterPlotView, categorySelection, timeSelection,  graph, dataForChart, dataForPlot;
+
+@synthesize cycleSelection, selectedDate;
+
+@synthesize dataFromCompanyDatabase;
 
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
+
+@synthesize timeLabel, toolBarTitleLabel, pageTitleLabel;
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,12 +36,21 @@
     
     if (self != nil)
     {
-        self.scatterPlotView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 75, 700, 500)] autorelease];
+        //configure the hosting view
+        self.scatterPlotView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 130, 700, 500)] autorelease];
         self.scatterPlotView.layer.masksToBounds = YES;
         self.scatterPlotView.layer.cornerRadius = 20;
     }
     
     return self;
+}
+
+-(void) dealloc
+{
+    [super dealloc];
+    [self.aeraPickPopover release];
+    [self.datePickPopover release];
+    [self.cyclePickPopover release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,26 +121,16 @@
 	graph.paddingRight	= 0.0;
 	graph.paddingBottom = 0.0;
     
+    //set the text style for the graph title
     CPTMutableTextStyle *textStyle = [CPTMutableTextStyle textStyle];
     textStyle.color = [CPTColor grayColor];
     textStyle.fontName = @"Helvetica-Bold";
     textStyle.fontSize = 25.0;
     
-    graph.title = @"客流分布";
+    //set the location of the title
     graph.titleTextStyle = textStyle;
-    graph.titleDisplacement = CGPointMake(0.0, -20.0);
+    graph.titleDisplacement = CGPointMake(0.0, -40.0);
     graph.titlePlotAreaFrameAnchor = CPTRectAnchorTop;
-    
-    if (self.categorySelection.selectedSegmentIndex == 0)
-    {
-        self.graph.title = @"客流量";
-        self.graph.titleTextStyle = textStyle;
-    }
-    else
-    {
-        self.graph.title = @"销售额";
-        self.graph.titleTextStyle = textStyle;
-    }
     
 	// Setup plot space
 	CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
@@ -163,9 +170,105 @@
             
             for (int i = 0; i < 31; i++)
             {
-                [tempArray2 addObject:[NSString stringWithFormat:@"%d日",i+1]];
+                [tempArray2 addObject:[NSString stringWithFormat:@"%d",i+1]];
             }
             xAxisLabels = tempArray2;
+            
+            NSUInteger labelLocation = 0;
+            NSMutableArray *customLabels = [NSMutableArray arrayWithCapacity:[xAxisLabels count]];
+            for ( NSNumber *tickLocation in customTickLocations ) 
+            {
+                CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++] textStyle:mts];
+                newLabel.tickLocation = [tickLocation decimalValue];
+                newLabel.offset		  = x.labelOffset + x.majorTickLength;
+                newLabel.rotation	  = M_PI / 4;
+                [customLabels addObject:newLabel];
+                [newLabel release];
+            }
+            
+            x.axisLabels = [NSSet setWithArray:customLabels];
+            CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
+            axisTitleStyle.color = [CPTColor blackColor];
+            axisTitleStyle.fontSize = 14;
+            CPTAxisTitle *title = [[[CPTAxisTitle alloc] initWithText:@"时间周期（日）" textStyle:axisTitleStyle] autorelease];
+            x.axisTitle = title;
+            x.titleOffset = 40.0f;
+            
+            CPTXYAxis *y = axisSet.yAxis;
+            y.visibleRange = plotSpace.yRange;
+            y.majorIntervalLength = CPTDecimalFromString (@"5");
+            y.orthogonalCoordinateDecimal = CPTDecimalFromString (@"0");
+            
+            
+            if (self.categorySelection.selectedSegmentIndex == 0)
+            {
+                self.graph.title = @"客流量";
+                y.title = @"客流量（万人）";
+                y.titleOffset = -60.0f ;
+                y.titleLocation = CPTDecimalFromFloat ( 46.0f );
+                y.titleRotation = M_PI * 2;
+                self.graph.titleTextStyle = textStyle;
+            }
+            else
+            {
+                self.graph.title = @"销售额";
+                y.title = @"销售额（万元）";
+                y.titleOffset = -60.0f ;
+                y.titleLocation = CPTDecimalFromFloat ( 46.0f );
+                y.titleRotation = M_PI * 2;
+                self.graph.titleTextStyle = textStyle;
+            }
+            
+            // Create a green plot area
+            CPTScatterPlot *dataSourceLinePlot1 = [[[CPTScatterPlot alloc] init] autorelease];
+            
+            CPTMutableLineStyle *lineStyle1 = [[dataSourceLinePlot1.dataLineStyle mutableCopy] autorelease];
+            lineStyle1.lineWidth				 = 3.f;
+            lineStyle1.lineColor				 = [CPTColor greenColor];
+            lineStyle1.dashPattern = nil;
+            dataSourceLinePlot1.dataLineStyle = lineStyle1;
+            dataSourceLinePlot1.identifier = @"本月";
+            dataSourceLinePlot1.dataSource = self;
+            
+            // Animate in the new plot, as an example
+            [graph addPlot:dataSourceLinePlot1];
+            
+            // Create a green plot area
+            CPTScatterPlot *dataSourceLinePlot2 = [[[CPTScatterPlot alloc] init] autorelease];
+            
+            CPTMutableLineStyle *lineStyle2 = [[dataSourceLinePlot2.dataLineStyle mutableCopy] autorelease];
+            lineStyle2.lineWidth				 = 3.f;
+            lineStyle2.lineColor				 = [CPTColor yellowColor];
+            lineStyle2.dashPattern			 = nil;
+            dataSourceLinePlot2.dataLineStyle = lineStyle2;
+            dataSourceLinePlot2.identifier = @"上月";
+            dataSourceLinePlot2.dataSource = self;
+            
+            // Animate in the new plot, as an example
+            [graph addPlot:dataSourceLinePlot2];
+            
+            // Create a green plot area
+            CPTScatterPlot *dataSourceLinePlot3 = [[[CPTScatterPlot alloc] init] autorelease];
+            
+            CPTMutableLineStyle *lineStyle3 = [[dataSourceLinePlot3.dataLineStyle mutableCopy] autorelease];
+            lineStyle3.lineWidth				 = 3.f;
+            lineStyle3.lineColor				 = [CPTColor redColor];
+            lineStyle3.dashPattern			 = nil;
+            dataSourceLinePlot3.dataLineStyle = lineStyle3;
+            dataSourceLinePlot3.identifier = @"上年同月";
+            dataSourceLinePlot3.dataSource = self;
+            
+            // Animate in the new plot, as an example
+            [graph addPlot:dataSourceLinePlot3];
+            
+            graph.legend				 = [CPTLegend legendWithGraph:graph];
+            graph.legend.textStyle		 = x.titleTextStyle;
+            graph.legend.fill			 = [CPTFill fillWithColor:[CPTColor darkGrayColor]];
+            graph.legend.borderLineStyle = x.axisLineStyle;
+            graph.legend.cornerRadius	 = 5.0;
+            graph.legend.swatchSize		 = CGSizeMake(25.0, 25.0);
+            graph.legendDisplacement	 = CGPointMake(150.0, 370.0);
+            
         }
             break;
             
@@ -192,11 +295,92 @@
             
             for (int i = 0; i < 52; i++)
             {
-                [tempArray2 addObject:[NSString stringWithFormat:@"%d周",i+1]];
+                [tempArray2 addObject:[NSString stringWithFormat:@"%d",i+1]];
             }
             xAxisLabels = tempArray2;
             
             mts.fontSize = 7.0f;
+            
+            NSUInteger labelLocation = 0;
+            NSMutableArray *customLabels = [NSMutableArray arrayWithCapacity:[xAxisLabels count]];
+            for ( NSNumber *tickLocation in customTickLocations ) 
+            {
+                CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++] textStyle:mts];
+                newLabel.tickLocation = [tickLocation decimalValue];
+                newLabel.offset		  = x.labelOffset + x.majorTickLength;
+                newLabel.rotation	  = M_PI / 4;
+                [customLabels addObject:newLabel];
+                [newLabel release];
+            }
+            
+            x.axisLabels = [NSSet setWithArray:customLabels];
+            CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
+            axisTitleStyle.color = [CPTColor blackColor];
+            axisTitleStyle.fontSize = 14;
+            CPTAxisTitle *title = [[[CPTAxisTitle alloc] initWithText:@"时间周期（周）" textStyle:axisTitleStyle] autorelease];
+            x.axisTitle = title;
+            x.titleOffset = 40.0f;
+            
+            CPTXYAxis *y = axisSet.yAxis;
+            y.visibleRange = plotSpace.yRange;
+            y.majorIntervalLength = CPTDecimalFromString (@"5");
+            y.orthogonalCoordinateDecimal = CPTDecimalFromString (@"0");
+            
+            
+            if (self.categorySelection.selectedSegmentIndex == 0)
+            {
+                self.graph.title = @"客流量";
+                y.title = @"客流量（万人）";
+                y.titleOffset = -60.0f ;
+                y.titleLocation = CPTDecimalFromFloat ( 46.0f );
+                y.titleRotation = M_PI * 2;
+                self.graph.titleTextStyle = textStyle;
+            }
+            else
+            {
+                self.graph.title = @"销售额";
+                y.title = @"销售额（万元）";
+                y.titleOffset = -60.0f ;
+                y.titleLocation = CPTDecimalFromFloat ( 46.0f );
+                y.titleRotation = M_PI * 2;
+                self.graph.titleTextStyle = textStyle;
+            }
+            
+            // Create a green plot area
+            CPTScatterPlot *dataSourceLinePlot1 = [[[CPTScatterPlot alloc] init] autorelease];
+            
+            CPTMutableLineStyle *lineStyle1 = [[dataSourceLinePlot1.dataLineStyle mutableCopy] autorelease];
+            lineStyle1.lineWidth				 = 3.f;
+            lineStyle1.lineColor				 = [CPTColor greenColor];
+            lineStyle1.dashPattern			 =  nil;
+            dataSourceLinePlot1.dataLineStyle = lineStyle1;
+            dataSourceLinePlot1.identifier = @"今年";
+            dataSourceLinePlot1.dataSource = self;
+            
+            // Animate in the new plot, as an example
+            [graph addPlot:dataSourceLinePlot1];
+            
+            // Create a green plot area
+            CPTScatterPlot *dataSourceLinePlot2 = [[[CPTScatterPlot alloc] init] autorelease];
+            
+            CPTMutableLineStyle *lineStyle2 = [[dataSourceLinePlot2.dataLineStyle mutableCopy] autorelease];
+            lineStyle2.lineWidth				 = 3.f;
+            lineStyle2.lineColor				 = [CPTColor yellowColor];
+            lineStyle2.dashPattern			 =  nil;
+            dataSourceLinePlot2.dataLineStyle = lineStyle2;
+            dataSourceLinePlot2.identifier = @"去年";
+            dataSourceLinePlot2.dataSource = self;
+            
+            // Animate in the new plot, as an example
+            [graph addPlot:dataSourceLinePlot2];
+            
+            graph.legend				 = [CPTLegend legendWithGraph:graph];
+            graph.legend.textStyle		 = x.titleTextStyle;
+            graph.legend.fill			 = [CPTFill fillWithColor:[CPTColor darkGrayColor]];
+            graph.legend.borderLineStyle = x.axisLineStyle;
+            graph.legend.cornerRadius	 = 5.0;
+            graph.legend.swatchSize		 = CGSizeMake(25.0, 25.0);
+            graph.legendDisplacement	 = CGPointMake(150.0, 370.0);
             
         }
             break;
@@ -225,56 +409,93 @@
             
             for (int i = 0; i < 12; i++)
             {
-                [tempArray2 addObject:[NSString stringWithFormat:@"%d月",i+1]];
+                [tempArray2 addObject:[NSString stringWithFormat:@"%d",i+1]];
             }
             xAxisLabels = tempArray2;
+            
+            NSUInteger labelLocation = 0;
+            NSMutableArray *customLabels = [NSMutableArray arrayWithCapacity:[xAxisLabels count]];
+            for ( NSNumber *tickLocation in customTickLocations ) 
+            {
+                CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++] textStyle:mts];
+                newLabel.tickLocation = [tickLocation decimalValue];
+                newLabel.offset		  = x.labelOffset + x.majorTickLength;
+                newLabel.rotation	  = M_PI / 4;
+                [customLabels addObject:newLabel];
+                [newLabel release];
+            }
+            
+            x.axisLabels = [NSSet setWithArray:customLabels];
+            CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
+            axisTitleStyle.color = [CPTColor blackColor];
+            axisTitleStyle.fontSize = 14;
+            CPTAxisTitle *title = [[[CPTAxisTitle alloc] initWithText:@"时间周期（月）" textStyle:axisTitleStyle] autorelease];
+            x.axisTitle = title;
+            x.titleOffset = 40.0f;
+            
+            CPTXYAxis *y = axisSet.yAxis;
+            y.visibleRange = plotSpace.yRange;
+            y.majorIntervalLength = CPTDecimalFromString (@"5");
+            y.orthogonalCoordinateDecimal = CPTDecimalFromString (@"0");
+            
+            if (self.categorySelection.selectedSegmentIndex == 0)
+            {
+                self.graph.title = @"客流量";
+                y.title = @"客流量（万人）";
+                y.titleOffset = -60.0f ;
+                y.titleLocation = CPTDecimalFromFloat ( 46.0f );
+                y.titleRotation = M_PI * 2;
+                self.graph.titleTextStyle = textStyle;
+            }
+            else
+            {
+                self.graph.title = @"销售额";
+                y.title = @"销售额（万元）";
+                y.titleOffset = -60.0f ;
+                y.titleLocation = CPTDecimalFromFloat ( 46.0f );
+                y.titleRotation = M_PI * 2;
+                self.graph.titleTextStyle = textStyle;
+            }
+            
+            // Create a green plot area
+            CPTScatterPlot *dataSourceLinePlot1 = [[[CPTScatterPlot alloc] init] autorelease];
+            
+            CPTMutableLineStyle *lineStyle1 = [[dataSourceLinePlot1.dataLineStyle mutableCopy] autorelease];
+            lineStyle1.lineWidth				 = 3.f;
+            lineStyle1.lineColor				 = [CPTColor greenColor];
+            lineStyle1.dashPattern			 = nil;
+            dataSourceLinePlot1.dataLineStyle = lineStyle1;
+            dataSourceLinePlot1.identifier = @"今年";
+            dataSourceLinePlot1.dataSource = self;
+            
+            // Animate in the new plot, as an example
+            [graph addPlot:dataSourceLinePlot1];
+            
+            // Create a green plot area
+            CPTScatterPlot *dataSourceLinePlot2 = [[[CPTScatterPlot alloc] init] autorelease];
+            
+            CPTMutableLineStyle *lineStyle2 = [[dataSourceLinePlot2.dataLineStyle mutableCopy] autorelease];
+            lineStyle2.lineWidth				 = 3.f;
+            lineStyle2.lineColor				 = [CPTColor yellowColor];
+            lineStyle2.dashPattern			 = nil;
+            dataSourceLinePlot2.dataLineStyle = lineStyle2;
+            dataSourceLinePlot2.identifier = @"明年";
+            dataSourceLinePlot2.dataSource = self;
+            
+            // Animate in the new plot, as an example
+            [graph addPlot:dataSourceLinePlot2];
         }
+            graph.legend				 = [CPTLegend legendWithGraph:graph];
+            graph.legend.textStyle		 = x.titleTextStyle;
+            graph.legend.fill			 = [CPTFill fillWithColor:[CPTColor darkGrayColor]];
+            graph.legend.borderLineStyle = x.axisLineStyle;
+            graph.legend.cornerRadius	 = 5.0;
+            graph.legend.swatchSize		 = CGSizeMake(25.0, 25.0);
+            graph.legendDisplacement	 = CGPointMake(150.0, 370.0);
             break;
     }
-            
-    NSUInteger labelLocation = 0;
-    NSMutableArray *customLabels = [NSMutableArray arrayWithCapacity:[xAxisLabels count]];
-    for ( NSNumber *tickLocation in customTickLocations ) 
-    {
-		 CPTAxisLabel *newLabel = [[CPTAxisLabel alloc] initWithText:[xAxisLabels objectAtIndex:labelLocation++] textStyle:mts];
-		 newLabel.tickLocation = [tickLocation decimalValue];
-		 newLabel.offset		  = x.labelOffset + x.majorTickLength;
-         newLabel.rotation	  = M_PI / 4;
-		 [customLabels addObject:newLabel];
-		 [newLabel release];
-    }
     
-	x.axisLabels = [NSSet setWithArray:customLabels];
-    x.title = @"时间周期";
-    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
-    axisTitleStyle.color = [CPTColor blackColor];
-    axisTitleStyle.fontSize = 14;
-    CPTAxisTitle *title = [[[CPTAxisTitle alloc] initWithText:@"时间周期" textStyle:axisTitleStyle] autorelease];
-    x.axisTitle = title;
-    x.titleOffset = 40.0f;
     
-    CPTXYAxis *y = axisSet.yAxis;
-    y.visibleRange = plotSpace.yRange;
-    y.majorIntervalLength = CPTDecimalFromString (@"5");
-    y.orthogonalCoordinateDecimal = CPTDecimalFromString (@"0");
-    y.title = @"数量";
-    y.titleOffset = 45.0f ;
-    y.titleLocation = CPTDecimalFromFloat ( 46.0f );
-    y.titleRotation = M_PI * 2;
-    
-    // Create a green plot area
-	CPTScatterPlot *dataSourceLinePlot = [[[CPTScatterPlot alloc] init] autorelease];
-    
-	CPTMutableLineStyle *lineStyle = [[dataSourceLinePlot.dataLineStyle mutableCopy] autorelease];
-	lineStyle.lineWidth				 = 3.f;
-	lineStyle.lineColor				 = [CPTColor greenColor];
-	lineStyle.dashPattern			 = [NSArray arrayWithObjects:[NSNumber numberWithFloat:5.0f], [NSNumber numberWithFloat:5.0f], nil];
-	dataSourceLinePlot.dataLineStyle = lineStyle;
-    
-	dataSourceLinePlot.dataSource = self;
-    
-	// Animate in the new plot, as an example
-	[graph addPlot:dataSourceLinePlot];
     
     [self generateData];
 }
@@ -290,7 +511,86 @@
     
     if ( fieldEnum == CPTScatterPlotFieldY ) 
     {
-        num = (NSDecimalNumber *)[NSDecimalNumber numberWithDouble:[num doubleValue]];
+        if (self.timeSelection.selectedSegmentIndex == 0)
+        {
+            if ([plot.identifier isEqual:@"本月"])
+            {
+                if (index > 30)
+                {
+                    num = [NSDecimalNumber notANumber];
+                    
+                }
+                else
+                {
+                    num = (NSDecimalNumber *)[NSDecimalNumber numberWithDouble:[num doubleValue]];
+                }
+            }
+            else if ([plot.identifier isEqual:@"上月"])
+            {
+                if (index > 30)
+                {
+                    num = [NSDecimalNumber notANumber];
+                }
+                else
+                {
+                    num = (NSDecimalNumber *)[NSDecimalNumber numberWithDouble:([num doubleValue]+10)];
+                }
+                
+            }
+            else if ([plot.identifier isEqual:@"上年同月"])
+            {
+                if (index > 30)
+                {
+                    num = [NSDecimalNumber notANumber];
+                }
+                else
+                {
+                    num = (NSDecimalNumber *)[NSDecimalNumber numberWithDouble:([num doubleValue]+20)];
+                }
+            }
+        }
+        else if (self.timeSelection.selectedSegmentIndex == 1)
+        {
+            
+            if ([plot.identifier isEqual:@"今年"])
+            {
+                if (index > 14)
+                {
+                    num = [NSDecimalNumber notANumber];
+                }
+                else
+                {
+                    num = (NSDecimalNumber *)[NSDecimalNumber numberWithDouble:[num doubleValue]];
+                }
+            }
+            else if ([plot.identifier isEqual:@"去年"])
+            {
+                
+                num = (NSDecimalNumber *)[NSDecimalNumber numberWithDouble:([num doubleValue]+10)];
+                
+            }
+        }
+        else
+        {
+            
+            if ([plot.identifier isEqual:@"今年"])
+            {
+                if (index > 3)
+                {
+                    num = [NSDecimalNumber notANumber];
+                }
+                else
+                {
+                    num = (NSDecimalNumber *)[NSDecimalNumber numberWithDouble:[num doubleValue]];
+                }
+            }
+            else if ([plot.identifier isEqual:@"去年"])
+            {
+                
+                num = (NSDecimalNumber *)[NSDecimalNumber numberWithDouble:([num doubleValue]+10)];
+            }
+            
+        }
     }
     
 	return num;
@@ -324,18 +624,18 @@
     }
     
     NSArray *nameLabels = [[NSArray alloc] initWithObjects:@"日期", @"本月", @"上月", @"去年同月", nil];
-    self.daySheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 580, 700, 200) andTitles:titlesDays andNamelabels:nameLabels] autorelease];
+    self.daySheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 620, 700, 200) andTitles:titlesDays andNamelabels:nameLabels] autorelease];
     
     [self.view addSubview:daySheet];
     
     NSArray *nameLabels2 = [[NSArray alloc] initWithObjects:@"周数", @"今年", @"去年", nil];
-    self.weekSheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 600, 700, 200) andTitles:titlesWeeks andNamelabels:nameLabels2] autorelease];
+    self.weekSheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 640, 700, 200) andTitles:titlesWeeks andNamelabels:nameLabels2] autorelease];
     
     [self.view addSubview:weekSheet];
     [self.weekSheet setHidden:YES];
-
+    
     NSArray *nameLabels3 = [[NSArray alloc] initWithObjects:@"月份", @"今年", @"去年", nil];
-    self.yearSheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 600, 700, 200) andTitles:titlesMonths andNamelabels:nameLabels3] autorelease];
+    self.yearSheet = [[[SheetView alloc] initWithFrame:CGRectMake(30, 640, 700, 200) andTitles:titlesMonths andNamelabels:nameLabels3] autorelease];
     
     [self.view addSubview:yearSheet];
     [self.yearSheet setHidden:YES];
@@ -352,6 +652,10 @@
     [self constructMonthScatterPlot];
     [self constructTable];
     
+    self.selectedDate = [NSDate date];
+    [self.cycleSelection setSelectedSegmentIndex:0];
+    [self presentCycleDay];
+    
     // configure popover;
     AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] initWithNibName:@"AeraPickViewController" bundle:nil] autorelease];
     self.aeraPickPopover = [[UIPopoverController alloc] initWithContentViewController:aeraPickVC];
@@ -359,6 +663,7 @@
     [self.aeraPickPopover setDelegate:self];
     
     DatePickViewController *datePickVC = [[[DatePickViewController alloc] initWithNibName:@"DateViewController" bundle:nil] autorelease];
+    [datePickVC.calendar setDelegate:self];
     self.datePickPopover = [[UIPopoverController alloc] initWithContentViewController:datePickVC];
     [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 265)];
     [self.datePickPopover setDelegate:self];
@@ -367,12 +672,7 @@
     self.cyclePickPopover = [[UIPopoverController alloc] initWithContentViewController:cyclePickVC];
     [self.cyclePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
     [self.cyclePickPopover setDelegate:self];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
 }
 
 - (void)viewDidUnload
@@ -387,6 +687,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.pageTitleLabel setText:
+     [NSString stringWithFormat:@"%@趋势分析", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare]
+     ];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -457,35 +761,123 @@
     }
 }
 
-- (IBAction)pressCycleButton:(id)sender; 
+-(void) presentCycleDay
 {
-    if ([self.aeraPickPopover isPopoverVisible])
-    {
-        [self.aeraPickPopover dismissPopoverAnimated:YES];
-    }
+    NSMutableString *dateString = [[NSMutableString alloc] init];
     
-    if ([self.datePickPopover isPopoverVisible]) 
-    {
-        [self.datePickPopover dismissPopoverAnimated:YES];
-    }
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
     
-    if ([self.cyclePickPopover isPopoverVisible])
-    {
-        [self.cyclePickPopover dismissPopoverAnimated:YES];
-    }
-    else {
-        UIBarButtonItem *tappedButton = (UIBarButtonItem *)sender;
-        [self.cyclePickPopover presentPopoverFromBarButtonItem:tappedButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        
-    }
+    [dateString appendFormat:@"日期：%d-%d-%d", year, month, day];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
 }
 
--(void) dealloc
+-(void) presentCycleWeek
 {
-    [super dealloc];
-    [self.aeraPickPopover release];
-    [self.datePickPopover release];
-    [self.cyclePickPopover release];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *comps =[calendar components:(NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSWeekdayOrdinalCalendarUnit) fromDate:self.selectedDate];
+    
+    NSInteger week = [comps week]; // 今年的第几周
+    
+    NSInteger weekday = [comps weekday]; // 星期几（注意，周日是“1”，周一是“2”。。。。）
+    
+    NSDate *beginningOfWeek = nil;
+    [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&beginningOfWeek
+                 interval:NULL forDate: self.selectedDate];
+    beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60];
+    NSDate *endOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60*6];
+    
+    if (weekday == 1)
+    {
+        beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:-24*60*60*7];
+        endOfWeek = self.selectedDate;
+        week--;
+    }
+    
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:beginningOfWeek];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d~",year, month, day];
+    
+    comps = [calendar components:unitFlags fromDate:endOfWeek];
+    year = [comps year];    
+    month = [comps month];
+    day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d",year, month, day];
+    
+    [dateString appendFormat:@" 第%d周", week];
+    
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+    
+}
+
+-(void) presentCycleMonth
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    
+    [dateString appendFormat:@"%d年%d月", year, month];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) setTheDateCycle
+{
+    if (self.cycleSelection.selectedSegmentIndex == 0)
+    {
+        [self presentCycleDay];
+    }
+    else if (self.cycleSelection.selectedSegmentIndex == 1)
+    {
+        [self presentCycleWeek];
+    }
+    else
+    {
+        [self presentCycleMonth];
+    }
+    
+}
+
+- (IBAction)pressCycleButton:(id)sender; 
+{
+    [self setTheDateCycle];
+}
+
+#pragma mark - TKCalendarMonthViewDelegate methods
+
+
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView didSelectDate:(NSDate *)d {
+    self.selectedDate = d;
+    
+    [self setTheDateCycle];
+}
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView monthDidChange:(NSDate *)d {
+	self.selectedDate = d;
+    
+    [self setTheDateCycle];
 }
 
 @end

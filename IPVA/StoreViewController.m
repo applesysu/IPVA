@@ -13,15 +13,22 @@
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
 
+#import "AppDelegate.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 @implementation StoreViewController
 
 @synthesize data;
+@synthesize selectedDate;
 @synthesize sheetView;
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
+
+@synthesize timeLabel, toolBarTitleLabel, pageTitleLabel;
+
+@synthesize cycleSelection;
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,27 +63,27 @@
 {
     LeadingStoreData *data1 = [[[LeadingStoreData alloc] init] autorelease];
     data1.rankNumber = 1;
-    data1.squareName = @"s2";
-    data1.consumerCount =  3;
-    data1.salesCount = 4;
+    data1.squareName = @"square2";
+    data1.consumerCount =  30000;
+    data1.salesCount = 40000;
     
     LeadingStoreData *data2 = [[[LeadingStoreData alloc] init] autorelease];
     data2.rankNumber = 2;
-    data2.squareName = @"s3";
-    data2.consumerCount =  4;
-    data2.salesCount = 1;
+    data2.squareName = @"square3";
+    data2.consumerCount =  40000;
+    data2.salesCount = 10000;
     
     LeadingStoreData *data3 = [[[LeadingStoreData alloc] init] autorelease];
     data3.rankNumber = 3;
-    data3.squareName = @"s4";
-    data3.consumerCount =  1;
-    data3.salesCount = 2;
+    data3.squareName = @"square4";
+    data3.consumerCount =  10000;
+    data3.salesCount = 20000;
     
     LeadingStoreData *data4 = [[[LeadingStoreData alloc] init] autorelease];
     data4.rankNumber = 4;
-    data4.squareName = @"s1";
-    data4.consumerCount = 2;
-    data4.salesCount = 3;
+    data4.squareName = @"square1";
+    data4.consumerCount = 20000;
+    data4.salesCount = 30000;
     
     NSArray *array = [[[NSArray alloc] initWithObjects:data1, data2, data3, data4, nil] autorelease];
     self.data = array;
@@ -88,11 +95,15 @@
 {
     [super viewDidLoad];
     
+    self.selectedDate = [NSDate date];
+    [self.cycleSelection setSelectedSegmentIndex:0];
+    [self presentCycleDay];
+    
     //生成表视图
     [self initWithData];
     NSArray *titles = [[NSArray alloc] initWithObjects:@"排名", @"广场名称", @"客流量", @"销售额", nil];
     NSArray *propertyNames = [[NSArray alloc] initWithObjects:@"rankNumber", @"squareName", @"consumerCount", @"salesCount", nil];
-    self.sheetView = [[StoreSheetView alloc] initWithFrame:CGRectMake(74, 100, 620, 570) andTitles:titles andPropertyname:propertyNames andData:self.data];
+    self.sheetView = [[StoreSheetView alloc] initWithFrame:CGRectMake(74, 130, 620, 570) andTitles:titles andPropertyname:propertyNames andData:self.data];
     
     [self.view addSubview:self.sheetView];
     
@@ -134,6 +145,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.pageTitleLabel setText:
+     [NSString stringWithFormat:@"%@客流分析", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare]
+     ];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -204,27 +219,124 @@
     }
 }
 
+-(void) presentCycleDay
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    
+    [dateString appendFormat:@"日期：%d-%d-%d", year, month, day];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) presentCycleWeek
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *comps =[calendar components:(NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSWeekdayOrdinalCalendarUnit) fromDate:self.selectedDate];
+    
+    NSInteger week = [comps week]; // 今年的第几周
+    
+    NSInteger weekday = [comps weekday]; // 星期几（注意，周日是“1”，周一是“2”。。。。）
+    
+    NSDate *beginningOfWeek = nil;
+    [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&beginningOfWeek
+                 interval:NULL forDate: self.selectedDate];
+    beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60];
+    NSDate *endOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60*6];
+    
+    if (weekday == 1)
+    {
+        beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:-24*60*60*7];
+        endOfWeek = self.selectedDate;
+        week--;
+    }
+    
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:beginningOfWeek];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d~",year, month, day];
+    
+    comps = [calendar components:unitFlags fromDate:endOfWeek];
+    year = [comps year];    
+    month = [comps month];
+    day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d",year, month, day];
+    
+    [dateString appendFormat:@" 第%d周", week];
+    
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+    
+}
+
+-(void) presentCycleMonth
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    
+    [dateString appendFormat:@"%d年%d月", year, month];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) setTheDateCycle
+{
+    if (self.cycleSelection.selectedSegmentIndex == 0)
+    {
+        [self presentCycleDay];
+    }
+    else if (self.cycleSelection.selectedSegmentIndex == 1)
+    {
+        [self presentCycleWeek];
+    }
+    else
+    {
+        [self presentCycleMonth];
+    }
+    
+}
+
 - (IBAction)pressCycleButton:(id)sender; 
 {
-    if ([self.aeraPickPopover isPopoverVisible])
-    {
-        [self.aeraPickPopover dismissPopoverAnimated:YES];
-    }
-    
-    if ([self.datePickPopover isPopoverVisible]) 
-    {
-        [self.datePickPopover dismissPopoverAnimated:YES];
-    }
-    
-    if ([self.cyclePickPopover isPopoverVisible])
-    {
-        [self.cyclePickPopover dismissPopoverAnimated:YES];
-    }
-    else {
-        UIBarButtonItem *tappedButton = (UIBarButtonItem *)sender;
-        [self.cyclePickPopover presentPopoverFromBarButtonItem:tappedButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        
-    }
+    [self setTheDateCycle];
 }
+
+#pragma mark - TKCalendarMonthViewDelegate methods
+
+
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView didSelectDate:(NSDate *)d {
+    self.selectedDate = d;
+    
+    [self setTheDateCycle];
+}
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView monthDidChange:(NSDate *)d {
+	self.selectedDate = d;
+    
+    [self setTheDateCycle];
+}
+
 
 @end

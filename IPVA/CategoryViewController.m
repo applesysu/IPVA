@@ -12,6 +12,8 @@
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
 
+#import "AppDelegate.h"
+
 @interface CategoryViewController ()
 
 @end
@@ -24,7 +26,13 @@
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
 
-@synthesize consumer, sales, collectConsumer, convertRate, bags, effect, selectedButton, generateGraph, indexs, selectedTag; 
+@synthesize timeLabel, toolBarTitleLabel, pageTitleLabel;
+
+@synthesize selectedDate, cycleSelection;
+
+@synthesize consumer, sales, collectConsumer, convertRate, bags, effect, selectedButton, indexs, selectedTag; 
+
+@synthesize dataFromCompanyDatabase;
 
 - (void)dealloc
 {
@@ -70,7 +78,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.scatterPlotView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 100, 700, 500)] autorelease];
+        self.scatterPlotView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 130, 700, 500)] autorelease];
         self.scatterPlotView.layer.masksToBounds = YES;
         self.scatterPlotView.layer.cornerRadius = 20;
         [self.view addSubview:self.scatterPlotView];
@@ -205,37 +213,36 @@
     return [dataForPlot count];
 }
 
--(CPTPlotSymbol *) symbolForScatterPlot:(CPTScatterPlot *)plot recordIndex:(NSUInteger)index
-{
-    CPTPlotSymbol  *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
-    
-    if (index % 2 == 0 && index % 5 == 0 && index != 0 )
-    {
-        plotSymbol.size = CGSizeMake(100, 100);
-        plotSymbol.fill = [CPTFill fillWithColor:[CPTColor blueColor]];
-    }
-    else if (index % 3 == 0 && index != 0 && index != 9)
-    {
-        plotSymbol.size = CGSizeMake(50,50);
-        plotSymbol.fill = [CPTFill fillWithColor:[CPTColor greenColor]];
-    }
-    else if(index == 1)
-    {
-        plotSymbol.size = CGSizeMake(70,70);
-        plotSymbol.fill = [CPTFill fillWithColor:[CPTColor redColor]];
-    }
-    else if (index == 9)
-    {
-        plotSymbol.size = CGSizeMake(30,30);
-        plotSymbol.fill = [CPTFill fillWithColor:[CPTColor orangeColor]];
-    }
-    
-    return plotSymbol;
-}
+//-(CPTPlotSymbol *) symbolForScatterPlot:(CPTScatterPlot *)plot recordIndex:(NSUInteger)index
+//{
+//    CPTPlotSymbol  *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
+//    
+//    if (index % 2 == 0 && index % 5 == 0 && index != 0 )
+//    {
+//        plotSymbol.size = CGSizeMake(100, 100);
+//        plotSymbol.fill = [CPTFill fillWithColor:[CPTColor blueColor]];
+//    }
+//    else if (index % 3 == 0 && index != 0 && index != 9)
+//    {
+//        plotSymbol.size = CGSizeMake(50,50);
+//        plotSymbol.fill = [CPTFill fillWithColor:[CPTColor greenColor]];
+//    }
+//    else if(index == 1)
+//    {
+//        plotSymbol.size = CGSizeMake(70,70);
+//        plotSymbol.fill = [CPTFill fillWithColor:[CPTColor redColor]];
+//    }
+//    else if (index == 9)
+//    {
+//        plotSymbol.size = CGSizeMake(30,30);
+//        plotSymbol.fill = [CPTFill fillWithColor:[CPTColor orangeColor]];
+//    }
+//    
+//    return plotSymbol;
+//}
 
 -(void) scatterPlot:(CPTScatterPlot *)plot plotSymbolWasSelectedAtRecordIndex:(NSUInteger)index
 {
-    NSLog(@"hihihihi");
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"详情" message:@"客户数是XXX， 店铺总数是XXX" delegate:self cancelButtonTitle:@"了解完毕" otherButtonTitles: nil];
     [alertView show];
     [alertView release];
@@ -247,6 +254,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // the default date is today, and the cycle type is day-cycle
+    self.selectedDate = [NSDate date];
+    [self.cycleSelection setSelectedSegmentIndex:0];
+    [self presentCycleDay];
+    
     // configure popover;
     AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] initWithNibName:@"AeraPickViewController" bundle:nil] autorelease];
     self.aeraPickPopover = [[UIPopoverController alloc] initWithContentViewController:aeraPickVC];
@@ -254,12 +266,16 @@
     [self.aeraPickPopover setDelegate:self];
     
     DatePickViewController *datePickVC = [[[DatePickViewController alloc] initWithNibName:@"DateViewController" bundle:nil] autorelease];
-    [datePickVC.calendar setDelegate:self];
     self.datePickPopover = [[UIPopoverController alloc] initWithContentViewController:datePickVC];
     [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 265)];
     [self.datePickPopover setDelegate:self];
     
-
+    CycleViewController *cyclePickVC = [[[CycleViewController alloc] init] autorelease];
+    self.cyclePickPopover = [[UIPopoverController alloc] initWithContentViewController:cyclePickVC];
+    [self.cyclePickPopover setPopoverContentSize:CGSizeMake(320, 480)];
+    [self.cyclePickPopover setDelegate:self];
+    
+    //configure the selected button initially
     self.selectedButton = [[NSMutableArray alloc] initWithCapacity:2];
     [self.selectedButton insertObject:@"客流量" atIndex:0];
     [self.selectedButton insertObject:@"销售额" atIndex:1];
@@ -279,6 +295,15 @@
     self.datePickPopover = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.pageTitleLabel setText:
+     [NSString stringWithFormat:@"%@对比分析", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare]
+     ];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -333,37 +358,125 @@
     }
 }
 
+-(void) presentCycleDay
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    
+    [dateString appendFormat:@"日期：%d-%d-%d", year, month, day];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) presentCycleWeek
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *comps =[calendar components:(NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSWeekdayOrdinalCalendarUnit) fromDate:self.selectedDate];
+    
+    NSInteger week = [comps week]; // 今年的第几周
+    
+    NSInteger weekday = [comps weekday]; // 星期几（注意，周日是“1”，周一是“2”。。。。）
+    
+    NSDate *beginningOfWeek = nil;
+    [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&beginningOfWeek
+                 interval:NULL forDate: self.selectedDate];
+    beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60];
+    NSDate *endOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60*6];
+    
+    if (weekday == 1)
+    {
+        beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:-24*60*60*7];
+        endOfWeek = self.selectedDate;
+        week--;
+    }
+    
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:beginningOfWeek];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d~",year, month, day];
+    
+    comps = [calendar components:unitFlags fromDate:endOfWeek];
+    year = [comps year];    
+    month = [comps month];
+    day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d",year, month, day];
+    
+    [dateString appendFormat:@" 第%d周", week];
+    
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+    
+}
+
+-(void) presentCycleMonth
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    
+    [dateString appendFormat:@"%d年%d月", year, month];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) setTheDateCycle
+{
+    if (self.cycleSelection.selectedSegmentIndex == 0)
+    {
+        [self presentCycleDay];
+    }
+    else if (self.cycleSelection.selectedSegmentIndex == 1)
+    {
+        [self presentCycleWeek];
+    }
+    else
+    {
+        [self presentCycleMonth];
+    }
+    
+}
+
 - (IBAction)pressCycleButton:(id)sender; 
 {
-    if ([self.aeraPickPopover isPopoverVisible])
-    {
-        [self.aeraPickPopover dismissPopoverAnimated:YES];
-    }
-    
-    if ([self.datePickPopover isPopoverVisible]) 
-    {
-        [self.datePickPopover dismissPopoverAnimated:YES];
-    }
-    
-    if ([self.cyclePickPopover isPopoverVisible])
-    {
-        [self.cyclePickPopover dismissPopoverAnimated:YES];
-    }
-    else {
-        UIBarButtonItem *tappedButton = (UIBarButtonItem *)sender;
-        [self.cyclePickPopover presentPopoverFromBarButtonItem:tappedButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        
-    }
+    [self setTheDateCycle];
 }
 
 #pragma mark - TKCalendarMonthViewDelegate methods
 
+
+
 - (void)calendarMonthView:(TKCalendarMonthView *)monthView didSelectDate:(NSDate *)d {
-    NSLog(@"Did Select Date and delegate to master view, %@", d);
+    self.selectedDate = d;
+    
+    [self setTheDateCycle];
 }
 
 - (void)calendarMonthView:(TKCalendarMonthView *)monthView monthDidChange:(NSDate *)d {
-	NSLog(@"calendarMonthView monthDidChange");	
+	self.selectedDate = d;
+    
+    [self setTheDateCycle];
 }
+
+
 
 @end

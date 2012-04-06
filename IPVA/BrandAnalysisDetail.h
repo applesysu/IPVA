@@ -11,13 +11,12 @@
 @class BrandDetailSheetView;
 
 @interface BrandAnalysisDetail : UIViewController
-{
-    NSArray *data;
-    BrandDetailSheetView *brandDetailSheetView;
-    
-}
+
 @property (nonatomic, retain) NSArray *data;
 @property (nonatomic, retain) BrandDetailSheetView *brandDetailSheetView;
+
+@property (nonatomic, retain) IBOutlet UILabel *pageTitleLabel;
+@property (nonatomic, retain) IBOutlet UILabel *timeLabel;
 
 -(void) initWithData;
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andTheData:(NSString *)dataName;

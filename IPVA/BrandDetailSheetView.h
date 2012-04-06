@@ -9,13 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface BrandDetailSheetView : UIView<UITableViewDelegate, UITableViewDataSource>
-{
-	UITableView *rightTableView;
-	NSArray *titleArray;
-    NSArray *propertyNames;
-	UIView *titleRowView;
-	NSArray *data;
-}
 
 @property (nonatomic, retain) UITableView *rightTableView;
 @property (nonatomic, retain) NSArray *titleArray;

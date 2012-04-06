@@ -23,9 +23,9 @@
         self.nameLabels = namelabelarray;
         
         //初始化表头项
-        UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 30, 80, 50)];
+        UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 30, 120, 50)];
         titleView.backgroundColor = [UIColor grayColor];
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 60, 30)];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.font = [UIFont systemFontOfSize:15];
         titleLabel.text = [self.nameLabels objectAtIndex:0];
@@ -35,7 +35,7 @@
         [titleView release];
         
         //初始化表头行的各个数据名目
-        titleRowView = [[UIView alloc] initWithFrame:CGRectMake(80, 30, self.frame.size.width- 80, 50)];
+        titleRowView = [[UIView alloc] initWithFrame:CGRectMake(120, 30, self.frame.size.width- 120, 50)];
         titleRowView.backgroundColor = [UIColor grayColor];
         for(int i=0;i<[titleArray count];i++)
         {
@@ -54,7 +54,7 @@
         leftScrollView.backgroundColor = [UIColor whiteColor];
         leftScrollView.bounces = YES;
         
-        rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(80, 0, frame.size.width-80, ([self.nameLabels count]-1)*50)];
+        rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(120, 0, frame.size.width-80, ([self.nameLabels count]-1)*50)];
         rightScrollView.backgroundColor = [UIColor grayColor];
         rightScrollView.alwaysBounceHorizontal = FALSE;
         rightScrollView.bounces = YES;
@@ -71,7 +71,7 @@
         rightScrollView.directionalLockEnabled = YES;
         
         //每个对比项的项目的table
-        leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 80, [self.nameLabels count]*50)];
+        leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 120, [self.nameLabels count]*50)];
         leftTableView.delegate = self;
         leftTableView.dataSource = self;
         leftTableView.rowHeight = 50;
@@ -100,18 +100,18 @@
 #pragma mark Scroll View Delegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 	//重新布局表头行
-	titleRowView.frame = CGRectMake(80, 30, self.frame.size.width - 80, 50);
-	titleRowView.bounds = CGRectMake(scrollView.contentOffset.x, 0, self.frame.size.width - 80, 50);
+	titleRowView.frame = CGRectMake(120, 30, self.frame.size.width - 120, 50);
+	titleRowView.bounds = CGRectMake(scrollView.contentOffset.x, 0, self.frame.size.width - 120, 50);
 	titleRowView.clipsToBounds = YES;	
 	titleRowView.backgroundColor = [UIColor grayColor];
 	[self addSubview:titleRowView];
     
-	rightScrollView.frame =CGRectMake(80, 0, self.frame.size.width - 80, ([self.nameLabels count] - 1) *50); 
+	rightScrollView.frame =CGRectMake(120, 0, self.frame.size.width - 120, ([self.nameLabels count] - 1) *50); 
 	[leftScrollView addSubview:rightScrollView];
 	
 	rightTableView.frame = CGRectMake(0, 0, [self.titleArray count] * 80,([self.nameLabels count] - 1) * 50);
 	[rightScrollView addSubview:rightTableView];
-	leftTableView.frame = CGRectMake(0, 0, 80, ([self.nameLabels count] - 1) * 50);
+	leftTableView.frame = CGRectMake(0, 0, 120, ([self.nameLabels count] - 1) * 50);
 	[leftScrollView addSubview:leftTableView];
 	
 	[rightTableView reloadData];
@@ -123,8 +123,8 @@
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
 	[UIView setAnimationDuration:0.0];
-	titleRowView.frame = CGRectMake(80, 30, self.frame.size.width - 80, 50);
-	titleRowView.bounds = CGRectMake(scrollView.contentOffset.x, 0, self.frame.size.width - 80, 50);
+	titleRowView.frame = CGRectMake(120, 30, self.frame.size.width - 120, 50);
+	titleRowView.bounds = CGRectMake(scrollView.contentOffset.x, 0, self.frame.size.width - 120, 50);
 	titleRowView.clipsToBounds = YES;
 	[self addSubview:titleRowView];
 	[UIView commitAnimations];
@@ -178,6 +178,7 @@
                 label.textColor = [UIColor whiteColor];
                 label.textAlignment = UITextAlignmentCenter;
                 label.tag = 100 + index;
+                label.text = [NSString stringWithFormat:@"%d", (index+50)* (index+50)];
                 [cell.contentView addSubview:label];
                 labelLocation += 80;
                 index++;
@@ -186,11 +187,7 @@
 		}
 		
         //设置每一个cell的内容
-        for (int i  =0; i < [self.titleArray count]; i++)
-        {
-            UILabel *label = (UILabel *)[cell.contentView viewWithTag:(100+i)];
-            label.text = [self.titleArray objectAtIndex:i];
-        }
+        
 		
 		return cell;
 	}

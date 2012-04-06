@@ -25,7 +25,7 @@
 @synthesize passengerViewController = _passengerViewController;
 @synthesize rankViewController = _rankViewController;
 
-
+@synthesize chosenSquare;
 
 - (void)dealloc
 {
@@ -83,6 +83,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    self.chosenSquare = @"万达集团";
     UIViewController *loginViewController = [[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil] autorelease];
     [self.window setRootViewController:loginViewController];
     UITabBarController *tabC = [[UITabBarController alloc] init];

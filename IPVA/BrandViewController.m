@@ -12,6 +12,9 @@
 #import "AeraPickViewController.h"
 #import "DatePickViewController.h"
 #import "CycleViewController.h"
+
+#import "AppDelegate.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 @implementation BrandViewController
@@ -21,6 +24,10 @@
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
 @synthesize cyclePickPopover = _cyclePickPopover;
+
+@synthesize timeLabel, pageTitleLabel;
+
+@synthesize cycleSelection, selectedDate;
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -63,66 +70,66 @@
 {
     BrandAnalysisData *data1 = [[[BrandAnalysisData alloc] init] autorelease];
     data1.rankNumber = 1;
-    data1.brandName = @"b2";
+    data1.brandName = @"brand2";
     data1.storeNumber = 3;
-    data1.consumerCount = 4;
-    data1.salesCount = 5;
-    data1.avgConsumerCount = 6;
-    data1.avgSalesCount = 7;
+    data1.consumerCount = 40000;
+    data1.salesCount = 500000;
+    data1.avgConsumerCount = 6000;
+    data1.avgSalesCount = 7000;
     
     BrandAnalysisData *data2 = [[[BrandAnalysisData alloc] init] autorelease];
     data2.rankNumber = 2;
-    data2.brandName = @"b3";
+    data2.brandName = @"brand3";
     data2.storeNumber = 4;
-    data2.consumerCount = 5;
-    data2.salesCount = 6;
-    data2.avgConsumerCount = 7;
-    data2.avgSalesCount = 1;
+    data2.consumerCount = 50000;
+    data2.salesCount = 600000;
+    data2.avgConsumerCount = 7000;
+    data2.avgSalesCount = 1000;
     
     BrandAnalysisData *data3 = [[[BrandAnalysisData alloc] init] autorelease];
     data3.rankNumber = 3;
-    data3.brandName = @"b4";
+    data3.brandName = @"brand4";
     data3.storeNumber = 5;
-    data3.consumerCount = 6;
-    data3.salesCount = 7;
-    data3.avgConsumerCount = 1;
-    data3.avgSalesCount = 2;
+    data3.consumerCount = 60000;
+    data3.salesCount = 700000;
+    data3.avgConsumerCount = 1000;
+    data3.avgSalesCount = 2000;
     
     BrandAnalysisData *data4 = [[[BrandAnalysisData alloc] init] autorelease];
     data4.rankNumber = 4;
-    data4.brandName = @"b5";
+    data4.brandName = @"brand5";
     data4.storeNumber = 6;
-    data4.consumerCount = 7;
-    data4.salesCount = 1;
-    data4.avgConsumerCount = 2;
-    data4.avgSalesCount = 3;
+    data4.consumerCount = 70000;
+    data4.salesCount = 100000;
+    data4.avgConsumerCount = 2000;
+    data4.avgSalesCount = 3000;
     
     BrandAnalysisData *data5 = [[[BrandAnalysisData alloc] init] autorelease];
     data5.rankNumber = 5;
-    data5.brandName = @"b6";
+    data5.brandName = @"brand6";
     data5.storeNumber = 7;
-    data5.consumerCount = 1;
-    data5.salesCount = 2;
-    data5.avgConsumerCount = 3;
-    data5.avgSalesCount = 4;
+    data5.consumerCount = 10000;
+    data5.salesCount = 200000;
+    data5.avgConsumerCount = 3000;
+    data5.avgSalesCount = 4000;
     
     BrandAnalysisData *data6 = [[[BrandAnalysisData alloc] init] autorelease];
     data6.rankNumber = 6;
-    data6.brandName = @"b7";
+    data6.brandName = @"brand7";
     data6.storeNumber = 1;
-    data6.consumerCount = 2;
-    data6.salesCount = 3;
-    data6.avgConsumerCount = 4;
-    data6.avgSalesCount = 5;
+    data6.consumerCount = 20000;
+    data6.salesCount = 300000;
+    data6.avgConsumerCount = 4000;
+    data6.avgSalesCount = 5000;
     
     BrandAnalysisData *data7 = [[[BrandAnalysisData alloc] init] autorelease];
     data7.rankNumber = 7;
-    data7.brandName = @"b1";
+    data7.brandName = @"brand1";
     data7.storeNumber = 2;
-    data7.consumerCount = 3;
-    data7.salesCount = 4;
-    data7.avgConsumerCount = 5;
-    data7.avgSalesCount = 6;
+    data7.consumerCount = 30000;
+    data7.salesCount = 400000;
+    data7.avgConsumerCount = 5000;
+    data7.avgSalesCount = 6000;
     
     NSArray *array = [[[NSArray alloc] initWithObjects:data1, data2, data3, data4, data5, data6, data7, nil] autorelease];
     self.data = array;
@@ -141,7 +148,7 @@
     [propertyName release];
     
     //初始化表头行的各个数据名目
-    titleRowView = [[UIView alloc] initWithFrame:CGRectMake(64, 100, [self.titleArray count] * 90, 50)];
+    titleRowView = [[UIView alloc] initWithFrame:CGRectMake(64, 130, [self.titleArray count] * 90, 50)];
     titleRowView.backgroundColor = [UIColor grayColor];
     for(int i=0;i<[titleArray count];i++)
     {
@@ -160,7 +167,7 @@
     [self.view addSubview:titleRowView];
     
     //每个记录的table
-    rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(64, 150, [self.titleArray count] * 90, 500)];
+    rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(64, 180, [self.titleArray count] * 90, 500)];
     rightTableView.delegate = self;
     rightTableView.dataSource = self;
     rightTableView.rowHeight = 50;
@@ -176,8 +183,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = @"万达集团品牌分析";
     [self initTheTableView];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+    //configure the date type of the view
+    self.selectedDate = [NSDate date];
+    [self.cycleSelection setSelectedSegmentIndex:0];
+    [self presentCycleDay];
     
     // configure popover;
     AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] initWithNibName:@"AeraPickViewController" bundle:nil] autorelease];
@@ -186,6 +199,7 @@
     [self.aeraPickPopover setDelegate:self];
     
     DatePickViewController *datePickVC = [[[DatePickViewController alloc] initWithNibName:@"DateViewController" bundle:nil] autorelease];
+    [datePickVC.calendar setDelegate:self];
     self.datePickPopover = [[UIPopoverController alloc] initWithContentViewController:datePickVC];
     [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 265)];
     [self.datePickPopover setDelegate:self];
@@ -214,11 +228,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.pageTitleLabel setText:
+     [NSString stringWithFormat:@"%@品牌分析", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare]
+     ];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -241,14 +261,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [self.data count];
 }
@@ -363,8 +381,10 @@
      */
     NSString *brandName = [(UILabel *)[[tableView cellForRowAtIndexPath:indexPath] viewWithTag:101] text];
     
+    self.navigationController.navigationBarHidden = NO;
     BrandAnalysisDetail *brandAnalysisDetail = [[BrandAnalysisDetail alloc] initWithNibName:@"BrandAnalysisDetail" bundle:nil andTheData:brandName];
     [self.navigationController pushViewController:brandAnalysisDetail animated:YES];
+    
     [brandAnalysisDetail release];
 }
 
@@ -415,27 +435,123 @@
     }
 }
 
+-(void) presentCycleDay
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    
+    [dateString appendFormat:@"日期：%d-%d-%d", year, month, day];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) presentCycleWeek
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *comps =[calendar components:(NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSWeekdayOrdinalCalendarUnit) fromDate:self.selectedDate];
+    
+    NSInteger week = [comps week]; // 今年的第几周
+    
+    NSInteger weekday = [comps weekday]; // 星期几（注意，周日是“1”，周一是“2”。。。。）
+    
+    NSDate *beginningOfWeek = nil;
+    [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&beginningOfWeek
+                 interval:NULL forDate: self.selectedDate];
+    beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60];
+    NSDate *endOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60*6];
+    
+    if (weekday == 1)
+    {
+        beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:-24*60*60*7];
+        endOfWeek = self.selectedDate;
+        week--;
+    }
+    
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:beginningOfWeek];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d~",year, month, day];
+    
+    comps = [calendar components:unitFlags fromDate:endOfWeek];
+    year = [comps year];    
+    month = [comps month];
+    day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d",year, month, day];
+    
+    [dateString appendFormat:@" 第%d周", week];
+    
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+    
+}
+
+-(void) presentCycleMonth
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    
+    [dateString appendFormat:@"%d年%d月", year, month];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) setTheDateCycle
+{
+    if (self.cycleSelection.selectedSegmentIndex == 0)
+    {
+        [self presentCycleDay];
+    }
+    else if (self.cycleSelection.selectedSegmentIndex == 1)
+    {
+        [self presentCycleWeek];
+    }
+    else
+    {
+        [self presentCycleMonth];
+    }
+    
+}
+
 - (IBAction)pressCycleButton:(id)sender; 
 {
-    if ([self.aeraPickPopover isPopoverVisible])
-    {
-        [self.aeraPickPopover dismissPopoverAnimated:YES];
-    }
+    [self setTheDateCycle];
+}
+
+#pragma mark - TKCalendarMonthViewDelegate methods
+
+
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView didSelectDate:(NSDate *)d {
+    self.selectedDate = d;
     
-    if ([self.datePickPopover isPopoverVisible]) 
-    {
-        [self.datePickPopover dismissPopoverAnimated:YES];
-    }
+    [self setTheDateCycle];
+}
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView monthDidChange:(NSDate *)d {
+	self.selectedDate = d;
     
-    if ([self.cyclePickPopover isPopoverVisible])
-    {
-        [self.cyclePickPopover dismissPopoverAnimated:YES];
-    }
-    else {
-        UIBarButtonItem *tappedButton = (UIBarButtonItem *)sender;
-        [self.cyclePickPopover presentPopoverFromBarButtonItem:tappedButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        
-    }
+    [self setTheDateCycle];
 }
 
 @end

@@ -15,6 +15,8 @@
 
 @synthesize brandDetailSheetView, data;
 
+@synthesize timeLabel, pageTitleLabel;
+
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andTheData:(NSString *)dataName
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,38 +41,38 @@
 {
     BrandAnalysisDetailData *data1 = [[[BrandAnalysisDetailData alloc] init] autorelease];
     data1.rankNumber = 1;
-    data1.squareName = @"s2";
+    data1.squareName = @"square2";
     data1.storeID = 3;
-    data1.consumerCount = 4;
-    data1.salesCount = 5;
+    data1.consumerCount = 40000;
+    data1.salesCount = 50000;
     
     BrandAnalysisDetailData *data2 = [[[BrandAnalysisDetailData alloc] init] autorelease];
     data2.rankNumber = 2;
-    data2.squareName = @"s3";
+    data2.squareName = @"square3";
     data2.storeID = 4;
-    data2.consumerCount = 5;
-    data2.salesCount = 1;
+    data2.consumerCount = 50000;
+    data2.salesCount = 10000;
     
     BrandAnalysisDetailData *data3 = [[[BrandAnalysisDetailData alloc] init] autorelease];
     data3.rankNumber = 3;
-    data3.squareName = @"s4";
+    data3.squareName = @"square4";
     data3.storeID = 5;
-    data3.consumerCount = 1;
-    data3.salesCount = 2;
+    data3.consumerCount = 10000;
+    data3.salesCount = 20000;
     
     BrandAnalysisDetailData *data4 = [[[BrandAnalysisDetailData alloc] init] autorelease];
     data4.rankNumber = 4;
-    data4.squareName = @"s5";
+    data4.squareName = @"square5";
     data4.storeID = 1;
-    data4.consumerCount = 2;
-    data4.salesCount = 3;
+    data4.consumerCount = 20000;
+    data4.salesCount = 30000;
     
     BrandAnalysisDetailData *data5 = [[[BrandAnalysisDetailData alloc] init] autorelease];
     data5.rankNumber = 5;
-    data5.squareName = @"s1";
+    data5.squareName = @"square1";
     data5.storeID = 2;
-    data5.consumerCount = 3;
-    data5.salesCount = 4;
+    data5.consumerCount = 30000;
+    data5.salesCount = 40000;
     
     NSArray *array = [[[NSArray alloc] initWithObjects:data1, data2, data3, data4, data5, nil] autorelease];
     self.data = array;
@@ -106,6 +108,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.pageTitleLabel setText:self.navigationItem.title]; 
 }
 
 - (void)viewDidAppear:(BOOL)animated

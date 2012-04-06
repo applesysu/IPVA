@@ -31,6 +31,8 @@
 @property (strong, nonatomic) PassengerViewController *passengerViewController;
 @property (strong, nonatomic) RankViewController *rankViewController;
 
+@property (strong, nonatomic) NSString *chosenSquare;
+
 - (void) setTabBarControllerShowHeadOffice:(BOOL) toggle;
 
 @end

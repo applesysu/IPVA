@@ -9,8 +9,6 @@
 #import "AeraPickViewController.h"
 #import "AppDelegate.h"
 
-#define AERA_NUMBER 4
-
 @interface AeraPickViewController ()
 
 
@@ -20,13 +18,22 @@
 @implementation AeraPickViewController
 
 @synthesize aeraArray = _aeraArray;
+@synthesize greatArray, segment;
 
 - (void)dealloc
 {
     [super dealloc];
     [_aeraArray release];
+    [greatArray release];
+    [segment release];
 }
 
+
+-(IBAction)toFirst
+{
+    NSLog(@"hihi");
+    [self.tableView reloadData];
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -40,7 +47,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _aeraArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"总部"], [NSString stringWithFormat:@"华东区"], [NSString stringWithFormat:@"华北区"], [NSString stringWithFormat:@"华南区"], nil];
+    _aeraArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"万达广场"], [NSString stringWithFormat:@"华东区"], [NSString stringWithFormat:@"华北区"], [NSString stringWithFormat:@"华南区"], nil];
+    
+    greatArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"厦门湖里万达广场"],[NSString stringWithFormat:@"福州金融街万达广场"],[NSString stringWithFormat:@"宁波江北万达广场"],[NSString stringWithFormat:@"宁波鄞州万达广场"],[NSString stringWithFormat:@"泰州万达广场"],[NSString stringWithFormat:@"合肥天鹅湖万达广场"],[NSString stringWithFormat:@"石家庄裕华万达广场"],[NSString stringWithFormat:@"天津河东区万达广场"],[NSString stringWithFormat:@"呼和浩特万达广场"],[NSString stringWithFormat:@"包头青山万达广场"],[NSString stringWithFormat:@"济南魏家庄万达广场"],[NSString stringWithFormat:@"武汉经开万达广场"],[NSString stringWithFormat:@"武汉菱角湖万达广场"],[NSString stringWithFormat:@"武汉汉街万达广场"],[NSString stringWithFormat:@"宜昌万达广场"],[NSString stringWithFormat:@"襄阳万达广场"],[NSString stringWithFormat:@"重庆万州万达广场"],[NSString stringWithFormat:@"武汉汉街万达广场"],[NSString stringWithFormat:@"沈阳太原街(城中城)万达广场"],[NSString stringWithFormat:@"沈阳铁西万达广场"],[NSString stringWithFormat:@"长春红旗街万达广场"],[NSString stringWithFormat:@"大庆萨尔图万达广场"],[NSString stringWithFormat:@"合肥包河万达广场"], nil];
     NSLog(@"%@", _aeraArray);
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -53,6 +62,7 @@
 {
     [super viewDidUnload];
     self.aeraArray = nil;
+    self.greatArray = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -73,7 +83,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return AERA_NUMBER;
+    if (self.segment.selectedSegmentIndex == 0)
+    {
+        return [_aeraArray count];
+    }
+    else
+    {
+        return [greatArray count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,7 +100,14 @@
     UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     // Configure the cell...
     [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
-    [[cell textLabel] setText:[_aeraArray objectAtIndex:indexPath.row]];
+    if(self.segment.selectedSegmentIndex == 0)
+    {
+        [[cell textLabel] setText:[_aeraArray objectAtIndex:indexPath.row]];
+    }
+    else
+    {
+        [[cell textLabel] setText:[greatArray objectAtIndex:indexPath.row]];
+    }
 
     NSLog(@"%@", cell);
     
@@ -142,7 +166,21 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
-    for (int i = 0; i < AERA_NUMBER; i++)
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    NSLog(@"%@", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare);
+    
+    int areaNumber = 0;
+    
+    if(self.segment.selectedSegmentIndex == 0) 
+    {
+        areaNumber = [_aeraArray count];
+    }
+    else
+    {
+        areaNumber = [greatArray count];
+    }
+    
+    for (int i = 0; i < areaNumber; i++)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];

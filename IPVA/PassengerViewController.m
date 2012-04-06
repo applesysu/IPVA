@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 #import "PassengerViewController.h"
 #import "AeraPickViewController.h"
@@ -18,6 +19,12 @@
 @implementation PassengerViewController
 
 @synthesize barChartView, barChartForSales, barChartForConsumer, dataForPlot, dataForChart, categorySelection, sheetView;
+
+@synthesize timeLabel,pageTitleLabel,toolBarTitleLabel;
+
+@synthesize selectedDate,cycleSelection;
+
+@synthesize dataFromCompanyDatabase;
 
 @synthesize aeraPickPopover = _aeraPickPopover;
 @synthesize datePickPopover = _datePickPopover;
@@ -36,7 +43,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.barChartView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 50, 700, 500)] autorelease];
+        self.barChartView = [[[CPTGraphHostingView alloc] initWithFrame:CGRectMake(35, 130, 700, 500)] autorelease];
     }
     return self;
 }
@@ -193,7 +200,7 @@
 {
     NSArray *titles = [[NSArray alloc] initWithObjects:@"1月", @"2月", @"3月", @"4月", @"5月", @"6月",@"7月", @"8月", nil] ;
     NSArray *nameLabels = [[NSArray alloc] initWithObjects:@"月份", @"广州万达广场", @"上海万达广场", @"北京万达广场", nil];
-    self.sheetView = [[[SheetView alloc] initWithFrame:CGRectMake(30, 550, 700, 200) andTitles:titles andNamelabels:nameLabels] autorelease];
+    self.sheetView = [[[SheetView alloc] initWithFrame:CGRectMake(30, 670, 700, 200) andTitles:titles andNamelabels:nameLabels] autorelease];
     
     [self.view addSubview:sheetView];
     
@@ -210,6 +217,15 @@
     [self constructSalesBarChart];
     [self createTableView];
     
+    self.selectedDate = [NSDate date];
+    [self.cycleSelection setSelectedSegmentIndex:0];
+    [self presentCycleDay];
+    
+    [self.pageTitleLabel setText:
+     [NSString stringWithFormat:@"%@客流分析", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare]
+     ];
+    NSLog(@"%@",[NSString stringWithFormat:@"%@客流分析", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare]);
+    
     // configure popover;
     AeraPickViewController *aeraPickVC = [[[AeraPickViewController alloc] initWithNibName:@"AeraPickViewController" bundle:nil] autorelease];
     self.aeraPickPopover = [[UIPopoverController alloc] initWithContentViewController:aeraPickVC];
@@ -217,6 +233,7 @@
     [self.aeraPickPopover setDelegate:self];
     
     DatePickViewController *datePickVC = [[[DatePickViewController alloc] initWithNibName:@"DateViewController" bundle:nil] autorelease];
+    [datePickVC.calendar setDelegate:self];
     self.datePickPopover = [[UIPopoverController alloc] initWithContentViewController:datePickVC];
     [self.datePickPopover setPopoverContentSize:CGSizeMake(320, 265)];
     [self.datePickPopover setDelegate:self];
@@ -238,6 +255,13 @@
     self.datePickPopover = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [self.pageTitleLabel setText:
+     [NSString stringWithFormat:@"%@客流分析", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).chosenSquare]
+     ];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -331,17 +355,124 @@
     }
 }
 
+-(void) presentCycleDay
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    
+    [dateString appendFormat:@"日期：%d-%d-%d", year, month, day];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) presentCycleWeek
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *comps =[calendar components:(NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSWeekdayOrdinalCalendarUnit) fromDate:self.selectedDate];
+    
+    NSInteger week = [comps week]; // 今年的第几周
+    
+    NSInteger weekday = [comps weekday]; // 星期几（注意，周日是“1”，周一是“2”。。。。）
+    
+    NSDate *beginningOfWeek = nil;
+    [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&beginningOfWeek
+                 interval:NULL forDate: self.selectedDate];
+    beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60];
+    NSDate *endOfWeek = [beginningOfWeek dateByAddingTimeInterval:24*60*60*6];
+    
+    if (weekday == 1)
+    {
+        beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:-24*60*60*7];
+        endOfWeek = self.selectedDate;
+        week--;
+    }
+    
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:beginningOfWeek];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    NSInteger day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d~",year, month, day];
+    
+    comps = [calendar components:unitFlags fromDate:endOfWeek];
+    year = [comps year];    
+    month = [comps month];
+    day = [comps day];
+    [dateString appendFormat:@"%d-%d-%d",year, month, day];
+    
+    [dateString appendFormat:@" 第%d周", week];
+    
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+    
+}
+
+-(void) presentCycleMonth
+{
+    NSMutableString *dateString = [[NSMutableString alloc] init];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+    comps = [calendar components:unitFlags fromDate:self.selectedDate];
+    NSInteger year = [comps year];    
+    NSInteger month = [comps month];
+    
+    [dateString appendFormat:@"%d年%d月", year, month];
+    self.timeLabel.text = dateString;
+    
+    [dateString release];
+}
+
+-(void) setTheDateCycle
+{
+    if (self.cycleSelection.selectedSegmentIndex == 0)
+    {
+        [self presentCycleDay];
+    }
+    else if (self.cycleSelection.selectedSegmentIndex == 1)
+    {
+        [self presentCycleWeek];
+    }
+    else
+    {
+        [self presentCycleMonth];
+    }
+    
+}
+
 - (IBAction)pressCycleButton:(id)sender; 
 {
-    if ([self.cyclePickPopover isPopoverVisible])
-    {
-        [self.cyclePickPopover dismissPopoverAnimated:YES];
-    }
-    else {
-        UIBarButtonItem *tappedButton = (UIBarButtonItem *)sender;
-        [self.cyclePickPopover presentPopoverFromBarButtonItem:tappedButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        
-    }
+    [self setTheDateCycle];
 }
+
+#pragma mark - TKCalendarMonthViewDelegate methods
+
+
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView didSelectDate:(NSDate *)d {
+    self.selectedDate = d;
+    
+    [self setTheDateCycle];
+}
+
+- (void)calendarMonthView:(TKCalendarMonthView *)monthView monthDidChange:(NSDate *)d {
+	self.selectedDate = d;
+    
+    [self setTheDateCycle];
+}
+
 
 @end

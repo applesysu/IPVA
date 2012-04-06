@@ -9,20 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RankSheetView : UIView<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
-{
-	UIScrollView *leftScrollView;
-	UIScrollView *rightScrollView;
-	
-	UITableView *leftTableView;
-	UITableView *rightTableView;
-	
-	NSArray *titleArray;
-    NSArray *nameLabels;
-	
-	UIView *titleRowView;
-	
-    NSArray *datas;
-}
 
 @property (nonatomic, retain) UIScrollView *leftScrollView;
 @property (nonatomic, retain) UIScrollView *rightScrollView;
